@@ -26,19 +26,6 @@ public class Account implements Serializable {
 							// asset
 	private JSONArray xpubs;// pubkey array.
 
-	public Account(JSONObject json) throws BytomException {
-		try {
-			this.id = json.getString("id");
-			this.alias = json.getString("alias");
-			this.key_index = json.getInt("key_index");
-			this.quorom = json.getInt("quorom");
-			this.xpubs = json.getJSONArray("xpubs");
-		}
-		catch (JSONException je) {
-			throw new BytomException(je.getMessage() + ":" + json.toString(), je);
-		}
-	}
-
 	public Account(String data) throws BytomException {
 		try {
 			JSONObject json = new JSONObject(data);
@@ -53,12 +40,26 @@ public class Account implements Serializable {
 		}
 	}
 
-	public static List<Account> constructAccounts(JSONArray array) throws BytomException {
+	public Account(JSONObject json) throws BytomException {
 		try {
-			int size = array.length();
+			this.id = json.getString("id");
+			this.alias = json.getString("alias");
+			this.key_index = json.getInt("key_index");
+			this.quorom = json.getInt("quorom");
+			this.xpubs = json.getJSONArray("xpubs");
+		}
+		catch (JSONException je) {
+			throw new BytomException(je.getMessage() + ":" + json.toString(), je);
+		}
+	}
+
+	public static List<Account> constructAccounts(JSONObject json) throws BytomException {
+		try {
+			JSONArray data = json.getJSONArray("data"); 
+			int size = data.length();
 			List<Account> accounts = new ArrayList<Account>(size);
 			for (int i = 0; i < size; i++) {
-				accounts.add(new Account(array.getJSONObject(i)));
+				accounts.add(new Account(data.getJSONObject(i)));
 			}
 			return accounts;
 		}

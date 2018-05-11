@@ -41,8 +41,8 @@ public class KeysApi extends Bytom {
 	 * @throws BytomException
 	 */
 	public List<Key> listKeys() throws BytomException {
-		return Key.constructKeys(client.post(BytomConfig.getValue("baseURL")
-				+ "list-keys", null));
+		return Key.constructKeys(client.post(
+				BytomConfig.getValue("baseURL") + "list-keys", null).asJSONObject());
 	}
 
 	/**
@@ -61,11 +61,11 @@ public class KeysApi extends Bytom {
 		return new BytomResponse(client.post(
 				BytomConfig.getValue("baseURL") + "delete-key", body).asJSONObject());
 	}
-	
+
 	/**
 	 * @param xpub pubkey of the key.
-	 * @param old_password	old password of the key.
-	 * @param new_password	new password of the key.
+	 * @param old_password old password of the key.
+	 * @param new_password new password of the key.
 	 * @return
 	 * @throws BytomException
 	 * @throws JSONException
@@ -80,7 +80,5 @@ public class KeysApi extends Bytom {
 				BytomConfig.getValue("baseURL") + "reset-key-password", body)
 				.asJSONObject());
 	}
-	
-	
 
 }

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import bytom.http.Response;
 import bytom.org.json.JSONArray;
 import bytom.org.json.JSONException;
 import bytom.org.json.JSONObject;
@@ -45,9 +44,8 @@ public class Key implements Serializable {
 		}
 	}
 
-	public static List<Key> constructKeys(Response res) throws BytomException {
+	public static List<Key> constructKeys(JSONObject json) throws BytomException {
 		try {
-			JSONObject json = res.asJSONObject();
 			JSONArray data = json.getJSONArray("data");
 			int size = data.length();
 			List<Key> keys = new ArrayList<Key>(size);

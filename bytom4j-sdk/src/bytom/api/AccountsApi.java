@@ -1,10 +1,14 @@
 package bytom.api;
 
+import java.util.List;
+
+import bytom.model.Account;
 import bytom.model.BytomException;
 import bytom.model.BytomResponse;
 import bytom.org.json.JSONException;
 import bytom.org.json.JSONObject;
 import bytom.util.BytomConfig;
+
 /**
  * 
  * @author https://github.com/JackyKen
@@ -37,8 +41,15 @@ public class AccountsApi extends Bytom {
 				BytomConfig.getValue("baseURL") + "create-account", body).asJSONObject());
 	}
 
-	public BytomResponse getListAccounts() throws BytomException {
-		return new BytomResponse(client.post(
-				BytomConfig.getValue("baseURL") + "list-accounts", null).asJSONObject());
+	/**
+	 * 
+	 * @return
+	 * @throws BytomException
+	 */
+	public List<Account> listAccounts() throws BytomException {
+		return Account.constructAccounts(client.post(
+				BytomConfig.getValue("baseURL") + "list-accounts", null)
+				.asJSONObject());
 	}
+
 }

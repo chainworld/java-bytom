@@ -160,15 +160,12 @@ public class HttpClient implements java.io.Serializable {
 		HttpMethodParams param = postMethod.getParams();
 		param.setContentCharset("UTF-8");
 		postMethod.setRequestHeader("Content-Type", "text/plain;chartset=UTF-8");
-		StringRequestEntity requestEntity;
-		if (body != null) {
-			try {
-				requestEntity = new StringRequestEntity(body.toString(), "application/x-www-form-urlencoded", "UTF-8");
-				postMethod.setRequestEntity(requestEntity);
-			}
-			catch (UnsupportedEncodingException e) {
-				throw new BytomException(e.getMessage());
-			}
+		try{
+			StringRequestEntity  requestEntity = new StringRequestEntity(body==null?"{}":body.toString(), "application/x-www-form-urlencoded", "UTF-8");
+			postMethod.setRequestEntity(requestEntity);
+		}
+		catch (UnsupportedEncodingException e) {
+			throw new BytomException(e.getMessage());
 		}
 		return httpRequest(postMethod);
 	}
