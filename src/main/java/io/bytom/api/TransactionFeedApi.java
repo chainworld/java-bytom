@@ -11,7 +11,6 @@ import com.alibaba.fastjson.TypeReference;
 import io.bytom.bean.TransactionFeedResult;
 import io.bytom.bean.model.TransactionFeed;
 import io.bytom.http.BasicResult;
-import io.bytom.http.HttpClientUtil;
 import io.bytom.util.StringUtil;
 
 /**

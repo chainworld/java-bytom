@@ -1,17 +1,34 @@
 package io.bytom.bean;
 
+/**
+ * http请求的 返货code，和错误信息
+ * 
+ * @author niyue
+ *
+ */
 public class HttpResult {
 
-	// http请求 返回code
+	/**
+	 * http请求 返回code
+	 */
 	private int httpCode;
-	// 非200code均为失败
+	/**
+	 * 非200code均为失败
+	 */
 	private boolean codeSuccess;
 
-	// bytom错误Code
+	/**
+	 * bytom错误Code
+	 */
 	private String code;
-	// bytom错误message
+	/**
+	 * bytom错误message
+	 */
 	private String message;
-	// bytom错误temporary
+	/**
+	 * bytom错误temporary
+	 * 
+	 */
 	private boolean temporary;
 
 	public int getHttpCode() {

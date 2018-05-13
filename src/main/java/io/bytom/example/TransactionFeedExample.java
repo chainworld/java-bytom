@@ -1,4 +1,4 @@
-package io.bytom.exemple;
+package io.bytom.example;
 
 import io.bytom.api.TransactionFeedApi;
 import io.bytom.bean.TransactionFeedResult;
@@ -9,7 +9,7 @@ import io.bytom.bean.TransactionFeedResult;
  * @author niyue
  *
  */
-public class TransactionFeed {
+public class TransactionFeedExample {
 	private static TransactionFeedApi tfapi;
 
 	public static void main(String[] args) {
@@ -43,7 +43,7 @@ public class TransactionFeed {
 	private static void listTransactionFeeds() {
 		TransactionFeedResult feedResult = tfapi.listTransactionFeeds();
 		if (feedResult.isCodeSuccess()) {
-			System.out.println("listTransactionFeeds: " + feedResult.getData());
+			System.out.println("listTransactionFeeds: " + feedResult);
 		} else {
 			System.out.println("listTransactionFeeds fail: " + feedResult.toHttpResultString());
 		}
