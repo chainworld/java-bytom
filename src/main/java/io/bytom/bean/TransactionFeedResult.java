@@ -1,12 +1,9 @@
 package io.bytom.bean;
 
-import java.util.List;
-
-import io.bytom.bean.model.Transaction;
-
 public class TransactionFeedResult extends HttpResult {
 	private String status;
-	private List<Transaction> data;
+	private String msg;
+	private Object data;
 
 	public String getStatus() {
 		return status;
@@ -16,18 +13,35 @@ public class TransactionFeedResult extends HttpResult {
 		this.status = status;
 	}
 
-	public List<Transaction> getData() {
+	public Object getData() {
 		return data;
 	}
 
-	public void setData(List<Transaction> data) {
+	public void setData(Object data) {
 		this.data = data;
+	}
+
+	public String getMsg() {
+		return msg;
+	}
+
+	public void setMsg(String msg) {
+		this.msg = msg;
 	}
 
 	@Override
 	public String toString() {
-		return "TransactionFeedResult [status=" + status + ", data=" + data + ", toString()=" + super.toString() + "]";
+		return "TransactionFeedResult [status=" + status + ", msg=" + msg + ", data=" + data + "]";
 	}
 
+	public TransactionFeedResult(int httpCode) {
+		super();
+		this.setHttpCode(httpCode);
+	}
+
+	public TransactionFeedResult(){
+		super();
+	}
+	
 
 }

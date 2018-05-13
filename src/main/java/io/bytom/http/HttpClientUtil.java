@@ -2,26 +2,17 @@ package io.bytom.http;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.http.Consts;
 import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 import com.alibaba.fastjson.JSON;
@@ -36,7 +27,6 @@ public class HttpClientUtil {
 		if (params != null) {
 			try {
 				StringEntity stringEntity = new StringEntity(JSON.toJSONString(params));
-				System.out.println(JSON.toJSONString(params));
 				request.setEntity(stringEntity);
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
@@ -58,6 +48,7 @@ public class HttpClientUtil {
 			e.printStackTrace();
 			logger.info("Õ¯¬Á“Ï≥£");
 		}
+		logger.info("returnSt:"+ returnSt);
 		return returnSt;
 	}
 
@@ -69,7 +60,6 @@ public class HttpClientUtil {
 		if (params != null) {
 			try {
 				StringEntity stringEntity = new StringEntity(JSON.toJSONString(params));
-				System.out.println(JSON.toJSONString(params));
 				request.setEntity(stringEntity);
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
@@ -93,6 +83,7 @@ public class HttpClientUtil {
 			// Õ¯¬Á“Ï≥£
 			logger.info("Õ¯¬Á“Ï≥£");
 		}
+		logger.info("returnSt:"+ returnSt);
 		return returnSt;
 	}
 

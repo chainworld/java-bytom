@@ -21,4 +21,9 @@ public class BasicResult {
 		this.resultObj = resultObj;
 	}
 
+	@Override
+	public String toString() {
+		return "BasicResult [httpCode=" + httpCode + ", resultObj=" + resultObj + "]";
+	}
+
 }

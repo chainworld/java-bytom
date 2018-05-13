@@ -2,16 +2,16 @@ package io.bytom.bean;
 
 public class HttpResult {
 
-	//http请求 返回code
+	// http请求 返回code
 	private int httpCode;
-	//非200code均为失败
-	private boolean isSuccess;
+	// 非200code均为失败
+	private boolean codeSuccess;
 
-	//bytom错误Code
+	// bytom错误Code
 	private String code;
-	//bytom错误message
+	// bytom错误message
 	private String message;
-	//bytom错误temporary
+	// bytom错误temporary
 	private boolean temporary;
 
 	public int getHttpCode() {
@@ -22,12 +22,12 @@ public class HttpResult {
 		this.httpCode = httpCode;
 	}
 
-	public boolean isSuccess() {
-		return isSuccess;
+	public boolean isCodeSuccess() {
+		return codeSuccess;
 	}
 
-	public void setSuccess(boolean isSuccess) {
-		this.isSuccess = isSuccess;
+	public void setCodeSuccess(boolean codeSuccess) {
+		this.codeSuccess = codeSuccess;
 	}
 
 	public String getCode() {
@@ -56,7 +56,12 @@ public class HttpResult {
 
 	@Override
 	public String toString() {
-		return "HttpResult [httpCode=" + httpCode + ", isSuccess=" + isSuccess + ", code=" + code + ", message="
+		return "HttpResult [httpCode=" + httpCode + ", codeSuccess=" + codeSuccess + ", code=" + code + ", message="
+				+ message + ", temporary=" + temporary + "]";
+	}
+
+	public String toHttpResultString() {
+		return "HttpResult [httpCode=" + httpCode + ", codeSuccess=" + codeSuccess + ", code=" + code + ", message="
 				+ message + ", temporary=" + temporary + "]";
 	}
 
