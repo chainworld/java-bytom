@@ -15,7 +15,7 @@ public class AccountTest {
 	@Test
 	public void run() {
 		try {
-			testCreateAcount();
+//			testCreateAcount();
 			testListAcounts();
 		}
 		catch (Exception e) {

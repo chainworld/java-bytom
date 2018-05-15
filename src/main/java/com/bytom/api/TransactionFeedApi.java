@@ -1,188 +1,165 @@
 package com.bytom.api;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.TypeReference;
-import com.bytom.bean.TransactionFeedResult;
-import com.bytom.common.StringUtil;
-import com.bytom.http.BasicResult;
-import com.bytom.model.TransactionFeed;
+import com.bytom.exception.BytomException;
+import com.bytom.http.BytomResponse;
+import com.bytom.http.Client;
 
 /**
- * transaction-feed api
  * 
- * @author niyue
+ * @author niyuelin1990
  *
  */
-public class TransactionFeedApi extends BasisModel {
+public class TransactionFeedApi {
 
-	public TransactionFeedApi(String url) {
-		super();
-		this.setUrl(url);
-	}
+	private String alias;
+	private String filter;
 
-	public TransactionFeedApi(String url, String username, String password) {
-		this.setAuthorization(username, password);
-		this.setUrl(url);
-	}
+	private TransactionFeedParam param;
 
 	/**
-	 * 新增
-	 * @param alias，name of the transaction feed.
-	 * @param filter
-	 * @return
-	 */
-	public TransactionFeedResult createTransactionFeed(String alias, String filter) {
-		Map<String, String> m = new HashMap<String, String>();
-		m.put("alias", alias);
-		m.put("filter", filter);
-
-		System.out.println(this.getUrl() + "  " + this.getAuthorization());
-		BasicResult returnSt = this.dohttpPost("/create-transaction-feed", m);
-
-		TransactionFeedResult feedResult = new TransactionFeedResult(returnSt.getHttpCode());
-		if (returnSt.getHttpCode() == 200) {
-			feedResult.setCodeSuccess(true);
-		}
-
-		if (StringUtil.notNull(returnSt.getResultObj())) {
-			JSONObject jsonObject = JSON.parseObject(returnSt.getResultObj());
-			if (returnSt.getHttpCode() == 200) {
-				feedResult.setStatus(jsonObject.getString("status"));
-				feedResult.setMsg(jsonObject.getString("msg"));
-			} else {
-				setFailData(feedResult, jsonObject);
-			}
-		}
-		return feedResult;
-	}
-
-	/**
-	 * list
-	 * @return
-	 */
-	public TransactionFeedResult listTransactionFeeds() {
-		BasicResult returnSt = this.dohttpPost("/list-transaction-feeds", null);
-
-		TransactionFeedResult feedResult = new TransactionFeedResult(returnSt.getHttpCode());
-		if (returnSt.getHttpCode() == 200) {
-			feedResult.setCodeSuccess(true);
-		}
-
-		if (StringUtil.notNull(returnSt.getResultObj())) {
-			JSONObject jsonObject = JSON.parseObject(returnSt.getResultObj());
-			if (returnSt.getHttpCode() == 200) {
-				feedResult.setStatus(jsonObject.getString("status"));
-				feedResult.setMsg(jsonObject.getString("msg"));
-				feedResult.setData(
-						JSON.parseObject(jsonObject.getString("data"), new TypeReference<List<TransactionFeed>>() {
-						}));
-			} else {
-				setFailData(feedResult, jsonObject);
-			}
-		}
-		return feedResult;
-	}
-
-	/**
-	 * get
-	 * @param alias0， name of the transaction feed.
-	 * @return
-	 */
-	public TransactionFeedResult getTransactionFeed(String alias0) {
-		Map<String, String> m = new HashMap<String, String>();
-		m.put("alias", alias0);
-		BasicResult returnSt = this.dohttpPost("/get-transaction-feed", m);
-
-		TransactionFeedResult feedResult = new TransactionFeedResult(returnSt.getHttpCode());
-		if (returnSt.getHttpCode() == 200) {
-			feedResult.setCodeSuccess(true);
-		}
-		if (StringUtil.notNull(returnSt.getResultObj())) {
-			JSONObject jsonObject = JSON.parseObject(returnSt.getResultObj());
-			if (returnSt.getHttpCode() == 200) {
-				feedResult.setStatus(jsonObject.getString("status"));
-				feedResult.setMsg(jsonObject.getString("msg"));
-				feedResult.setData(JSON.parseObject(jsonObject.getString("data"),
-						new TypeReference<Map<String, TransactionFeed>>() {
-						}));
-			} else {
-				setFailData(feedResult, jsonObject);
-			}
-		}
-		return feedResult;
-	}
-
-	/**
-	 * 设置错误信息
+	 * 创建
 	 * 
-	 * @param feedResult 
-	 * @param jsonObject 返回值
+	 * @param client
+	 * @param alias
+	 * @param filter
+	 * @throws BytomException
 	 */
-	private void setFailData(TransactionFeedResult feedResult, JSONObject jsonObject) {
-		feedResult.setCode(jsonObject.getString("code"));
-		feedResult.setMessage(jsonObject.getString("message"));
-		feedResult.setTemporary(jsonObject.getBooleanValue("temporary"));
+	public void create(Client client, String alias, String filter) throws BytomException {
+		Map<String, Object> req = new HashMap<String, Object>();
+		req.put("alias", alias);
+		req.put("filter", filter);
+		client.request("create-transaction-feed", req);
+	}
+
+	/**
+	 * 获取
+	 * 
+	 * @param client
+	 * @param alias
+	 * @return
+	 * @throws BytomException
+	 */
+	public TransactionFeedApi get(Client client, String alias) throws BytomException {
+		Map<String, Object> req = new HashMap<String, Object>();
+		req.put("alias", alias);
+		return client.requestGet("get-transaction-feed", req, "txfeed", TransactionFeedApi.class);
 	}
 
 	/**
 	 * 修改
-	 * @param alias, name of the transaction feed.
-	 * @param filter filter of the transaction feed.
-	 * @return
+	 * 
+	 * @param client
+	 * @param alias
+	 * @param filter
+	 * @throws BytomException
 	 */
-	public TransactionFeedResult updateTransactionFeed(String alias, String filter) {
-		Map<String, String> m = new HashMap<String, String>();
-		m.put("alias", alias);
-		m.put("filter", filter);
-
-		BasicResult returnSt = this.dohttpPost("/update-transaction-feed", m);
-
-		TransactionFeedResult feedResult = new TransactionFeedResult(returnSt.getHttpCode());
-		if (returnSt.getHttpCode() == 200) {
-			feedResult.setCodeSuccess(true);
-		}
-
-		if (StringUtil.notNull(returnSt.getResultObj())) {
-			JSONObject jsonObject = JSON.parseObject(returnSt.getResultObj());
-			if (returnSt.getHttpCode() == 200) {
-				feedResult.setStatus(jsonObject.getString("status"));
-				feedResult.setMsg(jsonObject.getString("msg"));
-			} else {
-				setFailData(feedResult, jsonObject);
-			}
-		}
-		return feedResult;
+	public void update(Client client, String alias, String filter) throws BytomException {
+		Map<String, Object> req = new HashMap<String, Object>();
+		req.put("alias", alias);
+		req.put("filter", filter);
+		client.request("update-transaction-feed", req);
 	}
 
 	/**
-	 * 删除
-	 * @param  alias, name of the transaction feed.
+	 * 列表
+	 * 
+	 * @param client
 	 * @return
+	 * @throws BytomException
 	 */
-	public TransactionFeedResult deleteTransactionFeed(String alias) {
-		Map<String, String> m = new HashMap<String, String>();
-		m.put("alias", alias);
-		BasicResult returnSt = this.dohttpPost("/delete-transaction-feed", m);
+	public Items list(Client client) throws BytomException {
+		Items items = new Items();
+		items.setClient(client);
+		return items.query();
+	}
 
-		TransactionFeedResult feedResult = new TransactionFeedResult(returnSt.getHttpCode());
-		if (returnSt.getHttpCode() == 200) {
-			feedResult.setCodeSuccess(true);
+	/**
+	 * 
+	 * @param client
+	 * @param alias
+	 * @throws BytomException
+	 */
+	public void delete(Client client, String alias) throws BytomException {
+		Map<String, Object> req = new HashMap<String, Object>();
+		req.put("alias", alias);
+		client.request("delete-transaction-feed", req);
+	}
+
+	public class Items extends BytomResponse<TransactionFeedApi> {
+		public Items query() throws BytomException {
+			Items items = this.client.requestList("list-transaction-feeds", null, Items.class);
+			return items;
 		}
-		if (StringUtil.notNull(returnSt.getResultObj())) {
-			JSONObject jsonObject = JSON.parseObject(returnSt.getResultObj());
-			if (returnSt.getHttpCode() == 200) {
-				feedResult.setStatus(jsonObject.getString("status"));
-				feedResult.setMsg(jsonObject.getString("msg"));
-			} else {
-				setFailData(feedResult, jsonObject);
-			}
+	}
+
+	public class TransactionFeedParam {
+		private String assetid;
+		private long lowerlimit;
+
+		private long upperlimit;
+
+		public String getAssetid() {
+			return assetid;
 		}
-		return feedResult;
+
+		public void setAssetid(String assetid) {
+			this.assetid = assetid;
+		}
+
+		public long getLowerlimit() {
+			return lowerlimit;
+		}
+
+		public void setLowerlimit(long lowerlimit) {
+			this.lowerlimit = lowerlimit;
+		}
+
+		public long getUpperlimit() {
+			return upperlimit;
+		}
+
+		public void setUpperlimit(long upperlimit) {
+			this.upperlimit = upperlimit;
+		}
+
+		@Override
+		public String toString() {
+			return "TransactionFeedParam [assetid=" + assetid + ", lowerlimit=" + lowerlimit + ", upperlimit="
+					+ upperlimit + "]";
+		}
+
+	}
+
+	public String getAlias() {
+		return alias;
+	}
+
+	public void setAlias(String alias) {
+		this.alias = alias;
+	}
+
+	public String getFilter() {
+		return filter;
+	}
+
+	public void setFilter(String filter) {
+		this.filter = filter;
+	}
+
+	public TransactionFeedParam getParam() {
+		return param;
+	}
+
+	public void setParam(TransactionFeedParam param) {
+		this.param = param;
+	}
+
+	@Override
+	public String toString() {
+		return "TransactionFeedApi2 [alias=" + alias + ", filter=" + filter + ", param=" + param + "]";
 	}
 
 }

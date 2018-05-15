@@ -7,9 +7,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-
 /**
  * stringutil
  * 
@@ -348,24 +345,6 @@ public class StringUtil {
 			}
 		}
 		return picList;
-	}
-
-	public static String dealPicList(String picList) {
-		StringBuffer pictures = new StringBuffer();
-		if (isEmpty(picList)) {
-			return pictures.toString();
-		}
-		JSONArray picArray = JSON.parseArray(picList);
-		if (picArray != null) {
-			for (int i = 0; i < picArray.size(); i++) {
-				if (pictures.length() == 0) {
-					pictures.append(picArray.get(i).toString());
-				} else {
-					pictures.append(",").append(picArray.get(i).toString());
-				}
-			}
-		}
-		return pictures.toString();
 	}
 
 	/**

@@ -1,10 +1,12 @@
 package com.bytom.http;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
@@ -16,6 +18,7 @@ import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
 import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.log4j.Logger;
 
+import com.bytom.common.StringUtil;
 import com.bytom.common.Utils;
 import com.bytom.exception.BytomException;
 import com.google.gson.Gson;
@@ -30,6 +33,9 @@ public class Client {
 	private String url;
 
 	private String accessToken;
+	
+	//authorization È¨ÏÞ
+	private String authorization;
 
 	private HttpClient client = null;
 
@@ -51,6 +57,7 @@ public class Client {
 	private final static boolean DEBUG = true;
 
 	private static final String JSON = new String("application/json; charset=utf-8");
+	private static final String UTF_8 = "UTF-8";
 
 	private static Logger log = Logger.getLogger(Client.class.getName());
 
@@ -68,6 +75,25 @@ public class Client {
 		this(150, 30000, 30000);
 		this.url = url;
 		this.accessToken = accessToken;
+		initAuthorization();
+	}
+
+	private void initAuthorization() {
+		if (StringUtil.notNull(this.accessToken)) {
+			String[] as = this.accessToken.split(":");
+			if (as.length == 2) {
+				String username = as[0];
+				String password = as[1];
+				String encoding = "";
+				try {
+					encoding = new String(Base64.encodeBase64((username + ":" + password).getBytes(UTF_8)));
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
+
+				this.authorization = "Basic " + encoding;
+			}
+		}
 	}
 
 	/**
@@ -136,6 +162,35 @@ public class Client {
 		return post(action, body, rc);
 	}
 
+	/**
+	 * 
+	 * @param action
+	 * @param body
+	 * @param getKey data->key¹Ø¼ü×Ö
+	 * @param tClass
+	 * @return
+	 * @throws BytomException
+	 */
+	public <T> T requestGet(String action, Object body, String getKey,final Type tClass)
+			throws BytomException {
+		ResponseCreator<T> rc = new ResponseCreator<T>() {
+			public T create(Response response, Gson deserializer) throws IOException,
+					BytomException {
+				JsonElement root = new JsonParser().parse(response.asString());
+				JsonElement status = root.getAsJsonObject().get("status");
+				JsonElement data = root.getAsJsonObject().get("data");
+				
+				if (status != null && status.toString().contains("fail"))
+					throw new BytomException(root.getAsJsonObject().get("msg").toString());
+				else if (data != null)
+					return deserializer.fromJson(data.getAsJsonObject().get(getKey), tClass);
+				else
+					return deserializer.fromJson(response.asString(), tClass);
+			}
+		};
+		return post(action, body, rc);
+	}
+	
 	public <T> T requestList(String action, Object body, final Type tClass)
 			throws BytomException {
 		ResponseCreator<T> rc = new ResponseCreator<T>() {
@@ -174,6 +229,9 @@ public class Client {
 
 			List<Header> headers = new ArrayList<Header>();
 			headers.add((new Header("User-Agent", "bytom-sdk-java-" + version)));
+			if(this.authorization!=null){
+				headers.add((new Header("Authorization", this.authorization)));
+			}
 			client.getHostConfiguration().getParams()
 					.setParameter("http.default-headers", headers);
 			for (Header hd : headers) {

@@ -1,0 +1,80 @@
+0    DEBUG [2018-05-15 19:02:25]  Request:
+5    DEBUG [2018-05-15 19:02:25]  Action:create-transaction-feed
+130  DEBUG [2018-05-15 19:02:25]  User-Agent: bytom-sdk-java-dev
+131  DEBUG [2018-05-15 19:02:25]  Authorization: Basic d3Q6M2QxN2RiYjk1M2NlZGQ1MzM1M2JmM2YzNDJiYjI5MjllOTUwNTEwNWZmZWIyMTY3MGU2YmQwMGFiZWVmMzc3Mg==
+218  DEBUG [2018-05-15 19:02:25]  Response:
+218  DEBUG [2018-05-15 19:02:25]  https StatusCode:200
+218  DEBUG [2018-05-15 19:02:25]  Content-Type:application/json; charset=utf-8
+218  DEBUG [2018-05-15 19:02:25]  Vary:Accept-Encoding
+218  DEBUG [2018-05-15 19:02:25]  X-Content-Type-Options:nosniff
+218  DEBUG [2018-05-15 19:02:25]  X-Frame-Options:DENY
+218  DEBUG [2018-05-15 19:02:25]  X-Xss-Protection:1
+220  DEBUG [2018-05-15 19:02:25]  Date:Tue, 15 May 2018 11:02:28 GMT
+220  DEBUG [2018-05-15 19:02:25]  Content-Length:21
+224  DEBUG [2018-05-15 19:02:25]  {"status":"success"}
+
+
+229  DEBUG [2018-05-15 19:02:25]  Request:
+229  DEBUG [2018-05-15 19:02:25]  Action:get-transaction-feed
+230  DEBUG [2018-05-15 19:02:25]  User-Agent: bytom-sdk-java-dev
+230  DEBUG [2018-05-15 19:02:25]  Authorization: Basic d3Q6M2QxN2RiYjk1M2NlZGQ1MzM1M2JmM2YzNDJiYjI5MjllOTUwNTEwNWZmZWIyMTY3MGU2YmQwMGFiZWVmMzc3Mg==
+247  DEBUG [2018-05-15 19:02:25]  Response:
+247  DEBUG [2018-05-15 19:02:25]  https StatusCode:200
+247  DEBUG [2018-05-15 19:02:25]  Content-Type:application/json; charset=utf-8
+247  DEBUG [2018-05-15 19:02:25]  Vary:Accept-Encoding
+247  DEBUG [2018-05-15 19:02:25]  X-Content-Type-Options:nosniff
+247  DEBUG [2018-05-15 19:02:25]  X-Frame-Options:DENY
+247  DEBUG [2018-05-15 19:02:25]  X-Xss-Protection:1
+247  DEBUG [2018-05-15 19:02:25]  Date:Tue, 15 May 2018 11:02:28 GMT
+247  DEBUG [2018-05-15 19:02:25]  Content-Length:321
+247  DEBUG [2018-05-15 19:02:25]  {"status":"success","data":{"txfeed":{"alias":"test1","filter":"asset_id='84778a666fe453cf73b2e8c783dbc9e04bc4fd7cbb4f50caeaee99cf9967ebed' AND amount_lower_limit = 50 AND amount_upper_limit = 100","param":{"assetid":"84778a666fe453cf73b2e8c783dbc9e04bc4fd7cbb4f50caeaee99cf9967ebed","lowerlimit":50,"upperlimit":100}}}}
+
+
+257  DEBUG [2018-05-15 19:02:25]  Request:
+258  DEBUG [2018-05-15 19:02:25]  Action:update-transaction-feed
+258  DEBUG [2018-05-15 19:02:25]  User-Agent: bytom-sdk-java-dev
+258  DEBUG [2018-05-15 19:02:25]  Authorization: Basic d3Q6M2QxN2RiYjk1M2NlZGQ1MzM1M2JmM2YzNDJiYjI5MjllOTUwNTEwNWZmZWIyMTY3MGU2YmQwMGFiZWVmMzc3Mg==
+263  DEBUG [2018-05-15 19:02:25]  Response:
+263  DEBUG [2018-05-15 19:02:25]  https StatusCode:200
+263  DEBUG [2018-05-15 19:02:25]  Content-Type:application/json; charset=utf-8
+263  DEBUG [2018-05-15 19:02:25]  Vary:Accept-Encoding
+263  DEBUG [2018-05-15 19:02:25]  X-Content-Type-Options:nosniff
+263  DEBUG [2018-05-15 19:02:25]  X-Frame-Options:DENY
+263  DEBUG [2018-05-15 19:02:25]  X-Xss-Protection:1
+263  DEBUG [2018-05-15 19:02:25]  Date:Tue, 15 May 2018 11:02:28 GMT
+263  DEBUG [2018-05-15 19:02:25]  Content-Length:21
+264  DEBUG [2018-05-15 19:02:25]  {"status":"success"}
+
+
+264  DEBUG [2018-05-15 19:02:25]  Request:
+265  DEBUG [2018-05-15 19:02:25]  Action:list-transaction-feeds
+265  DEBUG [2018-05-15 19:02:25]  User-Agent: bytom-sdk-java-dev
+265  DEBUG [2018-05-15 19:02:25]  Authorization: Basic d3Q6M2QxN2RiYjk1M2NlZGQ1MzM1M2JmM2YzNDJiYjI5MjllOTUwNTEwNWZmZWIyMTY3MGU2YmQwMGFiZWVmMzc3Mg==
+269  DEBUG [2018-05-15 19:02:25]  Response:
+270  DEBUG [2018-05-15 19:02:25]  https StatusCode:200
+270  DEBUG [2018-05-15 19:02:25]  Content-Type:application/json; charset=utf-8
+270  DEBUG [2018-05-15 19:02:25]  Vary:Accept-Encoding
+270  DEBUG [2018-05-15 19:02:25]  X-Content-Type-Options:nosniff
+270  DEBUG [2018-05-15 19:02:25]  X-Frame-Options:DENY
+270  DEBUG [2018-05-15 19:02:25]  X-Xss-Protection:1
+270  DEBUG [2018-05-15 19:02:25]  Date:Tue, 15 May 2018 11:02:28 GMT
+270  DEBUG [2018-05-15 19:02:25]  Content-Length:310
+270  DEBUG [2018-05-15 19:02:25]  {"status":"success","data":[{"alias":"test1","filter":"asset_id='84778a666fe453cf73b2e8c783dbc9e04bc4fd7cbb4f50caeaee99cf9967ebed' AND amount_lower_limit = 50 AND amount_upper_limit = 80","param":{"assetid":"84778a666fe453cf73b2e8c783dbc9e04bc4fd7cbb4f50caeaee99cf9967ebed","lowerlimit":50,"upperlimit":80}}]}
+
+
+284  DEBUG [2018-05-15 19:02:25]  Request:
+284  DEBUG [2018-05-15 19:02:25]  Action:delete-transaction-feed
+285  DEBUG [2018-05-15 19:02:25]  User-Agent: bytom-sdk-java-dev
+286  DEBUG [2018-05-15 19:02:25]  Authorization: Basic d3Q6M2QxN2RiYjk1M2NlZGQ1MzM1M2JmM2YzNDJiYjI5MjllOTUwNTEwNWZmZWIyMTY3MGU2YmQwMGFiZWVmMzc3Mg==
+292  DEBUG [2018-05-15 19:02:25]  Response:
+292  DEBUG [2018-05-15 19:02:25]  https StatusCode:200
+292  DEBUG [2018-05-15 19:02:25]  Content-Type:application/json; charset=utf-8
+292  DEBUG [2018-05-15 19:02:25]  Vary:Accept-Encoding
+292  DEBUG [2018-05-15 19:02:25]  X-Content-Type-Options:nosniff
+292  DEBUG [2018-05-15 19:02:25]  X-Frame-Options:DENY
+292  DEBUG [2018-05-15 19:02:25]  X-Xss-Protection:1
+292  DEBUG [2018-05-15 19:02:25]  Date:Tue, 15 May 2018 11:02:28 GMT
+293  DEBUG [2018-05-15 19:02:25]  Content-Length:21
+293  DEBUG [2018-05-15 19:02:25]  {"status":"success"}
+
+
