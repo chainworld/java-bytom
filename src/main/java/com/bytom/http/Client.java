@@ -162,7 +162,6 @@ public class Client {
 		log("Action:" + action);
 		int responseCode = -1;
 		String content = Utils.serializer.toJson(body);
-		System.out.println("content:" + content);
 		PostMethod postMethod = new PostMethod(this.url + action);
 		try {
 			HttpMethodParams param = postMethod.getParams();
