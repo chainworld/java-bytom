@@ -11,9 +11,7 @@ import org.apache.log4j.Logger;
 import com.bytom.exception.BytomException;
 
 /**
- * 
  * @author https://github.com/JackyKen
- *
  */
 public class Response {
 
