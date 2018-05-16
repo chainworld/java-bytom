@@ -16,6 +16,7 @@ public class MessageTest {
 	public void run() {
 		try {
 			testSignMessage();
+			testVerifyMessage();
 		}
 		catch (BytomException e) {
 			e.printStackTrace();
@@ -28,5 +29,15 @@ public class MessageTest {
 				.setPassword("bytom04241521@163.com").sign(client);  
 		assertNotNull(message.derivedXpub);
 		assertNotNull(message.signature); 
+	}
+	
+	private void testVerifyMessage () throws BytomException {
+		client = TestUtils.generateClient();
+		try {
+			boolean flag = Message.verifyMessage(client, null, null, null, null);
+			System.out.println(flag);
+		} catch (BytomException e) {
+			e.printStackTrace();
+		}
 	}
 }
