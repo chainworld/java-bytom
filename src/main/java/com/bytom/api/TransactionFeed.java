@@ -12,7 +12,7 @@ import com.bytom.http.Client;
  * @author niyuelin1990
  *
  */
-public class TransactionFeedApi {
+public class TransactionFeed {
 
 	private String alias;
 	private String filter;
@@ -21,17 +21,17 @@ public class TransactionFeedApi {
 
 	/**
 	 * ´´½¨
-	 * 
 	 * @param client
 	 * @param alias
 	 * @param filter
+	 * @return success return true
 	 * @throws BytomException
 	 */
-	public void create(Client client, String alias, String filter) throws BytomException {
+	public static boolean create(Client client, String alias, String filter) throws BytomException {
 		Map<String, Object> req = new HashMap<String, Object>();
 		req.put("alias", alias);
 		req.put("filter", filter);
-		client.request("create-transaction-feed", req);
+		return client.requestStatus("create-transaction-feed", req);
 	}
 
 	/**
@@ -42,10 +42,10 @@ public class TransactionFeedApi {
 	 * @return
 	 * @throws BytomException
 	 */
-	public TransactionFeedApi get(Client client, String alias) throws BytomException {
+	public static TransactionFeed get(Client client, String alias) throws BytomException {
 		Map<String, Object> req = new HashMap<String, Object>();
 		req.put("alias", alias);
-		return client.requestGet("get-transaction-feed", req, "txfeed", TransactionFeedApi.class);
+		return client.requestGet("get-transaction-feed", req, "txfeed", TransactionFeed.class);
 	}
 
 	/**
@@ -54,13 +54,14 @@ public class TransactionFeedApi {
 	 * @param client
 	 * @param alias
 	 * @param filter
+	 * @return success return true
 	 * @throws BytomException
 	 */
-	public void update(Client client, String alias, String filter) throws BytomException {
+	public static boolean update(Client client, String alias, String filter) throws BytomException {
 		Map<String, Object> req = new HashMap<String, Object>();
 		req.put("alias", alias);
 		req.put("filter", filter);
-		client.request("update-transaction-feed", req);
+		return client.requestStatus("update-transaction-feed", req);
 	}
 
 	/**
@@ -70,25 +71,26 @@ public class TransactionFeedApi {
 	 * @return
 	 * @throws BytomException
 	 */
-	public Items list(Client client) throws BytomException {
+	public static Items list(Client client) throws BytomException {
 		Items items = new Items();
 		items.setClient(client);
 		return items.query();
 	}
 
 	/**
-	 * 
+	 * delete
 	 * @param client
 	 * @param alias
+	 * @return success return true
 	 * @throws BytomException
 	 */
-	public void delete(Client client, String alias) throws BytomException {
+	public static boolean delete(Client client, String alias) throws BytomException {
 		Map<String, Object> req = new HashMap<String, Object>();
 		req.put("alias", alias);
-		client.request("delete-transaction-feed", req);
+		return client.requestStatus("delete-transaction-feed", req);
 	}
 
-	public class Items extends BytomResponse<TransactionFeedApi> {
+	public static class Items extends BytomResponse<TransactionFeed> {
 		public Items query() throws BytomException {
 			Items items = this.client.requestList("list-transaction-feeds", null, Items.class);
 			return items;
@@ -159,7 +161,7 @@ public class TransactionFeedApi {
 
 	@Override
 	public String toString() {
-		return "TransactionFeedApi2 [alias=" + alias + ", filter=" + filter + ", param=" + param + "]";
+		return "TransactionFeed [alias=" + alias + ", filter=" + filter + ", param=" + param + "]";
 	}
 
 }

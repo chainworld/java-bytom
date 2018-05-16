@@ -5,16 +5,17 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.bytom.api.TransactionFeedApi;
+import com.bytom.api.TransactionFeed;
 import com.bytom.exception.BytomException;
 import com.bytom.http.Client;
 
 /**
  * TransactionFeedApiTest
+ * 
  * @author niyuelin1990
  *
  */
-public class TransactionFeedApiTest {
+public class TransactionFeedTest {
 
 	private static Client client;
 
@@ -34,10 +35,10 @@ public class TransactionFeedApiTest {
 
 	public void testCreatetransactionFeed(String alias) throws Exception {
 		client = TestUtils.generateClient();
-		TransactionFeedApi transactionFeedApi = new TransactionFeedApi();
 		try {
 			String filter = "asset_id='84778a666fe453cf73b2e8c783dbc9e04bc4fd7cbb4f50caeaee99cf9967ebed' AND amount_lower_limit = 50 AND amount_upper_limit = 100";
-			transactionFeedApi.create(client, alias, filter);
+			boolean flag = TransactionFeed.create(client, alias, filter);
+			Assert.assertEquals(true, flag);
 		} catch (BytomException e) {
 			e.printStackTrace();
 		}
@@ -45,9 +46,8 @@ public class TransactionFeedApiTest {
 
 	public void testGetTransactionFeed(String alias) throws Exception {
 		client = TestUtils.generateClient();
-		TransactionFeedApi transactionFeedApi = new TransactionFeedApi();
 		try {
-			TransactionFeedApi txfeed = transactionFeedApi.get(client, alias);
+			TransactionFeed txfeed = TransactionFeed.get(client, alias);
 			System.out.println(txfeed);
 			Assert.assertEquals(alias, txfeed.getAlias());
 		} catch (BytomException e) {
@@ -57,11 +57,10 @@ public class TransactionFeedApiTest {
 
 	public void testUpdateTransactionFeed(String alias) throws Exception {
 		client = TestUtils.generateClient();
-		TransactionFeedApi transactionFeedApi = new TransactionFeedApi();
 		try {
 			String filter = "asset_id='84778a666fe453cf73b2e8c783dbc9e04bc4fd7cbb4f50caeaee99cf9967ebed' AND amount_lower_limit = 50 AND amount_upper_limit = 80";
-
-			transactionFeedApi.update(client, alias, filter);
+			boolean flag = TransactionFeed.update(client, alias, filter);
+			Assert.assertEquals(true, flag);
 		} catch (BytomException e) {
 			e.printStackTrace();
 		}
@@ -69,17 +68,16 @@ public class TransactionFeedApiTest {
 
 	public void testListTransactionFeed() throws Exception {
 		client = TestUtils.generateClient();
-		TransactionFeedApi transactionFeedApi = new TransactionFeedApi();
-		TransactionFeedApi.Items items = transactionFeedApi.list(client);
+		TransactionFeed.Items items = TransactionFeed.list(client);
 		assertEquals(1, items.data.size());
 		System.out.println(items.data.get(0));
 	}
-	
+
 	public void testDeleteTransactionFeed(String alias) throws Exception {
 		client = TestUtils.generateClient();
-		TransactionFeedApi transactionFeedApi = new TransactionFeedApi();
 		try {
-			transactionFeedApi.delete(client, alias);
+			boolean flag = TransactionFeed.delete(client, alias);
+			Assert.assertEquals(true, flag);
 		} catch (BytomException e) {
 			e.printStackTrace();
 		}
