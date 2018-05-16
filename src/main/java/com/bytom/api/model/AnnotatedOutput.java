@@ -4,6 +4,11 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Map;
 
+/**
+ * A single output included in a transaction.
+ * @author niyuelin1990
+ *
+ */
 public class AnnotatedOutput {
     /**
      * The id of the output.
@@ -171,4 +176,12 @@ public class AnnotatedOutput {
     public void setAddress(String address) {
         this.address = address;
     }
+
+	@Override
+	public String toString() {
+		return "AnnotatedOutput [id=" + id + ", type=" + type + ", transactionId=" + transactionId + ", position="
+				+ position + ", assetId=" + assetId + ", assetAlias=" + assetAlias + ", assetDefinition="
+				+ assetDefinition + ", amount=" + amount + ", accountId=" + accountId + ", accountAlias=" + accountAlias
+				+ ", controlProgram=" + controlProgram + ", address=" + address + "]";
+	}
 }

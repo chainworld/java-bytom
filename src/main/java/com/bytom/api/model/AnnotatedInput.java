@@ -6,6 +6,7 @@ import java.util.Map;
 
 /**
  * A single input included in a transaction.
+ *  @author niyuelin1990
  */
 public class AnnotatedInput {
     /**
@@ -171,4 +172,13 @@ public class AnnotatedInput {
     public void setArbitrary(String arbitrary) {
         this.arbitrary = arbitrary;
     }
+
+	@Override
+	public String toString() {
+		return "AnnotatedInput [type=" + type + ", assetId=" + assetId + ", assetAlias=" + assetAlias
+				+ ", assetDefinition=" + assetDefinition + ", amount=" + amount + ", issuanceProgram=" + issuanceProgram
+				+ ", controlProgram=" + controlProgram + ", address=" + address + ", spentOutputId=" + spentOutputId
+				+ ", accountId=" + accountId + ", accountAlias=" + accountAlias + ", arbitrary=" + arbitrary + "]";
+	}
+    
 }
