@@ -32,7 +32,7 @@ public class AccountTest {
 					.create(client);
 			assertNotNull(account.id);
 			assertNotNull(account.alias);
-			assertNotNull(account.key_index);
+			assertNotNull(account.keyIndex);
 			assertEquals(1, account.xpubs.size());
 			assertNotNull(account.xpubs.get(0));
 		}

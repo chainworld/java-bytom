@@ -1,7 +1,9 @@
 package com.bytom.api;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.bytom.exception.BytomException;
 import com.bytom.http.BytomResponse;
@@ -26,7 +28,7 @@ public class Account {
 	/**
 	 * key index of account
 	 */
-	public Integer key_index;
+	public Integer keyIndex;
 	/**
 	 * threshold of keys that must sign a transaction to spend asset
 	 */
@@ -52,13 +54,6 @@ public class Account {
 		return client.request("create-account", this, Account.class);
 	}
 
-	public class Items extends BytomResponse<Account> {
-		public Items query() throws BytomException {
-			Items items = this.client.requestList("list-accounts", null, Items.class);
-			return items;
-		}
-	}
-
 	/**
 	 * list-accounts
 	 * @return
@@ -68,6 +63,25 @@ public class Account {
 		Items items = new Items();
 		items.setClient(client);
 		return items.query();
+	}
+
+	public class Items extends BytomResponse<Account> {
+		public Items query() throws BytomException {
+			Items items = this.client.requestList("list-accounts", null, Items.class);
+			return items;
+		}
+	}
+
+	/**
+	 * @param client
+	 * @param account_info
+	 * @return none if the account is deleted successfully
+	 * @throws BytomException
+	 */
+	public void delete(Client client, String account_info) throws BytomException {
+		Map<String, Object> req = new HashMap<String, Object>();
+		req.put("account_info", account_info);
+		client.request("delete-account", req, Account.class);
 	}
 
 	/**
@@ -89,8 +103,8 @@ public class Account {
 	/**
 	 * @param key_index the key_index to set
 	 */
-	public Account setKey_index(Integer key_index) {
-		this.key_index = key_index;
+	public Account setKeyIndex(Integer keyIndex) {
+		this.keyIndex = keyIndex;
 		return this;
 	}
 
@@ -110,8 +124,116 @@ public class Account {
 		return this;
 	}
 
+	/**
+	 * @param xpub
+	 * @return
+	 */
 	public Account addXpub(String xpub) {
 		this.xpubs.add(xpub);
 		return this;
+	}
+
+	public static class ReceiverBuilder {
+		@SerializedName("account_alias")
+		public String accountAlias;
+
+		@SerializedName("account_id")
+		public String accountId;
+
+		/**
+		 * Specifies the account under which the receiver is created. You must use this
+		 * method or @{link ReceiverBuilder#setAccountId}, but not both.
+		 *
+		 * @param alias the unique alias of the account
+		 * @return this ReceiverBuilder object
+		 */
+		public ReceiverBuilder setAccountAlias(String alias) {
+			this.accountAlias = alias;
+			return this;
+		}
+
+		/**
+		 * Specifies the account under which the receiver is created. You must use this
+		 * method or @{link ReceiverBuilder#setAccountAlias}, but not both.
+		 *
+		 * @param id the unique ID of the account
+		 * @return this ReceiverBuilder object
+		 */
+		public ReceiverBuilder setAccountId(String id) {
+			this.accountId = id;
+			return this;
+		}
+
+		/**
+		 * 
+		 * @param client the client object providing access to an instance of Bytom Core
+		 * @return a new Receiver object
+		 * @throws BytomException
+		 */
+		public Receiver create(Client client) throws BytomException {
+			return client.request("create-account-receiver", this, Receiver.class);
+		}
+
+	}
+
+	public static class AddressBuilder {
+
+		@SerializedName("account_alias")
+		public String accountAlias;
+
+		@SerializedName("account_id")
+		public String accountId;
+
+		/**
+		 * Specifies the account under which the receiver is created. You must use this
+		 * method or @{link AddressBuilder#setAccountId}, but not both.
+		 *
+		 * @param alias the unique alias of the account
+		 * @return this AddressBuilder object
+		 */
+		public AddressBuilder setAccountAlias(String alias) {
+			this.accountAlias = alias;
+			return this;
+		}
+
+		/**
+		 * Specifies the account under which the receiver is created. You must use this
+		 * method or @{link AddressBuilder#setAccountId}, but not both.
+		 *
+		 * @param alias the unique alias of the account
+		 * @return this AddressBuilder object
+		 */
+		public AddressBuilder setAccountId(String id) {
+			this.accountId = id;
+			return this;
+		}
+
+		public class Items extends BytomResponse<Address> {
+			public Items query() throws BytomException {
+				Items items = this.client
+						.requestList("list-addresses", this, Items.class);
+				return items;
+			}
+		}
+
+		public Items list(Client client) throws BytomException {
+			Items items = new Items();
+			items.setClient(client);
+			return items.query();
+		}
+
+		/**
+		 * check whether the address is vaild or not.
+		 * @param client
+		 * @param address
+		 * @return
+		 * @throws BytomException
+		 */
+		public Address validate(Client client, String address) throws BytomException {
+			Map<String, Object> req = new HashMap<String, Object>();
+			req.put("address", address);
+			return client.request("validate-address", req, Address.class);
+		}
+
 	}
 }

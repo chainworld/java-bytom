@@ -20,5 +20,5 @@ public class BytomResponse<T> {
 	public void setClient(Client client) {
 		this.client = client;
 	}
-
+	
 }

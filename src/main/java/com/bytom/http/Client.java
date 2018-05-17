@@ -16,9 +16,9 @@ import org.apache.commons.httpclient.methods.StringRequestEntity;
 import org.apache.commons.httpclient.params.HttpClientParams;
 import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
 import org.apache.commons.httpclient.params.HttpMethodParams;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-import com.bytom.common.StringUtil;
 import com.bytom.common.Utils;
 import com.bytom.exception.BytomException;
 import com.google.gson.Gson;
@@ -34,7 +34,7 @@ public class Client {
 
 	private String accessToken;
 	
-	//authorization È¨ÏÞ
+	//authorization
 	private String authorization;
 
 	private HttpClient client = null;
@@ -79,7 +79,7 @@ public class Client {
 	}
 
 	private void initAuthorization() {
-		if (StringUtil.notNull(this.accessToken)) {
+		if (StringUtils.isNotEmpty(this.accessToken)) {
 			String[] as = this.accessToken.split(":");
 			if (as.length == 2) {
 				String username = as[0];
@@ -109,7 +109,6 @@ public class Client {
 		params.setSoTimeout(soTimeOutMs);
 		HttpClientParams clientParams = new HttpClientParams();
 		client = new HttpClient(clientParams, connectionManager);
-
 	}
 
 	/**
@@ -166,12 +165,12 @@ public class Client {
 	 * 
 	 * @param action
 	 * @param body
-	 * @param getKey data->key¹Ø¼ü×Ö
+	 * @param getKey 
 	 * @param tClass
 	 * @return
 	 * @throws BytomException
 	 */
-	public <T> T requestGet(String action, Object body, String getKey,final Type tClass)
+	public <T> T requestGet(String action, Object body, String key,final Type tClass)
 			throws BytomException {
 		ResponseCreator<T> rc = new ResponseCreator<T>() {
 			public T create(Response response, Gson deserializer) throws IOException,
@@ -183,7 +182,7 @@ public class Client {
 				if (status != null && status.toString().contains("fail"))
 					throw new BytomException(root.getAsJsonObject().get("msg").toString());
 				else if (data != null)
-					return deserializer.fromJson(data.getAsJsonObject().get(getKey), tClass);
+					return deserializer.fromJson(data.getAsJsonObject().get(key), tClass);
 				else
 					return deserializer.fromJson(response.asString(), tClass);
 			}

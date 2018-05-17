@@ -1,80 +1,49 @@
-0    DEBUG [2018-05-15 19:02:25]  Request:
-5    DEBUG [2018-05-15 19:02:25]  Action:create-transaction-feed
-130  DEBUG [2018-05-15 19:02:25]  User-Agent: bytom-sdk-java-dev
-131  DEBUG [2018-05-15 19:02:25]  Authorization: Basic d3Q6M2QxN2RiYjk1M2NlZGQ1MzM1M2JmM2YzNDJiYjI5MjllOTUwNTEwNWZmZWIyMTY3MGU2YmQwMGFiZWVmMzc3Mg==
-218  DEBUG [2018-05-15 19:02:25]  Response:
-218  DEBUG [2018-05-15 19:02:25]  https StatusCode:200
-218  DEBUG [2018-05-15 19:02:25]  Content-Type:application/json; charset=utf-8
-218  DEBUG [2018-05-15 19:02:25]  Vary:Accept-Encoding
-218  DEBUG [2018-05-15 19:02:25]  X-Content-Type-Options:nosniff
-218  DEBUG [2018-05-15 19:02:25]  X-Frame-Options:DENY
-218  DEBUG [2018-05-15 19:02:25]  X-Xss-Protection:1
-220  DEBUG [2018-05-15 19:02:25]  Date:Tue, 15 May 2018 11:02:28 GMT
-220  DEBUG [2018-05-15 19:02:25]  Content-Length:21
-224  DEBUG [2018-05-15 19:02:25]  {"status":"success"}
+518  DEBUG [2018-05-17 11:01:18]  Content-Length:398
+520  DEBUG [2018-05-17 11:01:18]  {"status":"fail","msg":"tx rejected: checking result 0: checking output source: checking value source: checking gas input: checking control program: data stack underflow [prog 76ab142c8d931da4bf895ca603c5820443767cb1c2bb8188ae7cac = DUP HASH160 0x2c8d931da4bf895ca603c5820443767cb1c2bb81 EQUALVERIFY TXSIGHASH SWAP CHECKSIG; args 3f1e3abbf0837b4c52a9caf990b87c3cb2ea97d918970e62fca4453e13da75c0]"}
 
 
-229  DEBUG [2018-05-15 19:02:25]  Request:
-229  DEBUG [2018-05-15 19:02:25]  Action:get-transaction-feed
-230  DEBUG [2018-05-15 19:02:25]  User-Agent: bytom-sdk-java-dev
-230  DEBUG [2018-05-15 19:02:25]  Authorization: Basic d3Q6M2QxN2RiYjk1M2NlZGQ1MzM1M2JmM2YzNDJiYjI5MjllOTUwNTEwNWZmZWIyMTY3MGU2YmQwMGFiZWVmMzc3Mg==
-247  DEBUG [2018-05-15 19:02:25]  Response:
-247  DEBUG [2018-05-15 19:02:25]  https StatusCode:200
-247  DEBUG [2018-05-15 19:02:25]  Content-Type:application/json; charset=utf-8
-247  DEBUG [2018-05-15 19:02:25]  Vary:Accept-Encoding
-247  DEBUG [2018-05-15 19:02:25]  X-Content-Type-Options:nosniff
-247  DEBUG [2018-05-15 19:02:25]  X-Frame-Options:DENY
-247  DEBUG [2018-05-15 19:02:25]  X-Xss-Protection:1
-247  DEBUG [2018-05-15 19:02:25]  Date:Tue, 15 May 2018 11:02:28 GMT
-247  DEBUG [2018-05-15 19:02:25]  Content-Length:321
-247  DEBUG [2018-05-15 19:02:25]  {"status":"success","data":{"txfeed":{"alias":"test1","filter":"asset_id='84778a666fe453cf73b2e8c783dbc9e04bc4fd7cbb4f50caeaee99cf9967ebed' AND amount_lower_limit = 50 AND amount_upper_limit = 100","param":{"assetid":"84778a666fe453cf73b2e8c783dbc9e04bc4fd7cbb4f50caeaee99cf9967ebed","lowerlimit":50,"upperlimit":100}}}}
+0    DEBUG [2018-05-17 11:11:26]  Request:
+2    DEBUG [2018-05-17 11:11:26]  Action:build-transaction
+162  DEBUG [2018-05-17 11:11:26]  User-Agent: bytom-sdk-java-dev
+224  DEBUG [2018-05-17 11:11:27]  Response:
+224  DEBUG [2018-05-17 11:11:27]  https StatusCode:200
+225  DEBUG [2018-05-17 11:11:27]  Content-Type:application/json; charset=utf-8
+225  DEBUG [2018-05-17 11:11:27]  Vary:Accept-Encoding
+225  DEBUG [2018-05-17 11:11:27]  X-Content-Type-Options:nosniff
+225  DEBUG [2018-05-17 11:11:27]  X-Frame-Options:DENY
+226  DEBUG [2018-05-17 11:11:27]  X-Xss-Protection:1
+226  DEBUG [2018-05-17 11:11:27]  Date:Thu, 17 May 2018 03:11:27 GMT
+226  DEBUG [2018-05-17 11:11:27]  Content-Length:972
+229  DEBUG [2018-05-17 11:11:27]  {"status":"success","data":{"raw_transaction":"070100010161015fdfebc2f6cc62c45a7e95697e1a9c671f3801d45dafeb6ff69dd6614b31b31296ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff8099c4d5990100011600142c8d931da4bf895ca603c5820443767cb1c2bb81010002013effffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff80d3bdc69801011600145b1c48ae301ef811a1a34c8fdeba26c2003cc64700013cffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff8084af5f01160014e524fc3f7898a7a811fcdd22b3d7ce5d81d7cd7e00","signing_instructions":[{"position":0,"witness_components":[{"type":"raw_tx_signature","quorum":1,"keys":[{"xpub":"2f3e45ed187bbc4f666f33f58a618af43c8154935312625ea4719734b202a3a20e6e38f266e0e70bff70786d53564e15a5418f51cc990e360425c8657e12c013","derivation_path":["010100000000000000","0100000000000000"]}],"signatures":null},{"type":"data","value":"3f1e3abbf0837b4c52a9caf990b87c3cb2ea97d918970e62fca4453e13da75c0"}]}],"allow_additional_actions":false}}
 
 
-257  DEBUG [2018-05-15 19:02:25]  Request:
-258  DEBUG [2018-05-15 19:02:25]  Action:update-transaction-feed
-258  DEBUG [2018-05-15 19:02:25]  User-Agent: bytom-sdk-java-dev
-258  DEBUG [2018-05-15 19:02:25]  Authorization: Basic d3Q6M2QxN2RiYjk1M2NlZGQ1MzM1M2JmM2YzNDJiYjI5MjllOTUwNTEwNWZmZWIyMTY3MGU2YmQwMGFiZWVmMzc3Mg==
-263  DEBUG [2018-05-15 19:02:25]  Response:
-263  DEBUG [2018-05-15 19:02:25]  https StatusCode:200
-263  DEBUG [2018-05-15 19:02:25]  Content-Type:application/json; charset=utf-8
-263  DEBUG [2018-05-15 19:02:25]  Vary:Accept-Encoding
-263  DEBUG [2018-05-15 19:02:25]  X-Content-Type-Options:nosniff
-263  DEBUG [2018-05-15 19:02:25]  X-Frame-Options:DENY
-263  DEBUG [2018-05-15 19:02:25]  X-Xss-Protection:1
-263  DEBUG [2018-05-15 19:02:25]  Date:Tue, 15 May 2018 11:02:28 GMT
-263  DEBUG [2018-05-15 19:02:25]  Content-Length:21
-264  DEBUG [2018-05-15 19:02:25]  {"status":"success"}
+261  DEBUG [2018-05-17 11:11:27]  Request:
+262  DEBUG [2018-05-17 11:11:27]  Action:sign-transaction
+264  DEBUG [2018-05-17 11:11:27]  User-Agent: bytom-sdk-java-dev
+366  DEBUG [2018-05-17 11:11:27]  Response:
+367  DEBUG [2018-05-17 11:11:27]  https StatusCode:200
+367  DEBUG [2018-05-17 11:11:27]  Content-Type:application/json; charset=utf-8
+367  DEBUG [2018-05-17 11:11:27]  Vary:Accept-Encoding
+367  DEBUG [2018-05-17 11:11:27]  X-Content-Type-Options:nosniff
+368  DEBUG [2018-05-17 11:11:27]  X-Frame-Options:DENY
+368  DEBUG [2018-05-17 11:11:27]  X-Xss-Protection:1
+368  DEBUG [2018-05-17 11:11:27]  Date:Thu, 17 May 2018 03:11:27 GMT
+368  DEBUG [2018-05-17 11:11:27]  Content-Length:1333
+369  DEBUG [2018-05-17 11:11:27]  {"status":"success","data":{"transaction":{"raw_transaction":"070100010161015fdfebc2f6cc62c45a7e95697e1a9c671f3801d45dafeb6ff69dd6614b31b31296ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff8099c4d5990100011600142c8d931da4bf895ca603c5820443767cb1c2bb8163024060482f5840a34e79fc9430268fc7be0c45dc9f900455e83b1113ae69c24b91593cbd1069e6eab429dceb94bf1b47dd20e5455eb95bb4671283e67317c6040109203f1e3abbf0837b4c52a9caf990b87c3cb2ea97d918970e62fca4453e13da75c002013effffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff80d3bdc69801011600145b1c48ae301ef811a1a34c8fdeba26c2003cc64700013cffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff8084af5f01160014e524fc3f7898a7a811fcdd22b3d7ce5d81d7cd7e00","signing_instructions":[{"position":0,"witness_components":[{"type":"raw_tx_signature","quorum":1,"keys":[{"xpub":"2f3e45ed187bbc4f666f33f58a618af43c8154935312625ea4719734b202a3a20e6e38f266e0e70bff70786d53564e15a5418f51cc990e360425c8657e12c013","derivation_path":["010100000000000000","0100000000000000"]}],"signatures":["60482f5840a34e79fc9430268fc7be0c45dc9f900455e83b1113ae69c24b91593cbd1069e6eab429dceb94bf1b47dd20e5455eb95bb4671283e67317c6040109"]},{"type":"data","value":"3f1e3abbf0837b4c52a9caf990b87c3cb2ea97d918970e62fca4453e13da75c0"}]}],"allow_additional_actions":false},"sign_complete":true}}
 
 
-264  DEBUG [2018-05-15 19:02:25]  Request:
-265  DEBUG [2018-05-15 19:02:25]  Action:list-transaction-feeds
-265  DEBUG [2018-05-15 19:02:25]  User-Agent: bytom-sdk-java-dev
-265  DEBUG [2018-05-15 19:02:25]  Authorization: Basic d3Q6M2QxN2RiYjk1M2NlZGQ1MzM1M2JmM2YzNDJiYjI5MjllOTUwNTEwNWZmZWIyMTY3MGU2YmQwMGFiZWVmMzc3Mg==
-269  DEBUG [2018-05-15 19:02:25]  Response:
-270  DEBUG [2018-05-15 19:02:25]  https StatusCode:200
-270  DEBUG [2018-05-15 19:02:25]  Content-Type:application/json; charset=utf-8
-270  DEBUG [2018-05-15 19:02:25]  Vary:Accept-Encoding
-270  DEBUG [2018-05-15 19:02:25]  X-Content-Type-Options:nosniff
-270  DEBUG [2018-05-15 19:02:25]  X-Frame-Options:DENY
-270  DEBUG [2018-05-15 19:02:25]  X-Xss-Protection:1
-270  DEBUG [2018-05-15 19:02:25]  Date:Tue, 15 May 2018 11:02:28 GMT
-270  DEBUG [2018-05-15 19:02:25]  Content-Length:310
-270  DEBUG [2018-05-15 19:02:25]  {"status":"success","data":[{"alias":"test1","filter":"asset_id='84778a666fe453cf73b2e8c783dbc9e04bc4fd7cbb4f50caeaee99cf9967ebed' AND amount_lower_limit = 50 AND amount_upper_limit = 80","param":{"assetid":"84778a666fe453cf73b2e8c783dbc9e04bc4fd7cbb4f50caeaee99cf9967ebed","lowerlimit":50,"upperlimit":80}}]}
-
-
-284  DEBUG [2018-05-15 19:02:25]  Request:
-284  DEBUG [2018-05-15 19:02:25]  Action:delete-transaction-feed
-285  DEBUG [2018-05-15 19:02:25]  User-Agent: bytom-sdk-java-dev
-286  DEBUG [2018-05-15 19:02:25]  Authorization: Basic d3Q6M2QxN2RiYjk1M2NlZGQ1MzM1M2JmM2YzNDJiYjI5MjllOTUwNTEwNWZmZWIyMTY3MGU2YmQwMGFiZWVmMzc3Mg==
-292  DEBUG [2018-05-15 19:02:25]  Response:
-292  DEBUG [2018-05-15 19:02:25]  https StatusCode:200
-292  DEBUG [2018-05-15 19:02:25]  Content-Type:application/json; charset=utf-8
-292  DEBUG [2018-05-15 19:02:25]  Vary:Accept-Encoding
-292  DEBUG [2018-05-15 19:02:25]  X-Content-Type-Options:nosniff
-292  DEBUG [2018-05-15 19:02:25]  X-Frame-Options:DENY
-292  DEBUG [2018-05-15 19:02:25]  X-Xss-Protection:1
-292  DEBUG [2018-05-15 19:02:25]  Date:Tue, 15 May 2018 11:02:28 GMT
-293  DEBUG [2018-05-15 19:02:25]  Content-Length:21
-293  DEBUG [2018-05-15 19:02:25]  {"status":"success"}
+370  DEBUG [2018-05-17 11:11:27]  Request:
+370  DEBUG [2018-05-17 11:11:27]  Action:submit-transaction
+370  DEBUG [2018-05-17 11:11:27]  User-Agent: bytom-sdk-java-dev
+374  DEBUG [2018-05-17 11:11:27]  Response:
+374  DEBUG [2018-05-17 11:11:27]  https StatusCode:200
+374  DEBUG [2018-05-17 11:11:27]  Content-Type:application/json; charset=utf-8
+374  DEBUG [2018-05-17 11:11:27]  Vary:Accept-Encoding
+374  DEBUG [2018-05-17 11:11:27]  X-Content-Type-Options:nosniff
+375  DEBUG [2018-05-17 11:11:27]  X-Frame-Options:DENY
+375  DEBUG [2018-05-17 11:11:27]  X-Xss-Protection:1
+375  DEBUG [2018-05-17 11:11:27]  Date:Thu, 17 May 2018 03:11:27 GMT
+375  DEBUG [2018-05-17 11:11:27]  Content-Length:105
+375  DEBUG [2018-05-17 11:11:27]  {"status":"success","data":{"tx_id":"36084ec1aaf53b839bcdad137336d3dc12653bed2811cfbf0e9175295b1c7d60"}}
 
 

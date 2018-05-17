@@ -1,9 +1,7 @@
 package com.bytom.exception;
 
 /**
- * 
  * @author https://github.com/JackyKen
- *
  */
 public class BytomException extends Exception {
 	private static final long serialVersionUID = 4308636092690186281L;

@@ -42,13 +42,6 @@ public class Key {
 		return client.request("create-key", req, Key.class);
 	}
 
-	public class Items extends BytomResponse<Key> {
-		public Items query() throws BytomException {
-			Items items = this.client.request("list-keys", null, Items.class);
-			return items;
-		}
-	}
-
 	/**
 	 * @return keys owned by the client.
 	 * @throws BytomException
@@ -57,6 +50,13 @@ public class Key {
 		Items items = new Items();
 		items.setClient(client);
 		return items.query();
+	}
+	
+	public class Items extends BytomResponse<Key> {
+		public Items query() throws BytomException {
+			Items items = this.client.request("list-keys", null, Items.class);
+			return items;
+		}
 	}
 
 	/**
