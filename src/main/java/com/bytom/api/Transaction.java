@@ -1,7 +1,6 @@
 package com.bytom.api;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -69,7 +68,7 @@ public class Transaction {
 	public static class Items extends BytomResponse<Transaction> {
 
 		public Items query() throws BytomException {
-			Items items = this.client.request("list-transactions", null, Items.class);
+			Items items = this.client.requestList("list-transactions", null, Items.class);
 			items.setClient(this.client);
 			return items;
 		}

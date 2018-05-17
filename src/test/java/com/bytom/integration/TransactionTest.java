@@ -1,5 +1,6 @@
 package com.bytom.integration;
 
+import static org.junit.Assert.*;
 import org.junit.Test;
 
 import com.bytom.api.Account;
@@ -13,102 +14,58 @@ public class TransactionTest {
 	static Client client;
 
 	@Test
-	public void run() throws Exception {
-		testBasicTransaction();
+	public void run()    {
+		
+		//testBasicTransaction();
+		try {
+			testListTransaction(); 
+		}
+		catch (BytomException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		/*
 		 * testMultiSigTransaction(); testAtomicSwap(); testReceivers();
 		 * testUnspentOutputs();
 		 */
 	}
 
+	private void testListTransaction() throws BytomException {
+		client = TestUtils.generateClient();
+		Transaction.Items items= new Transaction.QueryBuilder().list(client);
+		assertNotNull(items.data);
+	}
+
 	private void testBasicTransaction() throws BytomException {
 		client = TestUtils.generateClient();
-		//Key key = Key.create(client, "baseTransaction-key05", "123456");
 
-		//String alice = "transactionTest.testbasictransaction.alice03";
-		//String bob = "transactionTest.testbasictransaction.bob05";
-		//String asset = "transactionTest.testbasictransaction.asset05";
-
-		/*Account aliceAcount = new Account().setAlias(alice).addXpub(key.xpub)
-				.setQuorum(1).create(client);*/
-		
-		/*Account bobAcount = new Account().setAlias(bob).addXpub(key.xpub).setQuorum(1)
-		 .create(client);
-		 
-		Asset assetObj = new Asset.Builder().setAlias(asset).addRootXpub(key.xpub)
-				.setQuorum(1).create(client);*/
-
-		/*String receiverAddress = new Account.ReceiverBuilder().setAccountId(
-				"0DSGJVV5G0A02").create(client).address; */
-
-		/*Transaction.Template addressTpl = new Transaction.Builder()
-
-				.addAction(
-						new Transaction.Action.Issue().setAssetId("ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff").setAmount(
-								2000)) 
-								
+		Transaction.Template spending = new Transaction.Builder()
 				.addAction(
 						new Transaction.Action.SpendFromAccount()
-								.setAccountId("0D00V8OUG0A02").setAmount(2000)
-								.setAssetId("ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"))
-
+								.setAccountId("0D00V8OUG0A02")
+								.setAssetId(
+										"ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")
+								.setAmount(300000000))
 				.addAction(
-						new Transaction.Action.SpendFromAccount()
-								.setAccountId("0D00V8OUG0A02").setAmount(100)
-								.setAssetId("ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"))
-
-				.addAction( 
 						new Transaction.Action.ControlWithAddress()
-								.setAddress("bm1qxaryt6aqv863fsjdywnda7037kq8sefjmf3n6a").setAssetId("ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")
-								.setAmount(50)).build(client);*/
-		
-		
-		
-		/*Transaction.Template retirement =
-		        new Transaction.Builder() 
-		            .addAction(
-		                new Transaction.Action.SpendFromAccount()
-		                    .setAccountId(bobAcount.id)
-		                    .setAssetId(assetObj.id) 
-		                    .setAmount(5) )
-		            .addAction(
-		                new Transaction.Action.Retire()
-		                     .setAssetId(assetObj.id) 
-		                    .setAmount(5) )
-		            .build(client);*/
-		
-	 Transaction.Template spending = 
-		        new Transaction.Builder()
-		            .addAction(
-		                new Transaction.Action.SpendFromAccount()
-		                    .setAccountId("0D00V8OUG0A02")
-		                    .setAssetId("ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")
-		                    .setAmount(300000000) )
-		            .addAction(
-		                new Transaction.Action.ControlWithAddress()
-		                    .setAddress("bm1qu5j0c0mcnzn6sy0um53t847wtkqa0nt785x4nh")
-		                    .setAssetId("ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")
-		                    .setAmount(200000000) ).build(client); 
-	 
-	 Transaction.Template singerTpl = new Transaction.SignerBuilder().sign(client,
-				spending, "xxxxx"); 
+								.setAddress("bm1qu5j0c0mcnzn6sy0um53t847wtkqa0nt785x4nh")
+								.setAssetId(
+										"ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")
+								.setAmount(200000000)).build(client);
 
-		Transaction.SubmitResponse resp = Transaction.submit(client, singerTpl);
-		
-		/*Transaction.Template issuance = new Transaction.Builder()
-		  .addAction(new Transaction.Action.Issue()
-		    .setAssetAlias("GOLD")
-		    .setAmount(100)
-		  ).addAction(new Transaction.Action.ControlWithAddress()
-		    .setAddress("bm1q9jxex8dyh7y4efsrckpqgsmk0jcu9wup684a9y")
-		    .setAssetAlias("GOLD")
-		    .setAmount(100)
-		  ).build(client); */
-		
-		
-		
+		Transaction.Template singer = new Transaction.SignerBuilder().sign(client,
+				spending, "bytom04241521@163.com");
 
-		System.out.println("哈哈哈交易成功：" + resp.tx_id); 
+		Transaction.SubmitResponse txs = Transaction.submit(client, singer); 
+		
+		//txs.tx_id;
+		
+		
+		
+		
+		
+		
+		
 
 		/*
 		 * Transaction.Items txs = new Transaction.QueryBuilder().setFilter("id=$1")
