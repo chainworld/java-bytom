@@ -133,7 +133,6 @@ public class Client {
 		post(action, body, rc);
 	}
 	
-	
 	/**
 	 * Perform a single HTTP POST request against the API for a specific action, return true or false
 	 * 
