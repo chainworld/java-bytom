@@ -4,8 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.bytom.api.model.AnnotatedInput;
-import com.bytom.api.model.AnnotatedOutput;
+import com.bytom.api.model.BlockTx;
 import com.bytom.exception.BytomException;
 import com.bytom.http.Client;
 import com.google.gson.annotations.SerializedName;
@@ -14,41 +13,7 @@ import com.google.gson.annotations.SerializedName;
  * UnconfirmedTransaction  list get
  * @author niyuelin1990
  */
-public class UnconfirmedTransaction {
-    /**
-     * Unique identifier, or transaction hash, of a transaction.
-     */
-    public String id;
-
-    /**
-     * version
-     */
-    public long version;
-    /**
-     * size
-     */
-    public long size;
-    /**
-     * time_range
-     */
-    @SerializedName("time_range")
-    public long timeRange;
-
-    /**
-     * status
-     */
-    @SerializedName("status_fail")
-    public boolean statusFail;
-
-    /**
-     * List of specified inputs for a transaction.
-     */
-    public List<AnnotatedInput> inputs;
-
-    /**
-     * List of specified outputs for a transaction.
-     */
-    public List<AnnotatedOutput> outputs;
+public class UnconfirmedTransaction extends BlockTx{
 
     /**
      * list unconfirmed-transactions ids
