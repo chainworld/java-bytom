@@ -5,6 +5,9 @@ import com.bytom.http.BytomResponse;
 import com.bytom.http.Client;
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * @author https://github.com/JackyKen
+ */
 public class UnspentOutput {
 
 	/**

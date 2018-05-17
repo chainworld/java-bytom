@@ -33,8 +33,8 @@ public class Client {
 	private String url;
 
 	private String accessToken;
-	
-	//authorization
+
+	// authorization
 	private String authorization;
 
 	private HttpClient client = null;
@@ -86,8 +86,10 @@ public class Client {
 				String password = as[1];
 				String encoding = "";
 				try {
-					encoding = new String(Base64.encodeBase64((username + ":" + password).getBytes(UTF_8)));
-				} catch (UnsupportedEncodingException e) {
+					encoding = new String(Base64.encodeBase64((username + ":" + password)
+							.getBytes(UTF_8)));
+				}
+				catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
 				}
 
@@ -132,9 +134,10 @@ public class Client {
 		};
 		post(action, body, rc);
 	}
-	
+
 	/**
-	 * Perform a single HTTP POST request against the API for a specific action, return true or false
+	 * Perform a single HTTP POST request against the API for a specific action, return
+	 * true or false
 	 * 
 	 * @param action The requested API action
 	 * @param body Body payload sent to the API as JSON
@@ -148,7 +151,7 @@ public class Client {
 				JsonElement status = root.getAsJsonObject().get("status");
 				if (status != null && status.toString().contains("fail"))
 					throw new BytomException(root.getAsJsonObject().get("msg").toString());
-				if(status != null && status.toString().contains("success"))
+				if (status != null && status.toString().contains("success"))
 					return true;
 				return false;
 			}
@@ -188,12 +191,12 @@ public class Client {
 	 * 
 	 * @param action
 	 * @param body
-	 * @param getKey 
+	 * @param getKey
 	 * @param tClass
 	 * @return
 	 * @throws BytomException
 	 */
-	public <T> T requestGet(String action, Object body, String key,final Type tClass)
+	public <T> T requestGet(String action, Object body, String key, final Type tClass)
 			throws BytomException {
 		ResponseCreator<T> rc = new ResponseCreator<T>() {
 			public T create(Response response, Gson deserializer) throws IOException,
@@ -201,7 +204,7 @@ public class Client {
 				JsonElement root = new JsonParser().parse(response.asString());
 				JsonElement status = root.getAsJsonObject().get("status");
 				JsonElement data = root.getAsJsonObject().get("data");
-				
+
 				if (status != null && status.toString().contains("fail"))
 					throw new BytomException(root.getAsJsonObject().get("msg").toString());
 				else if (data != null)
@@ -212,7 +215,7 @@ public class Client {
 		};
 		return post(action, body, rc);
 	}
-	
+
 	public <T> T requestList(String action, Object body, final Type tClass)
 			throws BytomException {
 		ResponseCreator<T> rc = new ResponseCreator<T>() {
@@ -251,7 +254,7 @@ public class Client {
 
 			List<Header> headers = new ArrayList<Header>();
 			headers.add((new Header("User-Agent", "bytom-sdk-java-" + version)));
-			if(this.authorization!=null){
+			if (this.authorization != null) {
 				headers.add((new Header("Authorization", this.authorization)));
 			}
 			client.getHostConfiguration().getParams()

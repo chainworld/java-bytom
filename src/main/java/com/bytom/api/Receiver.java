@@ -4,6 +4,9 @@ import com.bytom.common.Utils;
 import com.bytom.exception.JSONException;
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * @author https://github.com/JackyKen
+ */
 public class Receiver {
 
 	@SerializedName("control_program")

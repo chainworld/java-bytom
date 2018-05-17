@@ -2,6 +2,9 @@ package com.bytom.api;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * @author https://github.com/JackyKen
+ */
 public class Address {
 
 	@SerializedName("account_alias")

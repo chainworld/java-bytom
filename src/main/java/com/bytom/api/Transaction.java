@@ -1,7 +1,6 @@
 package com.bytom.api;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +11,9 @@ import com.bytom.http.BytomResponse;
 import com.bytom.http.Client;
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * @author https://github.com/JackyKen
+ */
 public class Transaction {
 	/**
 	 * Unique identifier, or transaction hash, of a transaction.
@@ -23,7 +25,7 @@ public class Transaction {
 	 * Time of transaction.
 	 */
 	@SerializedName("block_time")
-	public Date blockTime;
+	public String blockTime;
 
 	/**
 	 * Unique identifier, or block hash, of the block containing a transaction.
@@ -75,11 +77,26 @@ public class Transaction {
 	}
 
 	public static class QueryBuilder {
+
+		public String txId;
+
+		public QueryBuilder setTxId(String txId) {
+			this.txId = txId;
+			return this;
+		}
+
 		public Items list(Client client) throws BytomException {
 			Items items = new Items();
 			items.setClient(client);
 			return items.query();
 		}
+
+		public Transaction get(Client client) throws BytomException {
+			Map<String, Object> req = new HashMap<String, Object>();
+			req.put("tx_id", this.txId);
+			return client.request("get-transaction", req, Transaction.class);
+		}
+
 	}
 
 	public static class SignerBuilder {
@@ -96,7 +113,8 @@ public class Transaction {
 			HashMap<String, Object> req = new HashMap<>();
 			req.put("transaction", template);
 			req.put("password", password);
-			return client.requestGet("sign-transaction", req,"transaction", Transaction.Template.class);
+			return client.requestGet("sign-transaction", req, "transaction",
+					Transaction.Template.class);
 		}
 
 	}
@@ -156,6 +174,8 @@ public class Transaction {
 		 * Possible values are "issue" and "spend".
 		 */
 		public String type;
+
+		public String arbitrary;
 
 	}
 
@@ -882,6 +902,33 @@ public class Transaction {
 		HashMap<String, Object> body = new HashMap<>();
 		body.put("raw_transaction", template.rawTransaction);
 		return client.request("submit-transaction", body, SubmitResponse.class);
+	}
+
+	public static class TransactionGas {
+		/**
+		 * total consumed neu(1BTM = 10^8NEU) for execute transaction.
+		 */
+		@SerializedName("total_neu")
+		public int totalNeu;
+		
+		/**
+		 * consumed neu for storage transaction .
+		 */
+		@SerializedName("storage_neu")
+		
+		public int storageNeu;
+		/**
+		 * consumed neu for execute VM.
+		 */
+		@SerializedName("vm_neu")
+		public int vmNeu;
+	}
+
+	public static TransactionGas estimateGas(Client client, Template template)
+			throws BytomException {
+		HashMap<String, Object> body = new HashMap<>();
+		body.put("transaction_template", template);
+		return client.request("estimate-transaction-gas", body, TransactionGas.class);
 	}
 
 }

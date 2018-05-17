@@ -1,45 +1,95 @@
 package com.bytom.integration;
 
 import static org.junit.Assert.*;
+
 import org.junit.Test;
 
-import com.bytom.api.Account;
-import com.bytom.api.Asset;
-import com.bytom.api.Key;
 import com.bytom.api.Transaction;
+import com.bytom.api.Transaction.TransactionGas;
 import com.bytom.exception.BytomException;
 import com.bytom.http.Client;
 
+/**
+ * @author https://github.com/JackyKen
+ */
 public class TransactionTest {
 	static Client client;
 
 	@Test
-	public void run()    {
-		
-		//testBasicTransaction();
+	public void run() {
+
 		try {
-			testListTransaction(); 
+			//testBasicTransaction();
+			//testListTransaction();
+			//testGetTransaction();
+			TestEstimateGas();
 		}
 		catch (BytomException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		/*
-		 * testMultiSigTransaction(); testAtomicSwap(); testReceivers();
-		 * testUnspentOutputs();
-		 */
+
 	}
 
-	private void testListTransaction() throws BytomException {
+	public void TestEstimateGas() throws BytomException {
 		client = TestUtils.generateClient();
-		Transaction.Items items= new Transaction.QueryBuilder().list(client);
+
+		Transaction.Template controlAddress = new Transaction.Builder()
+				.addAction(
+						new Transaction.Action.SpendFromAccount()
+								.setAccountId("0D00V8OUG0A02")
+								.setAssetId(
+										"ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")
+								.setAmount(300000000))
+				.addAction(
+						new Transaction.Action.ControlWithAddress()
+								.setAddress("bm1qu5j0c0mcnzn6sy0um53t847wtkqa0nt785x4nh")
+								.setAssetId(
+										"ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")
+								.setAmount(200000000)).build(client);	
+		TransactionGas gas= Transaction.estimateGas(client, controlAddress);
+		assertNotNull(gas.storageNeu);
+		assertNotNull(gas.totalNeu);
+		assertNotNull(gas.vmNeu);
+		
+	}
+
+	public void testGetTransaction() throws BytomException {
+		client = TestUtils.generateClient();
+		Transaction tran = new Transaction.QueryBuilder().setTxId(
+				"f4f1cd86b75c74159b32a70f3b6d486fa1ee6d7c3fd654a01b351f38236da32b").get(
+				client);
+
+		Transaction.Input input = tran.inputs.get(0);
+		Transaction.Output output = tran.outputs.get(0);
+
+		assertNotNull(tran.outputs);
+		assertNotNull(tran.inputs);
+
+		assertEquals(1, tran.inputs.size());
+		assertEquals(1, tran.outputs.size());
+		assertEquals("coinbase", input.type);
+
+		assertNotNull(output.assetId);
+		assertNotNull(output.amount);
+		assertNotNull(output.accountId);
+		assertNotNull(output.accountAlias);
+
+	}
+
+	public void testListTransaction() throws BytomException {
+		client = TestUtils.generateClient();
+		Transaction.Items items = new Transaction.QueryBuilder().list(client);
 		assertNotNull(items.data);
 	}
 
-	private void testBasicTransaction() throws BytomException {
+	/**
+	 * build + sign +submit Transaction
+	 * @throws BytomException
+	 */
+	public void testBasicTransaction() throws BytomException {
 		client = TestUtils.generateClient();
 
-		Transaction.Template spending = new Transaction.Builder()
+		Transaction.Template controlAddress = new Transaction.Builder()
 				.addAction(
 						new Transaction.Action.SpendFromAccount()
 								.setAccountId("0D00V8OUG0A02")
@@ -54,69 +104,10 @@ public class TransactionTest {
 								.setAmount(200000000)).build(client);
 
 		Transaction.Template singer = new Transaction.SignerBuilder().sign(client,
-				spending, "bytom04241521@163.com");
+				controlAddress, "xxxxxx");
 
-		Transaction.SubmitResponse txs = Transaction.submit(client, singer); 
-		
-		//txs.tx_id;
-		
-		
-		
-		
-		
-		
-		
-
-		/*
-		 * Transaction.Items txs = new Transaction.QueryBuilder().setFilter("id=$1")
-		 * .addFilterParameter(resp.id).execute(client); Transaction tx = txs.next();
-		 * assertEquals(1, txs.list.size()); assertNotNull(tx.inputs); assertEquals(1,
-		 * tx.inputs.size()); assertNotNull(tx.outputs); assertEquals(1,
-		 * tx.inputs.size());
-		 * 
-		 * Transaction.Input input = tx.inputs.get(0); assertEquals("issue", input.type);
-		 * assertNotNull(input.assetId); assertNotNull(input.assetAlias);
-		 * assertNotNull(input.assetDefinition); assertNotNull(input.assetTags);
-		 * assertEquals("yes", input.assetIsLocal); assertNull(input.accountId);
-		 * assertNull(input.accountAlias); assertNull(input.accountTags);
-		 * assertEquals("yes", input.isLocal); assertNull(input.spentOutputId);
-		 * assertNotNull(input.issuanceProgram); assertNotNull(input.referenceData);
-		 * 
-		 * Transaction.Output output = tx.outputs.get(0); assertEquals("control",
-		 * output.type); assertEquals("receive", output.purpose);
-		 * assertNotNull(output.position); assertNotNull(output.assetId);
-		 * assertNotNull(output.assetAlias); assertNotNull(output.assetDefinition);
-		 * assertNotNull(output.assetTags); assertEquals("yes", output.assetIsLocal);
-		 * assertNotNull(output.accountId); assertNotNull(output.accountAlias);
-		 * assertNotNull(output.accountTags); assertNotNull(output.controlProgram);
-		 * assertEquals("yes", output.isLocal); assertNotNull(output.referenceData);
-		 */
-
-		/*
-		 * Transaction.Template spending = new Transaction.Builder() .addAction( new
-		 * Transaction.Action.SpendFromAccount().setAccountAlias(alice)
-		 * .setAssetAlias(asset).setAmount(10) .addReferenceDataField("test", test))
-		 * .addAction( new Transaction.Action.ControlWithAccount().setAccountAlias(bob)
-		 * .setAssetAlias(asset).setAmount(10) .addReferenceDataField("test", test))
-		 * .addAction( new Transaction.Action.SetTransactionReferenceData()
-		 * .addReferenceDataField("test", test)).build(client); resp =
-		 * Transaction.submit(client, HsmSigner.sign(spending)); txs = new
-		 * Transaction.QueryBuilder().setFilter("id=$1")
-		 * .addFilterParameter(resp.id).execute(client); tx = txs.next(); assertEquals(1,
-		 * txs.list.size()); assertNotNull(tx.inputs); assertTrue(tx.inputs.size() > 0);
-		 * 
-		 * input = tx.inputs.get(0); assertNotNull(input.spentOutputId);
-		 * 
-		 * Transaction.Template retirement = new Transaction.Builder() .addAction( new
-		 * Transaction.Action.SpendFromAccount().setAccountAlias(bob)
-		 * .setAssetAlias(asset).setAmount(5) .addReferenceDataField("test", test))
-		 * .addAction( new Transaction.Action.Retire().setAssetAlias(asset).setAmount(5)
-		 * .addReferenceDataField("test", test)) .addAction( new
-		 * Transaction.Action.SetTransactionReferenceData() .addReferenceDataField("test",
-		 * test)).build(client); Transaction.submit(client, HsmSigner.sign(retirement));
-		 * txs = new Transaction.QueryBuilder().setFilter("reference_data.test=$1")
-		 * .addFilterParameter(test).execute(client); assertEquals(3, txs.list.size());
-		 */
+		Transaction.SubmitResponse txs = Transaction.submit(client, singer);
+		assertNotNull(txs.tx_id);
 
 	}
 }
