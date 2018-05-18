@@ -22,7 +22,7 @@ public class Token {
 	private String create;
 
 	/**
-	 * create token by id 该接口远程连接不可用
+	 * create token by id 璇ユ帴鍙ｈ繙绋嬭繛鎺ヤ笉鍙敤
 	 * 
 	 * @param client
 	 * @param id
@@ -54,7 +54,7 @@ public class Token {
 	
 	
 	/**
-	 * 删除token
+	 * 鍒犻櫎token
 	 * @param client
 	 * @param id
 	 * @return
@@ -68,7 +68,7 @@ public class Token {
 
 
 	/**
-	 * 列表 该接口远程连接不可用
+	 * 鍒楄〃 璇ユ帴鍙ｈ繙绋嬭繛鎺ヤ笉鍙敤
 	 * 
 	 * @param client
 	 * @return

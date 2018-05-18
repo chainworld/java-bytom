@@ -26,23 +26,23 @@ public class Block {
 	private long size;
 
 	/**
-	 * °æ±¾
+	 * ç‰ˆæœ¬
 	 */
 	private long version;
 
 	/**
-	 * ¸ß¶È
+	 * é«˜åº¦
 	 */
 	private long height;
 
 	/**
-	 * Ç°Ò»¿éhash
+	 *  å‰ä¸€å—hash
 	 */
 	@SerializedName("previous_block_hash")
 	private String previousBlockHash;
 
 	/**
-	 * Ê±¼ä
+	 * æ—¶é—´
 	 */
 	private long timestamp;
 
@@ -57,7 +57,7 @@ public class Block {
 	private long bits;
 
 	/**
-	 * ÄÑ¶ÈÖµ
+	 * éš¾åº¦å€¼Öµ
 	 */
 	private String difficulty;
 
@@ -95,7 +95,7 @@ public class Block {
 	}
 
 	/**
-	 * »ñÈ¡¿é
+	 * ï¿½ï¿½È¡ï¿½ï¿½
 	 * 
 	 * @param client
 	 * @return
@@ -109,7 +109,7 @@ public class Block {
 	}
 
 	/**
-	 * »ñÈ¡¿éÍ·
+	 * ï¿½ï¿½È¡ï¿½ï¿½Í·
 	 * 
 	 * @param client
 	 * @param blockHeight
@@ -125,7 +125,7 @@ public class Block {
 	}
 
 	/**
-	 * »ñÈ¡¿éDifficulty
+	 * ï¿½ï¿½È¡ï¿½ï¿½Difficulty
 	 * @param client
 	 * @param blockHeight
 	 * @param blockHash
@@ -141,7 +141,7 @@ public class Block {
 	}
 	
 	/**
-	 * »ñÈ¡¿éHashRate
+	 * ï¿½ï¿½È¡ï¿½ï¿½HashRate
 	 * @param client
 	 * @param blockHeight
 	 * @param blockHash

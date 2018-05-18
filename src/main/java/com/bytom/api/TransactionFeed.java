@@ -20,7 +20,7 @@ public class TransactionFeed {
 	private TransactionFeedParam param;
 
 	/**
-	 * 创建
+	 * 鍒涘缓
 	 * @param client
 	 * @param alias
 	 * @param filter
@@ -35,7 +35,7 @@ public class TransactionFeed {
 	}
 
 	/**
-	 * 获取
+	 * 鑾峰彇
 	 * 
 	 * @param client
 	 * @param alias
@@ -49,7 +49,7 @@ public class TransactionFeed {
 	}
 
 	/**
-	 * 修改
+	 * 淇敼
 	 * 
 	 * @param client
 	 * @param alias
@@ -65,7 +65,7 @@ public class TransactionFeed {
 	}
 
 	/**
-	 * 列表
+	 *鍒楄〃
 	 * 
 	 * @param client
 	 * @return

@@ -196,7 +196,7 @@ public class Client {
 	 * @return
 	 * @throws BytomException
 	 */
-	public <T> T requestGet(String action, Object body, String key, final Type tClass)
+	public <T> T requestGet(String action, Object body, final String key, final Type tClass)
 			throws BytomException {
 		ResponseCreator<T> rc = new ResponseCreator<T>() {
 			public T create(Response response, Gson deserializer) throws IOException,

@@ -125,7 +125,7 @@ public class Asset {
 		 * Default constructor initializes the list of keys.
 		 */
 		public Builder() {
-			this.rootXpubs = new ArrayList<>();
+			this.rootXpubs = new ArrayList<String>();
 		}
 
 		/**

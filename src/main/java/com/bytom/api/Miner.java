@@ -10,12 +10,12 @@ import com.google.gson.annotations.SerializedName;
 public class Miner {
 
 	/**
-	 * ÉèÖÃÊÇ·ñÍÚ¿ó
+	 *  è®¾ç½®æ˜¯å¦æŒ–çŸ¿
 	 * 
 	 * @param client
 	 * @param isMining
-	 *            ÊÇ·ñÍÚ¿ó
-	 * @return ·µ»ØÉèÖÃÊÇ·ñ³É¹¦
+	 *            æ˜¯å¦æŒ–çŸ¿
+	 * @return è¿”å›è®¾ç½®æ˜¯å¦æˆåŠŸ
 	 * @throws BytomException
 	 */
 	public static boolean setMining(Client client, boolean isMining) throws BytomException {
@@ -25,10 +25,10 @@ public class Miner {
 	}
 
 	/**
-	 * ÊÇ·ñÍÚ¿ó
+	 * æ˜¯å¦æŒ–çŸ¿
 	 * 
 	 * @param client
-	 * @return trueÍÚ¿ó falseÃ»ÍÚ¿ó
+	 * @return trueæŒ–çŸ¿ falseæ²¡æŒ–çŸ¿
 	 * @throws BytomException
 	 */
 	public static boolean istMining(Client client) throws BytomException {

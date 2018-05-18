@@ -46,7 +46,7 @@ public class Account {
 
 	/**
 	 * create-account
-	 * @return
+	 * @return Account
 	 * @throws BytomException
 	 * @throws JSONException
 	 */
@@ -75,7 +75,6 @@ public class Account {
 	/**
 	 * @param client
 	 * @param account_info
-	 * @return none if the account is deleted successfully
 	 * @throws BytomException
 	 */
 	public void delete(Client client, String account_info) throws BytomException {

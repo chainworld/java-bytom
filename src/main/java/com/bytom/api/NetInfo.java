@@ -5,7 +5,7 @@ import com.bytom.http.Client;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * ÍøÂç×´Ì¬ÏûÏ¢
+ * ç½‘ç»œçŠ¶æ€æ¶ˆæ¯
  * @author niyuelin1990
  *
  */

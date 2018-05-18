@@ -110,7 +110,7 @@ public class Transaction {
 		 */
 		public Transaction.Template sign(Client client, Transaction.Template template,
 				String password) throws BytomException {
-			HashMap<String, Object> req = new HashMap<>();
+			HashMap<String, Object> req = new HashMap<String, Object>();
 			req.put("transaction", template);
 			req.put("password", password);
 			return client.requestGet("sign-transaction", req, "transaction",
