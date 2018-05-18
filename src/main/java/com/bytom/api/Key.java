@@ -16,12 +16,12 @@ public class Key {
 	 * name of the key.
 	 */
 	public String alias;
-	
+
 	/**
 	 * pubkey of the key.
 	 */
 	public String xpub;
-	
+
 	/**
 	 * path to the file of key.
 	 */
@@ -42,27 +42,29 @@ public class Key {
 		return client.request("create-key", req, Key.class);
 	}
 
-	/**
-	 * @return keys owned by the client.
-	 * @throws BytomException
-	 */
-	public Items list(Client client) throws BytomException {
-		Items items = new Items();
-		items.setClient(client);
-		return items.query();
-	}
-	
-	public class Items extends BytomResponse<Key> {
+	public static class Items extends BytomResponse<Key> {
 		public Items query() throws BytomException {
 			Items items = this.client.request("list-keys", null, Items.class);
 			return items;
 		}
 	}
 
+	public static class QueryBuilder {
+		/**
+		 * @return keys owned by the client.
+		 * @throws BytomException
+		 */
+		public Items list(Client client) throws BytomException {
+			Items items = new Items();
+			items.setClient(client);
+			return items.query();
+		}
+	}
+
 	/**
+	 * return none if the key is deleted successfully
 	 * @param xpub
 	 * @param password
-	 * @return none if the key is deleted successfully
 	 * @throws BytomException
 	 * @throws JSONException
 	 */
