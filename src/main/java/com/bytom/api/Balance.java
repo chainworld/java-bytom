@@ -33,18 +33,19 @@ public class Balance {
 	public Map<String, Object> definition;
 
 	public static class QueryBuilder {
-		public class Items extends BytomResponse<Balance> {
-			public Items query() throws BytomException {
-				Items items = this.client.requestList("list-balances", null, Items.class);
-				items.setClient(this.client);
-				return items;
-			}
-		}
 
 		public Items list(Client client) throws BytomException {
 			Items items = new Items();
 			items.setClient(client);
 			return items.query();
+		}
+	}
+	
+	public static class Items extends BytomResponse<Balance> {
+		public Items query() throws BytomException {
+			Items items = this.client.requestList("list-balances", null, Items.class);
+			items.setClient(this.client);
+			return items;
 		}
 	}
 

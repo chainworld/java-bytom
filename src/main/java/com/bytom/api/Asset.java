@@ -14,13 +14,9 @@ import com.google.gson.annotations.SerializedName;
  * @author https://github.com/JackyKen
  */
 public class Asset {
+	
 	/**
 	 * Globally unique identifier of the asset.<br>
-	 * Asset version 1 specifies the asset id as the hash of:<br>
-	 * - the asset version<br>
-	 * - the asset's issuance program<br>
-	 * - the core's VM version<br>
-	 * - the hash of the network's initial block
 	 */
 	public String id;
 
@@ -43,27 +39,27 @@ public class Asset {
 
 	@SerializedName("key_index")
 	public Integer keyIndex;
-
-	@SerializedName("xpubs")
-	public List<String> xpubs;
-
+	
 	/**
 	 * The number of keys required to sign an issuance of the asset.
 	 */
 	public int quorum;
+	
+	@SerializedName("xpubs")
+	public List<String> xpubs;
 
+	public String type;
+	
+	public int vm_version;
+
+	public String raw_definition_byte;
+	
 	/**
 	 * User-specified, arbitrary/unstructured data visible across blockchain networks.<br>
 	 * Version 1 assets specify the definition in their issuance programs, rendering the
 	 * definition immutable.
 	 */
 	public Map<String, Object> definition;
-
-	public int vm_version;
-
-	public String type;
-
-	public String raw_definition_byte;
 
 	public static class Key {
 		/**
@@ -87,18 +83,7 @@ public class Asset {
 	}
 
 	public static class Builder {
-		/**
-		 * User specified, unique identifier.
-		 */
-		public String alias;
-
-		/**
-		 * User-specified, arbitrary/unstructured data visible across blockchain networks.<br>
-		 * Version 1 assets specify the definition in their issuance programs, rendering
-		 * the definition immutable.
-		 */
-		public Map<String, Object> definition;
-
+		
 		/**
 		 * The list of keys used to create the issuance program for the asset.<br>
 		 * Signatures from these keys are required for issuing units of the asset.<br>
@@ -107,6 +92,11 @@ public class Asset {
 		 */
 		@SerializedName("root_xpubs")
 		public List<String> rootXpubs;
+		
+		/**
+		 * User specified, unique identifier.
+		 */
+		public String alias;
 
 		/**
 		 * The number of keys required to sign an issuance of the asset.<br>
@@ -116,7 +106,16 @@ public class Asset {
 		public int quorum;
 
 		/**
+		 * User-specified, arbitrary/unstructured data visible across blockchain networks.<br>
+		 * Version 1 assets specify the definition in their issuance programs, rendering
+		 * the definition immutable.
+		 * ( Optional )
+		 */
+		public Map<String, Object> definition;
+
+		/**
 		 * Unique identifier used for request idempotence.
+		 *  ( Optional )
 		 */
 		@SerializedName("access_token")
 		private String access_token;

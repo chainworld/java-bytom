@@ -49,7 +49,7 @@ public class UnspentOutput {
 	/**
 	 * whether the account address is change
 	 */
-	public Boolean change;
+	public boolean  change;
 
 	/**
 	 * The ID of the output.
@@ -106,7 +106,7 @@ public class UnspentOutput {
 	}
 
 	/**
-	 * A paged collection of unspent outputs returned from a query.
+	 * A  collection of unspent outputs returned from a query.
 	 */
 	public static class Items extends BytomResponse<UnspentOutput> {
 

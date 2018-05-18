@@ -432,43 +432,7 @@ public class Transaction {
 				return this;
 			}
 		}
-
-		/**
-		 * Represents a spend action taken on a particular unspent output.
-		 */
-		public static class SpendAccountUnspentOutput extends Action {
-			/**
-			 * Default constructor defines the action type as
-			 * "spend_account_unspent_output"
-			 */
-			public SpendAccountUnspentOutput() {
-				this.put("type", "spend_account_unspent_output");
-			}
-
-			/**
-			 * Specifies the unspent output to be spent.<br>
-			 * <strong>Either this or
-			 * {@link SpendAccountUnspentOutput#setOutputId(String)} must be
-			 * called.</strong>
-			 * @param unspentOutput unspent output to be spent
-			 * @return updated action object
-			 */
-			public SpendAccountUnspentOutput setUnspentOutput(UnspentOutput unspentOutput) {
-				setOutputId(unspentOutput.id);
-				return this;
-			}
-
-			/**
-			 * Specifies the output id of the unspent output to be spent.<br>
-			 * @param id
-			 * @return
-			 */
-			public SpendAccountUnspentOutput setOutputId(String id) {
-				this.put("output_id", id);
-				return this;
-			}
-		}
-
+		
 		/**
 		 * Represents a spend action taken on a particular account.
 		 */

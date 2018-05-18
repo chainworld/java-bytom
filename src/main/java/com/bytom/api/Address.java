@@ -13,16 +13,13 @@ public class Address {
 	@SerializedName("account_id")
 	public String accountId;
 
-	@SerializedName("address")
 	public String address;
 
-	@SerializedName("change")
 	public Boolean change;
 
-	@SerializedName("vaild")
 	public Boolean vaild;
 
 	@SerializedName("is_local")
-	public Boolean is_local;
+	public Boolean isLocal;
 
 }
