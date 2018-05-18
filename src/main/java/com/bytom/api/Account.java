@@ -34,7 +34,7 @@ public class Account {
 	 * threshold of keys that must sign a transaction to spend asset
 	 */
 	public int quorum;
-
+	
 	public List<String> xpubs;
 
 	public static class Builder {
@@ -73,7 +73,12 @@ public class Account {
 			this.quorum = quorum;
 			return this;
 		}
-
+		
+		/**
+		 * 
+		 * @param alias
+		 * @return
+		 */
 		public Builder setAlias(String alias) {
 			this.alias = alias;
 			return this;
