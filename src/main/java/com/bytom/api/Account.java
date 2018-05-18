@@ -74,6 +74,11 @@ public class Account {
 			return this;
 		}
 
+		public Builder setAlias(String alias) {
+			this.alias = alias;
+			return this;
+		}
+
 		/**
 		 * 
 		 * @param access_token the access_token to set
@@ -201,7 +206,7 @@ public class Account {
 			req.put("address", address);
 			return client.request("validate-address", req, Address.class);
 		}
-		
+
 		/**
 		 * Specifies the account under which the receiver is created. You must use this
 		 * method or @{link AddressBuilder#setAccountId}, but not both.

@@ -10,7 +10,7 @@ import com.bytom.exception.BytomException;
 import com.bytom.http.Client;
 
 public class BalanceTest {
-	
+
 	private static Client client;
 
 	@Test
@@ -25,7 +25,7 @@ public class BalanceTest {
 
 	public void testListBalances() throws BytomException {
 		client = TestUtils.generateClient();
-		Balance.QueryBuilder.Items items= new Balance.QueryBuilder().list(client);
+		Balance.Items items = new Balance.QueryBuilder().list(client);
 		assertEquals(1, items.data.size());
 		assertNotNull(items.data.get(0).accountAlias);
 		assertNotNull(items.data.get(0).accountId);

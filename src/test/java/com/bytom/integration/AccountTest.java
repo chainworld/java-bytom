@@ -15,7 +15,7 @@ public class AccountTest {
 	@Test
 	public void run() {
 		try {
-//			testCreateAcount();
+			// testCreateAcount();
 			testListAcounts();
 		}
 		catch (Exception e) {
@@ -25,11 +25,11 @@ public class AccountTest {
 
 	public void testCreateAcount() throws Exception {
 		client = TestUtils.generateClient();
-		Account account = new Account();
+
 		Key key = Key.create(client, "keytest0033", "123456");
 		if (key != null && key.xpub != null) {
-			account = account.setAlias("hello_bytom9").addXpub(key.xpub).setQuorum(1)
-					.create(client);
+			Account account = new Account.Builder().setAlias("hello_bytom9")
+					.addXpub(key.xpub).setQuorum(1).create(client);
 			assertNotNull(account.id);
 			assertNotNull(account.alias);
 			assertNotNull(account.keyIndex);
@@ -40,11 +40,9 @@ public class AccountTest {
 
 	public void testListAcounts() throws Exception {
 		client = TestUtils.generateClient();
-		Account account = new Account();
-		Account.Items accounts = account.list(client);
-		assertEquals(1, accounts.data.size());
-		System.out.println(accounts.data.get(0).alias);
-
+		Account.Items items = new Account.QueryBuilder().list(client);
+		assertEquals(1, items.data.size());
+		System.out.println(items.data.get(0).alias);
 	}
 
 }

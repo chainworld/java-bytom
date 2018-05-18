@@ -98,7 +98,9 @@ public class TransactionFeed {
 	}
 
 	public class TransactionFeedParam {
+		
 		private String assetid;
+		
 		private long lowerlimit;
 
 		private long upperlimit;

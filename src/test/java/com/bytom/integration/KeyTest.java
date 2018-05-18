@@ -31,9 +31,8 @@ public class KeyTest {
 
 	public void testListKeys() throws Exception {
 		client = TestUtils.generateClient();
-		Key key = new Key();
 		try {
-			Key.Items keys = key.list(client);
+			Key.Items keys = new Key.QueryBuilder().list(client);
 			Assert.assertEquals(19, keys.data.size());
 		}
 		catch (BytomException e) {

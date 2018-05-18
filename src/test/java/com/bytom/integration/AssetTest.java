@@ -94,10 +94,9 @@ public class AssetTest {
 
 	public void testListAcounts() throws Exception {
 		client = TestUtils.generateClient();
-		Account account = new Account();
-		Account.Items accounts = account.list(client);
-		assertEquals(1, accounts.data.size());
-		System.out.println(accounts.data.get(0).alias);
+		Account.Items items = new Account.QueryBuilder().list(client);
+		assertEquals(1, items.data.size());
+		System.out.println(items.data.get(0).alias);
 
 	}
 
