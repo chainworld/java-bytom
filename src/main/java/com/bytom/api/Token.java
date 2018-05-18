@@ -49,7 +49,7 @@ public class Token {
 		Map<String, Object> req = new HashMap<String, Object>();
 		req.put("id", id);
 		req.put("secret", secret);
-		return client.requestStatus("check-access-token", req);
+		return client.request("check-access-token", req);
 	}
 	
 	
@@ -63,7 +63,7 @@ public class Token {
 	public static boolean delete(Client client, String id) throws BytomException {
 		Map<String, Object> req = new HashMap<String, Object>();
 		req.put("id", id);
-		return client.requestStatus("delete-access-token", req);
+		return client.request("delete-access-token", req);
 	}
 
 

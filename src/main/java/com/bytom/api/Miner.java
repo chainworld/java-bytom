@@ -21,7 +21,7 @@ public class Miner {
 	public static boolean setMining(Client client, boolean isMining) throws BytomException {
 		Map<String, Object> req = new HashMap<String, Object>();
 		req.put("is_mining", isMining);
-		return client.requestStatus("set-mining", req);
+		return client.request("set-mining", req);
 	}
 
 	/**
@@ -52,10 +52,10 @@ public class Miner {
 	 * @return
 	 * @throws BytomException
 	 */
-	public static void submiWork(Client client, String blockHeader) throws BytomException {
+	public static boolean submiWork(Client client, String blockHeader) throws BytomException {
 		Map<String, Object> req = new HashMap<String, Object>();
 		req.put("block_header", blockHeader);
-		client.request("submit-work", req);
+		return client.request("submit-work", req); 
 	}
 
 	public static class MinerWork {

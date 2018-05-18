@@ -114,28 +114,6 @@ public class Client {
 	}
 
 	/**
-	 * Perform a single HTTP POST request against the API for a specific action, ignoring
-	 * the body of the response.
-	 * 
-	 * @param action The requested API action
-	 * @param body Body payload sent to the API as JSON
-	 * @throws BytomException
-	 */
-	public void request(String action, Object body) throws BytomException {
-		ResponseCreator<Object> rc = new ResponseCreator<Object>() {
-			public Object create(Response response, Gson deserializer)
-					throws IOException, BytomException {
-				JsonElement root = new JsonParser().parse(response.asString());
-				JsonElement status = root.getAsJsonObject().get("status");
-				if (status != null && status.toString().contains("fail"))
-					throw new BytomException(root.getAsJsonObject().get("msg").toString());
-				return null;
-			}
-		};
-		post(action, body, rc);
-	}
-
-	/**
 	 * Perform a single HTTP POST request against the API for a specific action, return
 	 * true or false
 	 * 
@@ -143,7 +121,7 @@ public class Client {
 	 * @param body Body payload sent to the API as JSON
 	 * @throws BytomException
 	 */
-	public boolean requestStatus(String action, Object body) throws BytomException {
+	public boolean request(String action, Object body) throws BytomException {
 		ResponseCreator<Boolean> rc = new ResponseCreator<Boolean>() {
 			public Boolean create(Response response, Gson deserializer)
 					throws IOException, BytomException {

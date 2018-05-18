@@ -68,11 +68,11 @@ public class Key {
 	 * @throws BytomException
 	 * @throws JSONException
 	 */
-	public void delete(Client client, String xpub, String password) throws BytomException {
+	public boolean delete(Client client, String xpub, String password) throws BytomException {
 		Map<String, Object> req = new HashMap<String, Object>();
 		req.put("xpub", xpub);
 		req.put("password", password);
-		client.request("delete-key", req);
+		return client.request("delete-key", req); 
 	}
 
 	/**
@@ -83,12 +83,12 @@ public class Key {
 	 * @throws BytomException
 	 * @throws JSONException
 	 */
-	public void resetPassword(Client client, String xpub, String old_password,
+	public boolean resetPassword(Client client, String xpub, String old_password,
 			String new_password) throws BytomException {
 		Map<String, Object> req = new HashMap<String, Object>();
 		req.put("xpub", xpub);
 		req.put("old_password", old_password);
 		req.put("new_password", new_password);
-		client.request("reset-key-password", req);
+		return client.request("reset-key-password", req);
 	}
 }

@@ -267,8 +267,8 @@ public class Asset {
 			return this;
 		}
 
-		public void update(Client client) throws BytomException {
-			client.request("update-asset-alias", this);
+		public boolean update(Client client) throws BytomException {
+			return client.request("update-asset-alias", this);
 		}
 
 	}

@@ -31,7 +31,7 @@ public class TransactionFeed {
 		Map<String, Object> req = new HashMap<String, Object>();
 		req.put("alias", alias);
 		req.put("filter", filter);
-		return client.requestStatus("create-transaction-feed", req);
+		return client.request("create-transaction-feed", req);
 	}
 
 	/**
@@ -61,7 +61,7 @@ public class TransactionFeed {
 		Map<String, Object> req = new HashMap<String, Object>();
 		req.put("alias", alias);
 		req.put("filter", filter);
-		return client.requestStatus("update-transaction-feed", req);
+		return client.request("update-transaction-feed", req);
 	}
 
 	/**
@@ -87,7 +87,7 @@ public class TransactionFeed {
 	public static boolean delete(Client client, String alias) throws BytomException {
 		Map<String, Object> req = new HashMap<String, Object>();
 		req.put("alias", alias);
-		return client.requestStatus("delete-transaction-feed", req);
+		return client.request("delete-transaction-feed", req);
 	}
 
 	public static class Items extends BytomResponse<TransactionFeed> {

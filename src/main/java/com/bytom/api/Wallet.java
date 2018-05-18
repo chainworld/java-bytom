@@ -23,12 +23,12 @@ public class Wallet {
 		return client.request("backup-wallet", null, Wallet.class);
 	}
 	
-	public static void restoreWallet(Client client ,Object accountImage, Object assetImage , Object keyImages) throws BytomException{
+	public static boolean restoreWallet(Client client ,Object accountImage, Object assetImage , Object keyImages) throws BytomException{
 		Map<String, Object> body = new HashMap<String, Object>();
 		body.put("account_image", accountImage);
 		body.put("asset_image", assetImage);
 		body.put("key_images", keyImages);
-		client.request("restore-wallet", body);   
+		return client.request("restore-wallet", body);   
 	}
 
 	public static class AccountImage {
