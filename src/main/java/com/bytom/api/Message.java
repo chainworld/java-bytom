@@ -1,8 +1,5 @@
 package com.bytom.api;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.bytom.exception.BytomException;
 import com.bytom.http.Client;
 import com.google.gson.annotations.SerializedName;
@@ -43,24 +40,61 @@ public class Message {
 
 	}
 	
-	/**
-	 * 
-	 * @param client
-	 * @param address address, address for account.
-	 * @param derived_xpub erived xpub.
-	 * @param message  message for signature by derived_xpub.
-	 * @param signature signature for message.
-	 * @return
-	 * @throws BytomException
-	 */
-	public static boolean verifyMessage(Client client, String address, String derived_xpub, String message,
-			String signature) throws BytomException {
-		Map<String, Object> req = new HashMap<String, Object>();
-		req.put("address", address);
-		req.put("derived_xpub", derived_xpub);
-		req.put("message", message);
-		req.put("signature", signature);
-		return client.requestGet("verify-message", req, "result", Boolean.class);
+	
+	public static class VerifyBuilder {
+
+		/**
+		 * address, address for account.
+		 */
+		public String address;
+		/**
+		 * derived_xpub, derived xpub.
+		 */
+		public String derived_xpub;
+		/**
+		 * message, message for signature by derived_xpub.
+		 */
+		public String message;
+		/**
+		 * signature, signature for message.
+		 */
+		public String signature;
+
+
+		public VerifyBuilder setAddress(String address) {
+			this.address = address;
+			return this;
+		}
+
+
+		public VerifyBuilder setDerived_xpub(String derived_xpub) {
+			this.derived_xpub = derived_xpub;
+			return this;
+		}
+
+
+		public VerifyBuilder setMessage(String message) {
+			this.message = message;
+			return this;
+		}
+
+
+		public VerifyBuilder setSignature(String signature) {
+			this.signature = signature;
+			return this;
+		}
+
+
+		/**
+		 * verify-message
+		 * @param client httpclient
+		 * @return  boolean
+		 * @throws BytomException 异常
+		 */
+		public boolean verifyMessage(Client client) throws BytomException {
+			return  client.requestGet("verify-message", this, "result", Boolean.class);
+		}
+
 	}
 
 }

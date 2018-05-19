@@ -11,19 +11,15 @@ import com.google.gson.annotations.SerializedName;
  *
  */
 public class Gas {
+	/**
+	 *  gas_rate, gas rate.
+	 */
 	@SerializedName("gas_rate")
-	private long gasRate;
+	public long gasRate;
 
 	public static Gas gaRate(Client client) throws BytomException {
 		return client.request("gas-rate", null, Gas.class);
 	}
 
-	public long getGasRate() {
-		return gasRate;
-	}
-
-	public void setGasRate(long gasRate) {
-		this.gasRate = gasRate;
-	}
 
 }

@@ -49,7 +49,7 @@ public class MinerTest {
 		client = TestUtils.generateClient();
 		try {
 			Miner.MinerWork minerWork = Miner.getWork(client);
-			System.out.println("minerWork, header:" + minerWork.getBlockHeader() + ", seed:" + minerWork.getSeed());
+			System.out.println("minerWork, header:" + minerWork.blockHeader + ", seed:" + minerWork.seed);
 		} catch (BytomException e) {
 			e.printStackTrace();
 		}

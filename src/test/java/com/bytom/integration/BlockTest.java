@@ -24,12 +24,11 @@ public class BlockTest {
 		}
 	}
 
-	
-
 	private void testGetBlock(int blockHeight) throws BytomException {
 		client = TestUtils.generateClient();
 		try {
-			Block block = Block.getBlock(client, blockHeight, null);
+			Block block = new Block.QueryBuilder().setBlockHeight(blockHeight).getBlock(client);
+
 			System.out.println("Block:" + block);
 		} catch (BytomException e) {
 			e.printStackTrace();
@@ -59,8 +58,8 @@ public class BlockTest {
 	private void testGetBlockHeader(int blockHeight) throws BytomException {
 		client = TestUtils.generateClient();
 		try {
-			Block.BlockHeader blockHeader = Block.getBlockHeader(client, blockHeight, null);
-			System.out.println("blockHeader Header:" + blockHeader.getBlockHeader());
+			Block.BlockHeader blockHeader = new Block.QueryBuilder().setBlockHeight(blockHeight).getBlockHeader(client);
+			System.out.println("blockHeader Header:" + blockHeader.blockHeader);
 		} catch (BytomException e) {
 			e.printStackTrace();
 		}
@@ -69,20 +68,24 @@ public class BlockTest {
 	private void testGetBlockDifficulty(int blockHeight) throws BytomException {
 		client = TestUtils.generateClient();
 		try {
-			Block.BlockDifficulty blockDifficulty = Block.getBlockDifficulty(client, blockHeight, null);
-			System.out.println("blockDifficulty Difficulty:" + blockDifficulty.getDifficulty());
+			Block.BlockDifficulty blockDifficulty = new Block.QueryBuilder().setBlockHeight(blockHeight)
+					.getBlockDifficulty(client);
+			System.out.println("blockDifficulty Difficulty:" + blockDifficulty.difficulty);
 		} catch (BytomException e) {
 			e.printStackTrace();
 		}
 	}
-	private void testGetBlockHashRate(int blockHeight) throws BytomException{
+
+	private void testGetBlockHashRate(int blockHeight) throws BytomException {
 		client = TestUtils.generateClient();
 		try {
-			Block.BlockHashRate blockHashRate = Block.getHashRate(client, blockHeight, null);
-			System.out.println("blockHashRate HashRate:" + blockHashRate.getHash_rate());
+			Block.BlockHashRate blockHashRate = new Block.QueryBuilder().setBlockHeight(blockHeight)
+					.getHashRate(client);
+
+			System.out.println("blockHashRate HashRate:" + blockHashRate.hash_rate);
 		} catch (BytomException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 }

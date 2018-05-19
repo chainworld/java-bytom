@@ -41,8 +41,8 @@ public class TokenTest {
 	public Token testCreateToken(String id) throws Exception {
 		client = TestUtils.generateClient();
 		try {
-			Token t = Token.create(client, id, "");
-			Assert.assertEquals(id, t.getId());
+			Token t = new Token.Builder().setId(id).create(client);
+			Assert.assertEquals(id, t.id);
 			return t;
 		} catch (BytomException e) {
 			e.printStackTrace();

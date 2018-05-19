@@ -2,7 +2,6 @@ package com.bytom.api;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import com.bytom.exception.BytomException;
 import com.bytom.http.BytomResponse;
 import com.bytom.http.Client;
@@ -14,24 +13,66 @@ import com.bytom.http.Client;
  */
 public class TransactionFeed {
 
-	private String alias;
-	private String filter;
-
-	private TransactionFeedParam param;
+	/**
+	 * name of the transaction feed.
+	 */
+	public String alias;
+	/**
+	 * filter, filter of the transaction feed.
+	 */
+	public String filter;
 
 	/**
-	 * 创建
-	 * @param client
-	 * @param alias
-	 * @param filter
-	 * @return success return true
-	 * @throws BytomException
+	 *  param, param of the transaction feed.
 	 */
-	public static boolean create(Client client, String alias, String filter) throws BytomException {
-		Map<String, Object> req = new HashMap<String, Object>();
-		req.put("alias", alias);
-		req.put("filter", filter);
-		return client.request("create-transaction-feed", req);
+	public TransactionFeedParam param;
+
+	public static class Builder {
+		/**
+		 * Token id
+		 */
+		public String alias;
+		/**
+		 * Token type
+		 */
+		public String filter;
+
+		public Builder() {
+		}
+
+		/**
+		 * 
+		 * @param alias
+		 *            the alias to set
+		 * @return Builder
+		 */
+		public Builder setAlias(String alias) {
+			this.alias = alias;
+			return this;
+		}
+
+		/**
+		 * 
+		 * @param type
+		 *            the type to set
+		 * @return Builder
+		 */
+		public Builder setFilter(String filter) {
+			this.filter = filter;
+			return this;
+		}
+
+		/**
+		 * 创建
+		 * 
+		 * @param client
+		 * @return true or false
+		 * @throws BytomException
+		 *             error
+		 */
+		public boolean create(Client client) throws BytomException {
+			return client.request("create-transaction-feed", this);
+		}
 	}
 
 	/**
@@ -65,7 +106,7 @@ public class TransactionFeed {
 	}
 
 	/**
-	 *列表
+	 * 列表
 	 * 
 	 * @param client
 	 * @return
@@ -79,6 +120,7 @@ public class TransactionFeed {
 
 	/**
 	 * delete
+	 * 
 	 * @param client
 	 * @param alias
 	 * @return success return true
@@ -98,72 +140,22 @@ public class TransactionFeed {
 	}
 
 	public class TransactionFeedParam {
-		
-		private String assetid;
-		
-		private long lowerlimit;
 
-		private long upperlimit;
+		/**
+		 * assetid
+		 */
+		public String assetid;
 
-		public String getAssetid() {
-			return assetid;
-		}
+		/**
+		 * lowerlimit
+		 */
+		public long lowerlimit;
 
-		public void setAssetid(String assetid) {
-			this.assetid = assetid;
-		}
+		/**
+		 * upperlimit
+		 */
+		public long upperlimit;
 
-		public long getLowerlimit() {
-			return lowerlimit;
-		}
-
-		public void setLowerlimit(long lowerlimit) {
-			this.lowerlimit = lowerlimit;
-		}
-
-		public long getUpperlimit() {
-			return upperlimit;
-		}
-
-		public void setUpperlimit(long upperlimit) {
-			this.upperlimit = upperlimit;
-		}
-
-		@Override
-		public String toString() {
-			return "TransactionFeedParam [assetid=" + assetid + ", lowerlimit=" + lowerlimit + ", upperlimit="
-					+ upperlimit + "]";
-		}
-
-	}
-
-	public String getAlias() {
-		return alias;
-	}
-
-	public void setAlias(String alias) {
-		this.alias = alias;
-	}
-
-	public String getFilter() {
-		return filter;
-	}
-
-	public void setFilter(String filter) {
-		this.filter = filter;
-	}
-
-	public TransactionFeedParam getParam() {
-		return param;
-	}
-
-	public void setParam(TransactionFeedParam param) {
-		this.param = param;
-	}
-
-	@Override
-	public String toString() {
-		return "TransactionFeed [alias=" + alias + ", filter=" + filter + ", param=" + param + "]";
 	}
 
 }

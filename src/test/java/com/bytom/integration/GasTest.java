@@ -19,7 +19,7 @@ public class GasTest {
 		client = TestUtils.generateClient();
 		try {
 			Gas gas = Gas.gaRate(client);
-			System.out.println(gas.getGasRate());
+			System.out.println(gas.gasRate);
 		}
 		catch (BytomException e) {
 			e.printStackTrace();

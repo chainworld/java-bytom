@@ -11,94 +11,55 @@ import com.google.gson.annotations.SerializedName;
  */
 public class NetInfo {
 
-	private boolean listening;
+	/**
+	 * listening, whether the node is listening.
+	 */
+	public boolean listening;
 
-	private boolean syncing;
+	/**
+	 * syncing, whether the node is syncing.
+	 */
+	public boolean syncing;
 
-	private boolean mining;
+	/**
+	 * mining, whether the node is mining.
+	 */
+	public boolean mining;
 
+	/**
+	 * peer_count, current count of connected peers.
+	 */
 	@SerializedName("peer_count")
-	private int peerCount;
+	public int peerCount;
 
+	/**
+	 * current_block, current block height in the node's blockchain.
+	 */
 	@SerializedName("current_block")
-	private long currentBlock;
+	public long currentBlock;
 
+	/**
+	 * highest_block, current highest block of the connected peers.
+	 */
 	@SerializedName("highest_block")
-	private long highestBlock;
+	public long highestBlock;
 
+	/**
+	 * network_id, network id.
+	 */
 	@SerializedName("network_id")
-	private String netWorkID;
+	public String netWorkID;
 
+	/**
+	 * version, bytom version.
+	 */
 	@SerializedName("version")
-	private String version;
+	public String version;
 
 	public static NetInfo getNetInfo(Client client) throws BytomException {
 		return client.request("net-info", null, NetInfo.class);
 	}
 
-	public boolean isListening() {
-		return listening;
-	}
-
-	public void setListening(boolean listening) {
-		this.listening = listening;
-	}
-
-	public boolean isSyncing() {
-		return syncing;
-	}
-
-	public void setSyncing(boolean syncing) {
-		this.syncing = syncing;
-	}
-
-	public boolean isMining() {
-		return mining;
-	}
-
-	public void setMining(boolean mining) {
-		this.mining = mining;
-	}
-
-	public int getPeerCount() {
-		return peerCount;
-	}
-
-	public void setPeerCount(int peerCount) {
-		this.peerCount = peerCount;
-	}
-
-	public long getCurrentBlock() {
-		return currentBlock;
-	}
-
-	public void setCurrentBlock(long currentBlock) {
-		this.currentBlock = currentBlock;
-	}
-
-	public long getHighestBlock() {
-		return highestBlock;
-	}
-
-	public void setHighestBlock(long highestBlock) {
-		this.highestBlock = highestBlock;
-	}
-
-	public String getNetWorkID() {
-		return netWorkID;
-	}
-
-	public void setNetWorkID(String netWorkID) {
-		this.netWorkID = netWorkID;
-	}
-
-	public String getVersion() {
-		return version;
-	}
-
-	public void setVersion(String version) {
-		this.version = version;
-	}
 
 	@Override
 	public String toString() {

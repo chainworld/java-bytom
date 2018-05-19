@@ -59,25 +59,15 @@ public class Miner {
 	}
 
 	public static class MinerWork {
+		/**
+		 * block_header, raw block header.
+		 */
 		@SerializedName("block_header")
-		private String blockHeader;
-		private String seed;
-
-		public String getBlockHeader() {
-			return blockHeader;
-		}
-
-		public void setBlockHeader(String blockHeader) {
-			this.blockHeader = blockHeader;
-		}
-
-		public String getSeed() {
-			return seed;
-		}
-
-		public void setSeed(String seed) {
-			this.seed = seed;
-		}
+		public String blockHeader;
+		/**
+		 *  seed, seed.
+		 */
+		public String seed;
 
 	}
 }

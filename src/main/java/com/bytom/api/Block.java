@@ -18,61 +18,61 @@ public class Block {
 	/**
 	 * Block hash
 	 */
-	private String hash;
+	public String hash;
 
 	/**
 	 * size
 	 */
-	private long size;
+	public long size;
 
 	/**
 	 * 版本
 	 */
-	private long version;
+	public long version;
 
 	/**
 	 * 高度
 	 */
-	private long height;
+	public long height;
 
 	/**
-	 *  前一块hash
+	 * 前一块hash
 	 */
 	@SerializedName("previous_block_hash")
-	private String previousBlockHash;
+	public String previousBlockHash;
 
 	/**
 	 * 时间
 	 */
-	private long timestamp;
+	public long timestamp;
 
 	/**
-	 * 
+	 * nonce
 	 */
-	private long nonce;
+	public long nonce;
 
 	/**
-	 * 
+	 * bits
 	 */
-	private long bits;
+	public long bits;
 
 	/**
 	 * 难度值ֵ
 	 */
-	private String difficulty;
+	public String difficulty;
 
 	/**
 	 * merkle_root
 	 */
 	@SerializedName("transaction_merkle_root")
-	private String transactionsMerkleRoot;
+	public String transactionsMerkleRoot;
 	/**
 	 * 
 	 */
 	@SerializedName("transaction_status_hash")
-	private String transactionStatusHash;
+	public String transactionStatusHash;
 
-	private List<BlockTx> transactions;
+	public List<BlockTx> transactions;
 
 	/**
 	 * get-block-count
@@ -85,7 +85,7 @@ public class Block {
 	}
 
 	/**
-	 * get-block-count
+	 * get-block-hash
 	 * 
 	 * @return
 	 * @throws BytomException
@@ -94,257 +94,117 @@ public class Block {
 		return client.requestGet("get-block-hash", null, "block_hash", String.class);
 	}
 
+	public static class QueryBuilder {
+
+		/**
+		 * block_height, height of block.
+		 */
+		public int blockHeight;
+		/**
+		 * block_hash, hash of block.
+		 */
+		public String blockHash;
+
+		public QueryBuilder setBlockHeight(int blockHeight) {
+			this.blockHeight = blockHeight;
+			return this;
+		}
+
+		public QueryBuilder setBlockHash(String blockHash) {
+			this.blockHash = blockHash;
+			return this;
+		}
+
+		/**
+		 * get-block
+		 * 
+		 * @param client
+		 *            httpclient
+		 * @return block
+		 * @throws BytomException
+		 *             异常
+		 */
+		public Block getBlock(Client client) throws BytomException {
+			return client.request("get-block", this, Block.class);
+		}
+
+		/**
+		 * get-block-header
+		 * 
+		 * @param client
+		 *            httpclient
+		 * @return BlockHeader
+		 * @throws BytomException
+		 *             异常
+		 */
+		public BlockHeader getBlockHeader(Client client) throws BytomException {
+			return client.request("get-block-header", this, BlockHeader.class);
+		}
+
+		/**
+		 * get-difficulty
+		 * 
+		 * @param client
+		 *            httpclient
+		 * @return BlockHeader
+		 * @throws BytomException
+		 *             异常
+		 */
+		public BlockDifficulty getBlockDifficulty(Client client) throws BytomException {
+			return client.request("get-difficulty", this, BlockDifficulty.class);
+		}
+
+		/**
+		 * get-hash-rate
+		 * 
+		 * @param client
+		 *            httpclient
+		 * @return BlockHeader
+		 * @throws BytomException
+		 *             异常
+		 */
+		public BlockHashRate getHashRate(Client client) throws BytomException {
+			return client.request("get-hash-rate", this, BlockHashRate.class);
+		}
+	}
+
 	/**
-	 * ��ȡ��
+	 * block_header
 	 * 
-	 * @param client
-	 * @return
-	 * @throws BytomException
+	 * @author niyue
+	 *
 	 */
-	public static Block getBlock(Client client, int blockHeight, String blockHash) throws BytomException {
-		Map<String, Object> req = new HashMap<String, Object>();
-		req.put("block_height", blockHeight);
-		req.put("block_hash", blockHash);
-		return client.request("get-block", req, Block.class);
-	}
-
-	/**
-	 * ��ȡ��ͷ
-	 * 
-	 * @param client
-	 * @param blockHeight
-	 * @param blockHash
-	 * @return
-	 * @throws BytomException
-	 */
-	public static BlockHeader getBlockHeader(Client client, int blockHeight, String blockHash) throws BytomException {
-		Map<String, Object> req = new HashMap<String, Object>();
-		req.put("block_height", blockHeight);
-		req.put("block_hash", blockHash);
-		return client.request("get-block-header", req, BlockHeader.class);
-	}
-
-	/**
-	 * ��ȡ��Difficulty
-	 * @param client
-	 * @param blockHeight
-	 * @param blockHash
-	 * @return
-	 * @throws BytomException
-	 */
-	public static BlockDifficulty getBlockDifficulty(Client client, int blockHeight, String blockHash)
-			throws BytomException {
-		Map<String, Object> req = new HashMap<String, Object>();
-		req.put("block_height", blockHeight);
-		req.put("block_hash", blockHash);
-		return client.request("get-difficulty", req, BlockDifficulty.class);
-	}
-	
-	/**
-	 * ��ȡ��HashRate
-	 * @param client
-	 * @param blockHeight
-	 * @param blockHash
-	 * @return
-	 * @throws BytomException
-	 */
-	public static BlockHashRate getHashRate(Client client, int blockHeight, String blockHash)
-			throws BytomException {
-		Map<String, Object> req = new HashMap<String, Object>();
-		req.put("block_height", blockHeight);
-		req.put("block_hash", blockHash);
-		return client.request("get-hash-rate", req, BlockHashRate.class);
-	}
-
-
 	public static class BlockHeader {
 		@SerializedName("block_header")
-		private String blockHeader;
-		private long reward;
-
-		public String getBlockHeader() {
-			return blockHeader;
-		}
-
-		public void setBlockHeader(String blockHeader) {
-			this.blockHeader = blockHeader;
-		}
-
-		public long getReward() {
-			return reward;
-		}
-
-		public void setReward(long reward) {
-			this.reward = reward;
-		}
-
+		public String blockHeader;
+		public long reward;
 	}
 
+	/**
+	 * block_difficulty
+	 * 
+	 * @author niyue
+	 *
+	 */
 	public static class BlockDifficulty {
-		private String hash;
-		private long height;
-		private long bits;
-		private long difficulty;
-
-		public String getHash() {
-			return hash;
-		}
-
-		public void setHash(String hash) {
-			this.hash = hash;
-		}
-
-		public long getHeight() {
-			return height;
-		}
-
-		public void setHeight(long height) {
-			this.height = height;
-		}
-
-		public long getBits() {
-			return bits;
-		}
-
-		public void setBits(long bits) {
-			this.bits = bits;
-		}
-
-		public long getDifficulty() {
-			return difficulty;
-		}
-
-		public void setDifficulty(long difficulty) {
-			this.difficulty = difficulty;
-		}
+		public String hash;
+		public long height;
+		public long bits;
+		public long difficulty;
 
 	}
 
+	/**
+	 * block_hashRate
+	 * 
+	 * @author niyue
+	 *
+	 */
 	public static class BlockHashRate {
-		private String hash;
-		private long height;
-		private long hash_rate;
+		public String hash;
+		public long height;
+		public long hash_rate;
 
-		public String getHash() {
-			return hash;
-		}
-
-		public void setHash(String hash) {
-			this.hash = hash;
-		}
-
-		public long getHeight() {
-			return height;
-		}
-
-		public void setHeight(long height) {
-			this.height = height;
-		}
-
-		public long getHash_rate() {
-			return hash_rate;
-		}
-
-		public void setHash_rate(long hash_rate) {
-			this.hash_rate = hash_rate;
-		}
-
-	}
-
-	public String getHash() {
-		return hash;
-	}
-
-	public void setHash(String hash) {
-		this.hash = hash;
-	}
-
-	public long getSize() {
-		return size;
-	}
-
-	public void setSize(long size) {
-		this.size = size;
-	}
-
-	public long getVersion() {
-		return version;
-	}
-
-	public void setVersion(long version) {
-		this.version = version;
-	}
-
-	public long getHeight() {
-		return height;
-	}
-
-	public void setHeight(long height) {
-		this.height = height;
-	}
-
-	public String getPreviousBlockHash() {
-		return previousBlockHash;
-	}
-
-	public void setPreviousBlockHash(String previousBlockHash) {
-		this.previousBlockHash = previousBlockHash;
-	}
-
-	public long getTimestamp() {
-		return timestamp;
-	}
-
-	public void setTimestamp(long timestamp) {
-		this.timestamp = timestamp;
-	}
-
-	public long getNonce() {
-		return nonce;
-	}
-
-	public void setNonce(long nonce) {
-		this.nonce = nonce;
-	}
-
-	public long getBits() {
-		return bits;
-	}
-
-	public void setBits(long bits) {
-		this.bits = bits;
-	}
-
-	public String getDifficulty() {
-		return difficulty;
-	}
-
-	public void setDifficulty(String difficulty) {
-		this.difficulty = difficulty;
-	}
-
-	public String getTransactionsMerkleRoot() {
-		return transactionsMerkleRoot;
-	}
-
-	public void setTransactionsMerkleRoot(String transactionsMerkleRoot) {
-		this.transactionsMerkleRoot = transactionsMerkleRoot;
-	}
-
-	public String getTransactionStatusHash() {
-		return transactionStatusHash;
-	}
-
-	public void setTransactionStatusHash(String transactionStatusHash) {
-		this.transactionStatusHash = transactionStatusHash;
-	}
-
-	public List<BlockTx> getTransactions() {
-		return transactions;
-	}
-
-	public void setTransactions(List<BlockTx> transactions) {
-		this.transactions = transactions;
 	}
 
 	@Override

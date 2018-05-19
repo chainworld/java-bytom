@@ -34,7 +34,7 @@ public class MessageTest {
 	private void testVerifyMessage () throws BytomException {
 		client = TestUtils.generateClient();
 		try {
-			boolean flag = Message.verifyMessage(client, null, null, null, null);
+			boolean flag =  new Message.VerifyBuilder().verifyMessage(client);  
 			System.out.println(flag);
 		} catch (BytomException e) {
 			e.printStackTrace();

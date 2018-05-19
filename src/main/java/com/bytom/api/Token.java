@@ -15,25 +15,69 @@ import com.google.gson.annotations.SerializedName;
  *
  */
 public class Token {
-	private String id;
-	private String token;
-	private String type;
-	@SerializedName(value = "created_at", alternate = { "create" })
-	private String create;
-
 	/**
-	 * create token by id 该接口远程连接不可用
-	 * 
-	 * @param client
-	 * @param id
-	 * @return
-	 * @throws BytomException
+	 * Token id
 	 */
-	public static Token create(Client client, String id, String type) throws BytomException {
-		Map<String, Object> req = new HashMap<String, Object>();
-		req.put("id", id);
-		req.put("type", type);
-		return client.request("create-access-token", req, Token.class);
+	public String id;
+	/**
+	 * Token token
+	 */
+	public String token;
+	/**
+	 * Token type
+	 */
+	public String type;
+	/**
+	 * Token create时间
+	 */
+	@SerializedName(value = "created_at", alternate = { "create" })
+	public String create;
+
+	public static class Builder {
+		/**
+		 * Token id
+		 */
+		public String id;
+		/**
+		 * Token type
+		 */
+		public String type;
+
+		public Builder() {
+		}
+
+		/**
+		 * 
+		 * @param id
+		 *            the id to set
+		 * @return Builder
+		 */
+		public Builder setId(String id) {
+			this.id = id;
+			return this;
+		}
+
+		/**
+		 * 
+		 * @param type
+		 *            the type to set
+		 * @return Builder
+		 */
+		public Builder setType(String type) {
+			this.type = type;
+			return this;
+		}
+
+		/**
+		 * create token by id 该接口远程连接不可用
+		 * 
+		 * @param client
+		 * @return
+		 * @throws BytomException
+		 */
+		public Token create(Client client) throws BytomException {
+			return client.request("create-access-token", this, Token.class);
+		}
 	}
 
 	/**
@@ -51,10 +95,10 @@ public class Token {
 		req.put("secret", secret);
 		return client.request("check-access-token", req);
 	}
-	
-	
+
 	/**
 	 * 删除token
+	 * 
 	 * @param client
 	 * @param id
 	 * @return
@@ -65,7 +109,6 @@ public class Token {
 		req.put("id", id);
 		return client.request("delete-access-token", req);
 	}
-
 
 	/**
 	 * 列表 该接口远程连接不可用
@@ -85,38 +128,6 @@ public class Token {
 			Items items = this.client.requestList("list-access-tokens", null, Items.class);
 			return items;
 		}
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public String getCreate() {
-		return create;
-	}
-
-	public void setCreate(String create) {
-		this.create = create;
 	}
 
 }

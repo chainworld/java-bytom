@@ -37,7 +37,7 @@ public class TransactionFeedTest {
 		client = TestUtils.generateClient();
 		try {
 			String filter = "asset_id='84778a666fe453cf73b2e8c783dbc9e04bc4fd7cbb4f50caeaee99cf9967ebed' AND amount_lower_limit = 50 AND amount_upper_limit = 100";
-			boolean flag = TransactionFeed.create(client, alias, filter);
+			boolean flag = new TransactionFeed.Builder().setAlias(alias).setFilter(filter).create(client);
 			Assert.assertEquals(true, flag);
 		} catch (BytomException e) {
 			e.printStackTrace();
@@ -49,7 +49,7 @@ public class TransactionFeedTest {
 		try {
 			TransactionFeed txfeed = TransactionFeed.get(client, alias);
 			System.out.println(txfeed);
-			Assert.assertEquals(alias, txfeed.getAlias());
+			Assert.assertEquals(alias, txfeed.alias);
 		} catch (BytomException e) {
 			e.printStackTrace();
 		}
