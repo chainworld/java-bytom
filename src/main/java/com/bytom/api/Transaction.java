@@ -176,6 +176,9 @@ public class Transaction {
 		public String type;
 
 		public String arbitrary;
+		
+		@SerializedName("control_program")
+		public String controlProgram;
 
 	}
 
@@ -378,6 +381,11 @@ public class Transaction {
 	 */
 	public static class Action extends HashMap<String, Object> {
 		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 7948250382060074590L;
+
+		/**
 		 * Default constructor initializes list and sets the client token.
 		 */
 		public Action() {
@@ -390,6 +398,11 @@ public class Transaction {
 		 * Represents an issuance action.
 		 */
 		public static class Issue extends Action {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -6296543909434749786L;
+
 			/**
 			 * Default constructor defines the action type as "issue"
 			 */
@@ -432,11 +445,16 @@ public class Transaction {
 				return this;
 			}
 		}
-		
+
 		/**
 		 * Represents a spend action taken on a particular account.
 		 */
 		public static class SpendFromAccount extends Action {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 6444162327409625893L;
+
 			/**
 			 * Default constructor defines the action type as "spend_account"
 			 */
@@ -516,6 +534,11 @@ public class Transaction {
 		 * Represents a control action taken on a particular account.
 		 */
 		public static class ControlWithAccount extends Action {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -1067464339402520620L;
+
 			/**
 			 * Default constructor defines the action type as "control_account"
 			 */
@@ -597,6 +620,11 @@ public class Transaction {
 		 */
 		public static class ControlWithAddress extends Action {
 			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1292007349260961499L;
+
+			/**
 			 * Default constructor defines the action type as "control_address"
 			 */
 			public ControlWithAddress() {
@@ -649,6 +677,11 @@ public class Transaction {
 		 * Use this action to pay assets into a {@link Receiver}.
 		 */
 		public static class ControlWithReceiver extends Action {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 7280759134960453401L;
+
 			/**
 			 * Default constructor.
 			 */
@@ -711,6 +744,11 @@ public class Transaction {
 		 * Represents a retire action.
 		 */
 		public static class Retire extends Action {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -8434272436211832706L;
+
 			/**
 			 * Default constructor defines the action type as "control_program"
 			 */
@@ -874,12 +912,11 @@ public class Transaction {
 		 */
 		@SerializedName("total_neu")
 		public int totalNeu;
-		
+
 		/**
 		 * consumed neu for storage transaction .
 		 */
 		@SerializedName("storage_neu")
-		
 		public int storageNeu;
 		/**
 		 * consumed neu for execute VM.
