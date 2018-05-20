@@ -97,6 +97,7 @@ public class Block {
 		/**
 		 * block_height, height of block.
 		 */
+		@SerializedName("block_height")
 		public int blockHeight;
 		/**
 		 * block_hash, hash of block.
