@@ -16,41 +16,33 @@ public class KeyTest {
 		testCreateKey();
 		testListKeys();
 		testDeleteKey();
+		testResetKeyPwd();
 	}
 
 	public void testCreateKey() throws BytomException {
 		client = TestUtils.generateClient();
-		try {
-			Key key = Key.create(client, "keytest004", "123456");
-			Assert.assertNotEquals(null, key);
-		}
-		catch (BytomException e) {
-			e.printStackTrace();
-		}
+		Key key = Key.create(client, "testkey004", "123456");
+		Assert.assertNotEquals(null, key);
 	}
 
 	public void testListKeys() throws Exception {
 		client = TestUtils.generateClient();
-		try {
-			Key.Items keys = new Key.QueryBuilder().list(client);
-			Assert.assertEquals(19, keys.data.size());
-		}
-		catch (BytomException e) {
-			e.printStackTrace();
-		}
+		Key.Items keys = new Key.QueryBuilder().list(client);
+		Assert.assertNotNull(keys.data);
+		Assert.assertNotNull(keys.data.get(0).alias);
+		Assert.assertNotNull(keys.data.get(0).file);
 	}
 
 	public void testDeleteKey() throws Exception {
 		client = TestUtils.generateClient();
-		Key key = new Key();
-		try {
-			String keytest = "357540568a5159023e2de1962851f65f4e1c027b52d4fea202d206bc535ca78d6376fd46d8a290efd63c3dffee4f9a04f6953f08442d57eae8ca73f356e23676";
-			String password = "123456";
-			key.delete(client, keytest, password);
-		}
-		catch (BytomException e) {
-			e.printStackTrace();
-		}
+		Key key = Key.create(client, "testdelkey", "123456");
+		String password = "123456";
+		Key.delete(client, key.xpub, password);
 	}
 
+	public void testResetKeyPwd() throws Exception {
+		client = TestUtils.generateClient();
+		Key key=Key.create(client, "testresetkey1", "123456");
+		Key.resetPassword(client, key.xpub, "123456", "111111");
+	}
 }

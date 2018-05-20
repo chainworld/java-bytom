@@ -15,8 +15,8 @@ public class WalletTest {
 	@Test
 	public void run() {
 		try {
-			//testBackupWallet();
-			testRestoreWallet();
+			testBackupWallet();
+			//testRestoreWallet();
 		}
 		catch (Exception e) {
 			e.printStackTrace();

@@ -19,9 +19,9 @@ public class TransactionTest {
 	public void run() {
 
 		try {
-			//testBasicTransaction();
-			//testListTransaction();
-			//testGetTransaction();
+			testBasicTransaction();
+			testListTransaction();
+			testGetTransaction();
 			TestEstimateGas();
 		}
 		catch (BytomException e) {
@@ -104,10 +104,10 @@ public class TransactionTest {
 								.setAmount(200000000)).build(client);
 
 		Transaction.Template singer = new Transaction.SignerBuilder().sign(client,
-				controlAddress, "xxxxxx");
+				controlAddress, "bytom04241521@163.com");
 
-		Transaction.SubmitResponse txs = Transaction.submit(client, singer);
-		assertNotNull(txs.tx_id);
+		Transaction.SubmitResponse txs = Transaction.submit(client, singer); 
+		assertNotNull(txs.tx_id); 
 
 	}
 }

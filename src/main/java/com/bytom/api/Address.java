@@ -15,11 +15,11 @@ public class Address {
 
 	public String address;
 
-	public Boolean change;
+	public boolean change;
 
-	public Boolean vaild;
+	public boolean vaild;
 
 	@SerializedName("is_local")
-	public Boolean isLocal;
+	public boolean isLocal;
 
 }

@@ -34,7 +34,7 @@ public class Account {
 	 * threshold of keys that must sign a transaction to spend asset
 	 */
 	public int quorum;
-	
+
 	public List<String> xpubs;
 
 	public static class Builder {
@@ -73,7 +73,7 @@ public class Account {
 			this.quorum = quorum;
 			return this;
 		}
-		
+
 		/**
 		 * 
 		 * @param alias
@@ -185,10 +185,17 @@ public class Account {
 		@SerializedName("account_id")
 		public String accountId;
 
-		public class Items extends BytomResponse<Address> {
+		public static class Items extends BytomResponse<Address> {
+
+			public AddressBuilder addressBuilder;
+
+			public void setAddressBuilder(AddressBuilder builder) {
+				this.addressBuilder = builder;
+			}
+
 			public Items query() throws BytomException {
-				Items items = this.client
-						.requestList("list-addresses", this, Items.class);
+				Items items = this.client.requestList("list-addresses", addressBuilder,
+						Items.class);
 				return items;
 			}
 		}
@@ -196,6 +203,7 @@ public class Account {
 		public Items list(Client client) throws BytomException {
 			Items items = new Items();
 			items.setClient(client);
+			items.setAddressBuilder(this);
 			return items.query();
 		}
 

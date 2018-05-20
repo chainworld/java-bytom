@@ -44,7 +44,7 @@ public class Key {
 
 	public static class Items extends BytomResponse<Key> {
 		public Items query() throws BytomException {
-			Items items = this.client.request("list-keys", null, Items.class);
+			Items items = this.client.requestList("list-keys", null, Items.class);
 			return items;
 		}
 	}
@@ -68,7 +68,7 @@ public class Key {
 	 * @throws BytomException
 	 * @throws JSONException
 	 */
-	public boolean delete(Client client, String xpub, String password) throws BytomException {
+	public static boolean delete(Client client, String xpub, String password) throws BytomException {
 		Map<String, Object> req = new HashMap<String, Object>();
 		req.put("xpub", xpub);
 		req.put("password", password);
@@ -83,7 +83,7 @@ public class Key {
 	 * @throws BytomException
 	 * @throws JSONException
 	 */
-	public boolean resetPassword(Client client, String xpub, String old_password,
+	public static boolean resetPassword(Client client, String xpub, String old_password,
 			String new_password) throws BytomException {
 		Map<String, Object> req = new HashMap<String, Object>();
 		req.put("xpub", xpub);
