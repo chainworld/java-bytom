@@ -20,9 +20,9 @@ public class TransactionTest {
 
 		try {
 			testBasicTransaction();
-			testListTransaction();
-			testGetTransaction();
-			TestEstimateGas();
+			//testListTransaction();
+			//testGetTransaction();
+			//TestEstimateGas();
 		}
 		catch (BytomException e) {
 			e.printStackTrace();
@@ -105,6 +105,8 @@ public class TransactionTest {
 
 		Transaction.Template singer = new Transaction.SignerBuilder().sign(client,
 				controlAddress, "bytom04241521@163.com");
+		
+		System.out.println("address-traajscront:" + controlAddress.rawTransaction);
 
 		Transaction.SubmitResponse txs = Transaction.submit(client, singer); 
 		assertNotNull(txs.tx_id); 
