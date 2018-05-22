@@ -1355,7 +1355,7 @@ Wallet.restoreWallet(client, w.accountImage, w.assetImage, w.keyImages);
 
 ```java
 // Request
-Message message = new Message.SignBuilder().setAddress("bm1q9jxex8dyh7y4efsrckpqgsmk0jcu9wup684a9y").setMessage("this is a test message").setPassword("bytom04241521@163.com").sign(client);  
+Message message = new Message.SignBuilder().setAddress("bm1q9jxex8dyh7y4efsrckpqgsmk0jcu9wup684a9y").setMessage("this is a test message").setPassword("xxxxx@pwd").sign(client);  
 
 // Result
 {
@@ -1521,7 +1521,7 @@ boolean flag = new TransactionFeed.Builder().setAlias("test1").setFilter("asset_
 true
 ```
 
-
+----
 
 #### `get-transaction-feed`
 
@@ -1560,8 +1560,7 @@ TransactionFeed txfeed = TransactionFeed.get(client, "test1");
 }
 ```
 
-
-
+----
 #### `list-transaction-feeds`
 
 ##### Parameters
