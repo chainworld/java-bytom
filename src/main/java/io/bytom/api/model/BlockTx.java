@@ -1,5 +1,7 @@
 package io.bytom.api.model;
 
+import io.bytom.api.Transaction;
+
 import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
@@ -38,12 +40,12 @@ public class BlockTx {
     /**
      * List of specified inputs for a transaction.
      */
-    private List<AnnotatedInput> inputs;
+    private List<Transaction.Input> inputs;
 
     /**
      * List of specified outputs for a transaction.
      */
-    private List<AnnotatedOutput> outputs;
+    private List<Transaction.Output> outputs;
 
 	public String getId() {
 		return id;
@@ -85,19 +87,19 @@ public class BlockTx {
 		this.statusFail = statusFail;
 	}
 
-	public List<AnnotatedInput> getInputs() {
+	public List<Transaction.Input> getInputs() {
 		return inputs;
 	}
 
-	public void setInputs(List<AnnotatedInput> inputs) {
+	public void setInputs(List<Transaction.Input> inputs) {
 		this.inputs = inputs;
 	}
 
-	public List<AnnotatedOutput> getOutputs() {
+	public List<Transaction.Output> getOutputs() {
 		return outputs;
 	}
 
-	public void setOutputs(List<AnnotatedOutput> outputs) {
+	public void setOutputs(List<Transaction.Output> outputs) {
 		this.outputs = outputs;
 	}
 

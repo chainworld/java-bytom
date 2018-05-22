@@ -179,6 +179,9 @@ public class Transaction {
 		
 		@SerializedName("control_program")
 		public String controlProgram;
+		
+		 @SerializedName("issuance_program")
+	    private String issuanceProgram;
 
 	}
 
@@ -248,7 +251,13 @@ public class Transaction {
 
 		@SerializedName("address")
 		public String address;
-
+		
+		 /**
+	     * transaction_id
+	     */
+	    @SerializedName("transaction_id")
+	    private String transactionId;
+	    
 	}
 
 	/**

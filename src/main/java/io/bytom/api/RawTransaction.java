@@ -1,7 +1,5 @@
 package io.bytom.api;
 
-import io.bytom.api.model.AnnotatedInput;
-import io.bytom.api.model.AnnotatedOutput;
 import io.bytom.exception.BytomException;
 import io.bytom.http.Client;
 import com.google.gson.annotations.SerializedName;
@@ -38,12 +36,12 @@ public class RawTransaction {
     /**
      * List of specified inputs for a transaction.
      */
-    public List<AnnotatedInput> inputs;
+    public List<Transaction.Input> inputs;
 
     /**
      * List of specified outputs for a transaction.
      */
-    public List<AnnotatedOutput> outputs;
+    public List<Transaction.Output> outputs;
 
     /**
      * decode-raw-transaction  raw-transaction
