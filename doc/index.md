@@ -18,7 +18,7 @@ Welcome please submit the issue in Github directly.
 		return new Client(coreURL, accessToken);
 	}
 	
-Client client = generateClient();
+    Client client = generateClient();
 
 ```
 
