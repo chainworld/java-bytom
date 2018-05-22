@@ -232,7 +232,11 @@ Optional:
 // Request
 Key key = Key.create(client, "keytest0033", "123456");
 if (key != null && key.xpub != null) {
-	Account account = new Account.Builder().setAlias("hello_bytom9") .addXpub(key.xpub).setQuorum(1).create(client);
+	Account account = new Account.Builder()
+	                             .setAlias("hello_bytom9") 
+				     .addXpub(key.xpub)
+				     .setQuorum(1)
+				     .create(client);
 }
 
 // Result
@@ -381,8 +385,8 @@ list all the addresses:
 ```java
 // Request
 Account.AddressBuilder.Items items = new Account.AddressBuilder()
-                                    .setAccountId("0DSPTV6T00A08")
-				    .list(client);
+                                                .setAccountId("0DSPTV6T00A08")
+				                .list(client);
 
 // Result
 [
@@ -405,8 +409,9 @@ list all the addresses by account_id or account_alias:
 
 ```java
 // Request
-Account.AddressBuilder.Items items = new Account.AddressBuilder().setAccountId(
-				"0DSPTV6T00A08").list(client);
+Account.AddressBuilder.Items items = new Account.AddressBuilder()
+                                                .setAccountId("0DSPTV6T00A08")
+						.list(client);
 
 // Result
 [
