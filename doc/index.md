@@ -17,7 +17,9 @@ Welcome please submit the issue in Github directly.
 		}
 		return new Client(coreURL, accessToken);
 	}
-	Client client = generateClient();
+	
+Client client = generateClient();
+
 ```
 
 ## API methods
@@ -228,8 +230,10 @@ Optional:
 
 ```java
 // Request
-Account account = new Account.Builder().setAlias("hello_bytom9")
-					.addXpub(key.xpub).setQuorum(1).create(client);
+Key key = Key.create(client, "keytest0033", "123456");
+if (key != null && key.xpub != null) {
+	Account account = new Account.Builder().setAlias("hello_bytom9") .addXpub(key.xpub).setQuorum(1).create(client);
+}
 
 // Result
 {
@@ -381,13 +385,13 @@ Account.AddressBuilder.Items items = new Account.AddressBuilder().setAccountId(
 [
   {
     "account_alias": "alice",
-    "account_id": "086KQD75G0A02",
+    "account_id": "0DSPTV6T00A08",
     "address": "bm1qcn9lf7nxhswratvmg6d78nq7r7yupm36qgsv55",
     "change": false
   },
   {
     "account_alias": "bob",
-    "account_id": "086KQD75G0A04",
+    "account_id": "0DSPTV6T00A08",
     "address": "bm1qfkf3tyc95m0axv2mfnjsnu7l0h5tyfnpgpud4lsz5m0xkqmhgy9sd4x24h",
     "change": false
   }
@@ -405,19 +409,19 @@ Account.AddressBuilder.Items items = new Account.AddressBuilder().setAccountId(
 [
   {
     "account_alias": "alice",
-    "account_id": "086KQD75G0A02",
+    "account_id": "0DSPTV6T00A08",
     "address": "bm1qcn9lf7nxhswratvmg6d78nq7r7yupm36qgsv55",
     "change": false
   },
   {
     "account_alias": "alice",
-    "account_id": "086KQD75G0A02",
+    "account_id": "0DSPTV6T00A08",
     "address": "bm1qew4h5uvt5ssrtg2alms0j77r94c30m78ucrcxy",
     "change": false
   },
   {
     "account_alias": "alice",
-    "account_id": "086KQD75G0A02",
+    "account_id": "0DSPTV6T00A08",
     "address": "bm1qgnp4lte7wge0rsekevjlrdh39vkzz0c2alheue",
     "change": false
   }
@@ -776,30 +780,6 @@ UnspentOutput.Items items = new UnspentOutput.QueryBuilder().setId(
 ]
 ```
 
-list the unspent output matching the given id:
-
-```js
-// Request
-curl -X POST list-unspent-outputs -d '{"id": "58f29f0f85f7bd2a91088bcbe536dee41cd0642dfb1480d3a88589bdbfd642d9"}'
-
-// Result
-{
-  "account_alias": "alice",
-  "account_id": "0BKBR6VR00A06",
-  "address": "bm1qv3htuvug7qdv46ywcvvzytrwrsyg0swltfa0dm",
-  "amount": 2000,
-  "asset_alias": "GOLD",
-  "asset_id": "1883cce6aab82cf9af8cd085a3115dd4a92cdb8e6a9152acd73d7ae4adb9030a",
-  "change": false,
-  "control_program_index": 2,
-  "id": "58f29f0f85f7bd2a91088bcbe536dee41cd0642dfb1480d3a88589bdbfd642d9",
-  "program": "0014646ebe3388f01acae88ec318222c6e1c0887c1df",
-  "source_id": "5988c1630c1f325e69bb92cb4b19af14286aa107311bc64b8f1a54629a33e0f4",
-  "source_pos": 2,
-  "valid_height": 0
-}
-```
-
 ----
 
 #### `build-transaction`
@@ -825,85 +805,51 @@ curl -X POST list-unspent-outputs -d '{"id": "58f29f0f85f7bd2a91088bcbe536dee41c
 
 ##### Example
 
-- `spend` - transaction type is spend
+- `control_address` - transaction type is control_address
 ```js
-// Request
-curl -X POST build-transaction -d '{"base_transaction":null,"actions":[{"account_id":"0BF63M2U00A04","amount":20000000,"asset_id":"ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff","type":"spend_account"},{"account_id":"0BF63M2U00A04","amount":99,"asset_id":"3152a15da72be51b330e1c0f8e1c0db669269809da4f16443ff266e07cc43680","type":"spend_account"},{"amount":99,"asset_id":"3152a15da72be51b330e1c0f8e1c0db669269809da4f16443ff266e07cc43680","receiver":{"control_program":"0014a3f9111f3b0ee96cbd119a3ea5c60058f506fb19"},"type":"control_receiver"}],"ttl":0,"time_range": 1521625823}'
+//request
+ client = TestUtils.generateClient();
+
+		Transaction.Template controlAddress = new Transaction.Builder()
+				.addAction(
+						new Transaction.Action.SpendFromAccount()
+								.setAccountId("0D00V8OUG0A02")
+								.setAssetId(
+										"ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")
+								.setAmount(300000000))
+				.addAction(
+						new Transaction.Action.ControlWithAddress()
+								.setAddress("bm1qu5j0c0mcnzn6sy0um53t847wtkqa0nt785x4nh")
+								.setAssetId(
+										"ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")
+								.setAmount(200000000)).build(client);
 ```
 
-- `issue` - transaction type is issue
-```js
-// Request
-curl -X POST build-transaction -d '{"base_transaction":null,"actions":[{"account_id":"0BF63M2U00A04","amount":20000000,"asset_id":"ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff","type":"spend_account"},{"amount":10000,"asset_id":"3152a15da72be51b330e1c0f8e1c0db669269809da4f16443ff266e07cc43680","type":"issue"},{"account_id":"0BF63M2U00A04","amount":10000,"asset_id":"3152a15da72be51b330e1c0f8e1c0db669269809da4f16443ff266e07cc43680","type":"control_account"}],"ttl":0,"time_range": 1521625823}'
-```
-
-- `address` - transaction type is address
-```js
-// Request
-curl -X POST build-transaction -d '{"base_transaction":null,"actions":[{"account_id":"0BF63M2U00A04","amount":20000000,"asset_id":"ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff","type":"spend_account"},{"account_id":"0BF63M2U00A04","amount":99,"asset_id":"3152a15da72be51b330e1c0f8e1c0db669269809da4f16443ff266e07cc43680","type":"spend_account"},{"amount":99,"asset_id":"3152a15da72be51b330e1c0f8e1c0db669269809da4f16443ff266e07cc43680","address":"bm1q50u3z8empm5ke0g3ngl2t3sqtr6sd7cepd3z68","type":"control_address"}],"ttl":0,"time_range": 1521625823}'
-```
-
-- `retire` - transaction type is retire
-```js
-// Request
-curl -X POST build-transaction -d '{"base_transaction":null,"actions":[{"account_id":"0BF63M2U00A04","amount":20000000,"asset_id":"ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff","type":"spend_account"},{"account_id":"0BF63M2U00A04","amount":99,"asset_id":"3152a15da72be51b330e1c0f8e1c0db669269809da4f16443ff266e07cc43680","type":"spend_account"},{"account_id":"0BF63M2U00A04","amount":99,"asset_id":"3152a15da72be51b330e1c0f8e1c0db669269809da4f16443ff266e07cc43680","type":"retire"}],"ttl":0,"time_range":1521625823}'
-```
 
 ```js
-// Result(this type is spend, the other types are similar.)
+// Result(this type is address, the other types are similar.)
 {
-  "allow_additional_actions": false,
-  "local": true,
-  "raw_transaction": "07010000020161015fb6a63a3361170afca03c9d5ce1f09fe510187d69545e09f95548b939cd7fffa3ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff80fc93afdf01000116001426bd1b851cf6eb8a701c20c184352ad8720eeee90100015d015bb6a63a3361170afca03c9d5ce1f09fe510187d69545e09f95548b939cd7fffa33152a15da72be51b330e1c0f8e1c0db669269809da4f16443ff266e07cc43680c03e0101160014489a678741ccc844f9e5c502f7fac0a665bedb25010003013effffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff80a2cfa5df0101160014948fb4f500e66d20fbacb903fe108ee81f9b6d9500013a3152a15da72be51b330e1c0f8e1c0db669269809da4f16443ff266e07cc43680dd3d01160014cd5a822b34e3084413506076040d508bb12232c70001393152a15da72be51b330e1c0f8e1c0db669269809da4f16443ff266e07cc436806301160014a3f9111f3b0ee96cbd119a3ea5c60058f506fb1900",
-  "signing_instructions": [
-    {
-      "position": 0,
-      "witness_components": [
-        {
-          "keys": [
-            {
-              "derivation_path": [
-                "010100000000000000",
-                "0500000000000000"
-              ],
-              "xpub": "ee9dd8affdef7e0cacd0fbbf310217c7f588156c28e414db74c27afaedd8f876cf54547a672b431ff06ee8a146207df9595638a041b55ada1a764a8b5b30bda0"
-            }
-          ],
-          "quorum": 1,
-          "signatures": null,
-          "type": "raw_tx_signature"
-        },
-        {
-          "type": "data",
-          "value": "62a73b6b7ffe52b6ad782b0e0efdc8309bf2f057d88f9a17d125e41bb11dbb88"
-        }
-      ]
-    },
-    {
-      "position": 1,
-      "witness_components": [
-        {
-          "keys": [
-            {
-              "derivation_path": [
-                "010100000000000000",
-                "0600000000000000"
-              ],
-              "xpub": "ee9dd8affdef7e0cacd0fbbf310217c7f588156c28e414db74c27afaedd8f876cf54547a672b431ff06ee8a146207df9595638a041b55ada1a764a8b5b30bda0"
-            }
-          ],
-          "quorum": 1,
-          "signatures": null,
-          "type": "raw_tx_signature"
-        },
-        {
-          "type": "data",
-          "value": "ba5a63e7416caeb945eefc2ce874f40bc4aaf6005a1fc792557e41046f7e502f"
-        }
-      ]
-    }
-  ]
-}
+	"raw_transaction" : "070100010161015f7feb07b6e782f3f62c4fbade202fd069299737fc345904faa8dcca0813d8464affffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff8099c4d5990100011600142c8d931da4bf895ca603c5820443767cb1c2bb81010002013effffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff80d3bdc69801011600143bee3919e645af291efdd914e496aef72af76e8700013cffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff8084af5f01160014e524fc3f7898a7a811fcdd22b3d7ce5d81d7cd7e00",
+	"signing_instructions" : [ {
+		"position" : 0,
+		"witness_components" : [
+				{
+					"type" : "raw_tx_signature",
+					"quorum" : 1,
+					"keys" : [ {
+						"xpub" : "2f3e45ed187bbc4f666f33f58a618af43c8154935312625ea4719734b202a3a20e6e38f266e0e70bff70786d53564e15a5418f51cc990e360425c8657e12c013",
+						"derivation_path" : [ "010100000000000000",
+								"0100000000000000" ]
+					} ],
+					"signatures" : null
+				},
+				{
+					"type" : "data",
+					"value" : "3f1e3abbf0837b4c52a9caf990b87c3cb2ea97d918970e62fca4453e13da75c0"
+				} ]
+	} ],
+	"allow_additional_actions" : false
+}}
 ```
 
 ----
@@ -927,72 +873,55 @@ curl -X POST build-transaction -d '{"base_transaction":null,"actions":[{"account
 ##### Example
 
 ```js
-// Request
-curl -X POST sign-transaction -d '{"password":"123456","transaction":{"allow_additional_actions":false,"local":true,"raw_transaction":"07010000020161015fb6a63a3361170afca03c9d5ce1f09fe510187d69545e09f95548b939cd7fffa3ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff80fc93afdf01000116001426bd1b851cf6eb8a701c20c184352ad8720eeee90100015d015bb6a63a3361170afca03c9d5ce1f09fe510187d69545e09f95548b939cd7fffa33152a15da72be51b330e1c0f8e1c0db669269809da4f16443ff266e07cc43680c03e0101160014489a678741ccc844f9e5c502f7fac0a665bedb25010003013effffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff80a2cfa5df0101160014948fb4f500e66d20fbacb903fe108ee81f9b6d9500013a3152a15da72be51b330e1c0f8e1c0db669269809da4f16443ff266e07cc43680dd3d01160014cd5a822b34e3084413506076040d508bb12232c70001393152a15da72be51b330e1c0f8e1c0db669269809da4f16443ff266e07cc436806301160014a3f9111f3b0ee96cbd119a3ea5c60058f506fb1900","signing_instructions":[{"position":0,"witness_components":[{"keys":[{"derivation_path":["010100000000000000","0500000000000000"],"xpub":"ee9dd8affdef7e0cacd0fbbf310217c7f588156c28e414db74c27afaedd8f876cf54547a672b431ff06ee8a146207df9595638a041b55ada1a764a8b5b30bda0"}],"quorum":1,"signatures":null,"type":"raw_tx_signature"},{"type":"data","value":"62a73b6b7ffe52b6ad782b0e0efdc8309bf2f057d88f9a17d125e41bb11dbb88"}]},{"position":1,"witness_components":[{"keys":[{"derivation_path":["010100000000000000","0600000000000000"],"xpub":"ee9dd8affdef7e0cacd0fbbf310217c7f588156c28e414db74c27afaedd8f876cf54547a672b431ff06ee8a146207df9595638a041b55ada1a764a8b5b30bda0"}],"quorum":1,"signatures":null,"type":"raw_tx_signature"},{"type":"data","value":"ba5a63e7416caeb945eefc2ce874f40bc4aaf6005a1fc792557e41046f7e502f"}]}]}}'
+// Request 
+Transaction.Template controlAddress = new Transaction.Builder()
+				.addAction(
+						new Transaction.Action.SpendFromAccount()
+								.setAccountId("0D00V8OUG0A02")
+								.setAssetId(
+										"ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")
+								.setAmount(300000000))
+				.addAction(
+						new Transaction.Action.ControlWithAddress()
+								.setAddress("bm1qu5j0c0mcnzn6sy0um53t847wtkqa0nt785x4nh")
+								.setAssetId(
+										"ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")
+								.setAmount(200000000)).build(client);
 
-// Result
-{
-  "sign_complete": true,
-  "transaction": {
-    "allow_additional_actions": false,
-    "local": true,
-    "raw_transaction": "07010000020161015fb6a63a3361170afca03c9d5ce1f09fe510187d69545e09f95548b939cd7fffa3ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff80fc93afdf01000116001426bd1b851cf6eb8a701c20c184352ad8720eeee96302400d432e6f0e22da3168d76552273e60d23d432d61b4dac53e6769d39a1097f1cd1bd8e54c7d39eda334803e5c904bc2de2f27ff29748166e0334dcfded20e980b2062a73b6b7ffe52b6ad782b0e0efdc8309bf2f057d88f9a17d125e41bb11dbb88015d015bb6a63a3361170afca03c9d5ce1f09fe510187d69545e09f95548b939cd7fffa33152a15da72be51b330e1c0f8e1c0db669269809da4f16443ff266e07cc43680c03e0101160014489a678741ccc844f9e5c502f7fac0a665bedb256302401eadd84ad07c3643f71a35cc5669a2c1def96ae98e790d287217e6a3543fe602dd90afffe853c729bd5237a28f33538df631572847d9870829fb1fd1100ff20820ba5a63e7416caeb945eefc2ce874f40bc4aaf6005a1fc792557e41046f7e502f03013effffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff80a2cfa5df0101160014948fb4f500e66d20fbacb903fe108ee81f9b6d9500013a3152a15da72be51b330e1c0f8e1c0db669269809da4f16443ff266e07cc43680dd3d01160014cd5a822b34e3084413506076040d508bb12232c70001393152a15da72be51b330e1c0f8e1c0db669269809da4f16443ff266e07cc436806301160014a3f9111f3b0ee96cbd119a3ea5c60058f506fb1900",
-    "signing_instructions": [
-      {
-        "position": 0,
-        "witness_components": [
-          {
-            "keys": [
-              {
-                "derivation_path": [
-                  "010100000000000000",
-                  "0500000000000000"
-                ],
-                "xpub": "ee9dd8affdef7e0cacd0fbbf310217c7f588156c28e414db74c27afaedd8f876cf54547a672b431ff06ee8a146207df9595638a041b55ada1a764a8b5b30bda0"
-              }
-            ],
-            "quorum": 1,
-            "signatures": [
-              "0d432e6f0e22da3168d76552273e60d23d432d61b4dac53e6769d39a1097f1cd1bd8e54c7d39eda334803e5c904bc2de2f27ff29748166e0334dcfded20e980b"
-            ],
-            "type": "raw_tx_signature"
-          },
-          {
-            "type": "data",
-            "value": "62a73b6b7ffe52b6ad782b0e0efdc8309bf2f057d88f9a17d125e41bb11dbb88"
-          }
-        ]
-      },
-      {
-        "position": 1,
-        "witness_components": [
-          {
-            "keys": [
-              {
-                "derivation_path": [
-                  "010100000000000000",
-                  "0600000000000000"
-                ],
-                "xpub": "ee9dd8affdef7e0cacd0fbbf310217c7f588156c28e414db74c27afaedd8f876cf54547a672b431ff06ee8a146207df9595638a041b55ada1a764a8b5b30bda0"
-              }
-            ],
-            "quorum": 1,
-            "signatures": [
-              "1eadd84ad07c3643f71a35cc5669a2c1def96ae98e790d287217e6a3543fe602dd90afffe853c729bd5237a28f33538df631572847d9870829fb1fd1100ff208"
-            ],
-            "type": "raw_tx_signature"
-          },
-          {
-            "type": "data",
-            "value": "ba5a63e7416caeb945eefc2ce874f40bc4aaf6005a1fc792557e41046f7e502f"
-          }
-        ]
-      }
-    ]
-  }
-}
+		Transaction.Template singer = new Transaction.SignerBuilder().sign(client,
+				controlAddress, "xxxxxx");
+
 ```
+```js
+// Result(this type is address, the other types are similar.)
+{
+		"transaction" : {
+			"raw_transaction" : "070100010161015f7feb07b6e782f3f62c4fbade202fd069299737fc345904faa8dcca0813d8464affffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff8099c4d5990100011600142c8d931da4bf895ca603c5820443767cb1c2bb81630240fc2a00960fad45fd28490a3a45679a6362ee4bd53a9da1d2edf3a354e7269cea32f2e05d1ff62fb14030187a058043dbc57d7a7bafccaa21847dd0ca4d2f980c203f1e3abbf0837b4c52a9caf990b87c3cb2ea97d918970e62fca4453e13da75c002013effffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff80d3bdc698010116001402176f5cda77ea8c1a5a833a58f7a7755560cbe900013cffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff8084af5f01160014e524fc3f7898a7a811fcdd22b3d7ce5d81d7cd7e00",
+			"signing_instructions" : [ {
+				"position" : 0,
+				"witness_components" : [
+						{
+							"type" : "raw_tx_signature",
+							"quorum" : 1,
+							"keys" : [ {
+								"xpub" : "2f3e45ed187bbc4f666f33f58a618af43c8154935312625ea4719734b202a3a20e6e38f266e0e70bff70786d53564e15a5418f51cc990e360425c8657e12c013",
+								"derivation_path" : [ "010100000000000000",
+										"0100000000000000" ]
+							} ],
+							"signatures" : [ "fc2a00960fad45fd28490a3a45679a6362ee4bd53a9da1d2edf3a354e7269cea32f2e05d1ff62fb14030187a058043dbc57d7a7bafccaa21847dd0ca4d2f980c" ]
+						},
+						{
+							"type" : "data",
+							"value" : "3f1e3abbf0837b4c52a9caf990b87c3cb2ea97d918970e62fca4453e13da75c0"
+						} ]
+			} ],
+			"allow_additional_actions" : false
+		},
+		"sign_complete" : true
+	}
 
+
+```
 ----
 
 #### `submit-transaction`
@@ -1013,12 +942,31 @@ curl -X POST sign-transaction -d '{"password":"123456","transaction":{"allow_add
 
 ```js
 // Request
-curl -X POST submit-transaction -d '{"raw_transaction":"07010000010161015ffe8bdb49bbd08f711a54f0fbed4141b74c276de44c831999aac43bdd56f98309ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff80c0b1ca94120001160014d61f9b3354771283461e6cb269bec98e7ee975f6630240403d7b35ec72a80816b21822d645adc98af2c1f07d5b379dda4527d8585ec12ef213ada312e3807ae0ccf7206575f313ffe2b405a286309d3172feabe07e7e0620d013706a314a57e84c2b262c2a291e8e2b063785aea9338476a66d41be4de4f202013effffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff80bc82eb931201160014bdf260424fd2f322dbec9ce4ddbaed8618d8e959000139ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff6301160014a3f9111f3b0ee96cbd119a3ea5c60058f506fb1900"}'
 
+Transaction.Template controlAddress = new Transaction.Builder()
+				.addAction(
+						new Transaction.Action.SpendFromAccount()
+								.setAccountId("0D00V8OUG0A02")
+								.setAssetId(
+										"ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")
+								.setAmount(300000000))
+				.addAction(
+						new Transaction.Action.ControlWithAddress()
+								.setAddress("bm1qu5j0c0mcnzn6sy0um53t847wtkqa0nt785x4nh")
+								.setAssetId(
+										"ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")
+								.setAmount(200000000)).build(client);
+
+		Transaction.Template singer = new Transaction.SignerBuilder().sign(client,
+				controlAddress, "xxxxx");
+
+		Transaction.SubmitResponse txs = Transaction.submit(client, singer); 
+
+```
+
+```js
 // Result
-{
-  "tx_id": "2c0624a7d251c29d4d1ad14297c69919214e78d995affd57e73fbf84ece316cb"
-}
+{"tx_id":"cb78aedfdad26cf7aad67f4e5776b916634daac3b66908523b78856bde6c2e6d"}
 ```
 
 ----
@@ -1043,13 +991,27 @@ curl -X POST submit-transaction -d '{"raw_transaction":"07010000010161015ffe8bdb
 
 ```js
 // Request
-curl -X POST estimate-transaction-gas -d '{"transaction_template":{"allow_additional_actions":false,"raw_transaction":"070100010161015ffe8a1209937a6a8b22e8c01f056fd5f1730734ba8964d6b79de4a639032cecddffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff8099c4d59901000116001485eb6eee8023332da85df60157dc9b16cc553fb2010002013dffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff80afa08b4f011600142b4fd033bc76b4ddf5cb00f625362c4bc7b10efa00013dffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff8090dfc04a011600146eea1ce6cfa5b718ae8094376be9bc1a87c9c82700","signing_instructions":[{"position":0,"witness_components":[{"keys":[{"derivation_path":["010100000000000000","0100000000000000"],"xpub":"cb4e5932d808ee060df9552963d87f60edac42360b11d4ad89558ef2acea4d4aaf4818f2ebf5a599382b8dfce0a0c798c7e44ec2667b3a1d34c61ba57609de55"}],"quorum":1,"signatures":null,"type":"raw_tx_signature"},{"type":"data","value":"1c9b5c1db7f4afe31fd1b7e0495a8bb042a271d8d7924d4fc1ff7cf1bff15813"}]}]}}'
-
+Transaction.Template controlAddress = new Transaction.Builder()
+				.addAction(
+						new Transaction.Action.SpendFromAccount()
+								.setAccountId("0D00V8OUG0A02")
+								.setAssetId(
+										"ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")
+								.setAmount(300000000))
+				.addAction(
+						new Transaction.Action.ControlWithAddress()
+								.setAddress("bm1qu5j0c0mcnzn6sy0um53t847wtkqa0nt785x4nh")
+								.setAssetId(
+										"ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")
+								.setAmount(200000000)).build(client);	
+		TransactionGas gas= Transaction.estimateGas(client, controlAddress);
+```
+```js
 // Result
 {
-  "storage_neu": 3840000,
-  "total_neu": 5259000,
-  "vm_neu": 1419000
+		"total_neu" : 437400,
+		"storage_neu" : 153600,
+		"vm_neu" : 283800
 }
 ```
 
@@ -1105,58 +1067,43 @@ curl -X POST estimate-transaction-gas -d '{"transaction_template":{"allow_additi
 
 ```js
 // Request
-curl -X POST get-transaction -d '{"tx_id": "277aa67c2f9b1d340c0be53e81952706a444e12011a670181bc5fa0e7672a49e"}'
+Transaction tran = new Transaction.QueryBuilder().setTxId(
+				"f4f1cd86b75c74159b32a70f3b6d486fa1ee6d7c3fd654a01b351f38236da32b").get(
+				client);
 
+		Transaction.Input input = tran.inputs.get(0);
+		Transaction.Output output = tran.outputs.get(0);
+```
+```js
 // Result
 {
-  "block_hash": "0693cb1408d38e2df5a5e1302a51218a7f58b790367f610b028b7a0a931909f3",
-  "block_height": 30,
-  "block_index": 1,
-  "block_time": 1516788453,
-  "inputs": [
-    {
-      "account_alias": "default",
-      "account_id": "0BF1J9LCG0A02",
-      "address": "sm1q26kpwrrevhh2c8xrfy5vnaryu0ugc97csrdy69",
-      "amount": 624000000000,
-      "asset_alias": "btm",
-      "asset_definition": "7b0a202022646563696d616c73223a20382c0a2020226465736372697074696f6e223a20224279746f6d204f6666696369616c204973737565222c0a2020226e616d65223a202262746d222c0a20202273796d626f6c223a202262746d220a7d",
-      "asset_id": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
-      "spent_output_id": "2072edd06054d7cd27b2f120d0b1a21d4cc3f8077dc5f495ece0fea833ad09d7",
-      "type": "spend"
-    }
-  ],
-  "outputs": [
-    {
-      "account_alias": "default",
-      "account_id": "0BF1J9LCG0A02",
-      "address": "sm1qasn6ugm578a5dy9tqmrzqr6m376v6akunumy55",
-      "amount": 563980000000,
-      "asset_alias": "btm",
-      "asset_definition": "7b0a202022646563696d616c73223a20382c0a2020226465736372697074696f6e223a20224279746f6d204f6666696369616c204973737565222c0a2020226e616d65223a202262746d222c0a20202273796d626f6c223a202262746d220a7d",
-      "asset_id": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
-      "control_program": "0014e9d07f9fe967a962596e44ee6504fb08df45c3c4",
-      "id": "be671f65247dfdc0a71f38e90017eca00759f1b3940905ef4415522f31917911",
-      "position": 0,
-      "type": "control"
-    },
-    {
-      "account_alias": "alice",
-      "account_id": "0BF1JGC9G0A04",
-      "address": "sm1qq4n8j5ys2awj7hn3c8fq2k3z58l5u7p34chc5n",
-      "amount": 60000000000,
-      "asset_alias": "btm",
-      "asset_definition": "7b0a202022646563696d616c73223a20382c0a2020226465736372697074696f6e223a20224279746f6d204f6666696369616c204973737565222c0a2020226e616d65223a202262746d222c0a20202273796d626f6c223a202262746d220a7d",
-      "asset_id": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
-      "control_program": "0014bfdaf76c1b853ce435ee7454acfbef873d487523",
-      "id": "63bcfec365913ef980ab95ad2bef5eba9bd8637723af138a695b5e9a0a5a571e",
-      "position": 1,
-      "type": "control"
-    }
-  ],
-  "status_fail": false,
-  "tx_id": "277aa67c2f9b1d340c0be53e81952706a444e12011a670181bc5fa0e7672a49e"
-}
+		"tx_id" : "f4f1cd86b75c74159b32a70f3b6d486fa1ee6d7c3fd654a01b351f38236da32b",
+		"block_time" : 1524555187,
+		"block_hash" : "a4ab32b3c6daaaec825852653de5d50b249019f226e1755737633fe49e7c1d18",
+		"block_height" : 39,
+		"block_index" : 0,
+		"block_transactions_count" : 1,
+		"inputs" : [ {
+			"type" : "coinbase",
+			"asset_id" : "0000000000000000000000000000000000000000000000000000000000000000",
+			"asset_definition" : {},
+			"amount" : 0,
+			"arbitrary" : "27"
+		} ],
+		"outputs" : [ {
+			"type" : "control",
+			"id" : "f8e79f35e7604896eaca878ef4aeb509a041ff7e2859b105a00240ed52dd1025",
+			"position" : 0,
+			"asset_id" : "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+			"asset_definition" : {},
+			"amount" : 41250000000,
+			"account_id" : "0D00V8OUG0A02",
+			"account_alias" : "bytommaster",
+			"control_program" : "00142c8d931da4bf895ca603c5820443767cb1c2bb81",
+			"address" : "bm1q9jxex8dyh7y4efsrckpqgsmk0jcu9wup684a9y"
+		} ],
+		"status_fail" : false
+	}
 ```
 
 ----
@@ -1203,8 +1150,9 @@ list all the available transactions:
 
 ```js
 // Request
-curl -X POST list-transactions -d {}
-
+Transaction.Items items = new Transaction.QueryBuilder().list(client);
+```
+```js
 // Result
 [
   {
@@ -1262,118 +1210,6 @@ curl -X POST list-transactions -d {}
   }
 ]
 ```
-
-list the transaction matching the given tx_id with detail:
-
-```js
-// Request
-curl -X POST list-transactions -d '{"tx_id": "1151ce5c7b32b8755b5e48109ec7ed956fb1783eaea9558bf5a2ad957825e4b7","detail": true}'
-
-// Result
-[
-  {
-    "block_hash": "aef9ef8440c22eea79a608b11224015d72f80d117afc94e2c1e243d2a4b4264f",
-    "block_height": 65,
-    "block_index": 1,
-    "block_time": 1521770515,
-    "block_transactions_count": 2,
-    "inputs": [
-      {
-        "account_alias": "default",
-        "account_id": "0BMHBOBVG0A02",
-        "address": "sm1q26kpwrrevhh2c8xrfy5vnaryu0ugc97csrdy69",
-        "amount": 624000000000,
-        "asset_alias": "btm",
-        "asset_definition": "7b0a202022646563696d616c73223a20382c0a2020226465736372697074696f6e223a20224279746f6d204f6666696369616c204973737565222c0a2020226e616d65223a202262746d222c0a20202273796d626f6c223a202262746d220a7d",
-        "asset_id": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
-        "spent_output_id": "075bb0f790b973f212ce4790df38579d0675011c1cc57f7870b05086a8d9781c",
-        "type": "spend"
-      }
-    ],
-    "outputs": [
-      {
-        "account_alias": "default",
-        "account_id": "0BMHBOBVG0A02",
-        "address": "sm1qasn6ugm578a5dy9tqmrzqr6m376v6akunumy55",
-        "amount": 563980000000,
-        "asset_alias": "btm",
-        "asset_definition": "7b0a202022646563696d616c73223a20382c0a2020226465736372697074696f6e223a20224279746f6d204f6666696369616c204973737565222c0a2020226e616d65223a202262746d222c0a20202273796d626f6c223a202262746d220a7d",
-        "asset_id": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
-        "control_program": "0014b1c61390b550b04f7185fff188347fbefae4a6e0",
-        "id": "9b74c3b319359031bc2a05ea3301390929c9671dee6ecadcf8487bcb3f83effc",
-        "position": 0,
-        "type": "control"
-      },
-      {
-        "account_alias": "alice",
-        "account_id": "0BMHDI1P00A04",
-        "address": "sm1qq4n8j5ys2awj7hn3c8fq2k3z58l5u7p34chc5n",
-        "amount": 60000000000,
-        "asset_alias": "btm",
-        "asset_definition": "7b0a202022646563696d616c73223a20382c0a2020226465736372697074696f6e223a20224279746f6d204f6666696369616c204973737565222c0a2020226e616d65223a202262746d222c0a20202273796d626f6c223a202262746d220a7d",
-        "asset_id": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
-        "control_program": "001495f14dd5327a7e0ec09e313d118448076a49d45c",
-        "id": "b550565e376b0077e992963b78986129d94cc3ffecf12e3008c9ccd0b2c0c47e",
-        "position": 1,
-        "type": "control"
-      }
-    ],
-    "status_fail": false,
-    "tx_id": "1151ce5c7b32b8755b5e48109ec7ed956fb1783eaea9558bf5a2ad957825e4b7"
-  }
-]
-```
-
-list the transaction matching the given account_id:
-
-```js
-// Request
-curl -X POST list-transactions -d '{"account_id": "0BMHDI1P00A04"}'
-
-// Result
-[
-  {
-    "block_time": 1521770566,
-    "inputs": [
-      {
-        "account_alias": "alice",
-        "account_id": "0BMHDI1P00A04",
-        "amount": 60000000000,
-        "asset_alias": "btm",
-        "asset_id": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
-        "type": "spend"
-      },
-      {
-        "amount": 10000,
-        "asset_alias": "gold",
-        "asset_id": "951a9b58ef06e5cc89dec48ea9b3e0b608cd4da06f0e06b7415245d8ba1e393c",
-        "type": "issue"
-      }
-    ],
-    "outputs": [
-      {
-        "account_alias": "alice",
-        "account_id": "0BMHDI1P00A04",
-        "amount": 59980000000,
-        "asset_alias": "btm",
-        "asset_id": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
-        "type": "control"
-      },
-      {
-        "account_alias": "alice",
-        "account_id": "0BMHDI1P00A04",
-        "amount": 10000,
-        "asset_alias": "gold",
-        "asset_id": "951a9b58ef06e5cc89dec48ea9b3e0b608cd4da06f0e06b7415245d8ba1e393c",
-        "type": "control"
-      }
-    ],
-    "tx_id": "ecfd146da57b0958d4f5495ab748e63616c229bc3cf771ffd9a7cbdcb2129ad1"
-  }
-]
-```
-
-----
 
 #### `backup-wallet`
 
@@ -1630,8 +1466,9 @@ delete access token.
 boolean flag = Token.delete(client, id);
 
 // Result
-```
 true
+```
+
 ----
 
 #### `check-access-token`
@@ -1656,8 +1493,9 @@ check whether the access token is vaild or not.
 boolean flag = Token.check(client, id, secret);
 
 // Result
-```
 true
+```
+
 ----
 
 #### `create-transaction-feed`
@@ -1680,9 +1518,10 @@ true
 boolean flag = new TransactionFeed.Builder().setAlias("test1").setFilter("asset_id='84778a666fe453cf73b2e8c783dbc9e04bc4fd7cbb4f50caeaee99cf9967ebed' AND amount_lower_limit = 50 AND amount_upper_limit = 100").create(client);
 
 // Result
-```
 true
-----
+```
+
+
 
 #### `get-transaction-feed`
 
@@ -1721,7 +1560,7 @@ TransactionFeed txfeed = TransactionFeed.get(client, "test1");
 }
 ```
 
-----
+
 
 #### `list-transaction-feeds`
 
@@ -1786,8 +1625,9 @@ TransactionFeed.Items items = TransactionFeed.list(client);
 boolean flag = TransactionFeed.delete(client, alias);
 
 // Result
-```
 true
+```
+
 ----
 
 #### `update-transaction-feed`
@@ -1813,8 +1653,9 @@ String filter = "asset_id='84778a666fe453cf73b2e8c783dbc9e04bc4fd7cbb4f50caeaee9
 			boolean flag = TransactionFeed.update(client, "test1", filter);
 
 // Result
-```
 true
+```
+
 ----
 
 #### `get-unconfirmed-transaction`
