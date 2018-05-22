@@ -19,8 +19,8 @@ public class TransactionTest {
 	public void run() {
 
 		try {
-			testBasicTransaction();
-			//testListTransaction();
+			//testBasicTransaction();
+			testListTransaction();
 			//testGetTransaction();
 			//TestEstimateGas();
 		}
@@ -78,7 +78,7 @@ public class TransactionTest {
 
 	public void testListTransaction() throws BytomException {
 		client = TestUtils.generateClient();
-		Transaction.Items items = new Transaction.QueryBuilder().list(client);
+		Transaction.Items items = new Transaction.QueryBuilder().setTxId("b49278a5488c824e93f322657cba7bc58548d577ae380998f733f714c368b50a").list(client);
 		assertNotNull(items.data);
 	}
 
@@ -104,12 +104,10 @@ public class TransactionTest {
 								.setAmount(200000000)).build(client);
 
 		Transaction.Template singer = new Transaction.SignerBuilder().sign(client,
-				controlAddress, "bytom04241521@163.com");
-		
-		System.out.println("address-traajscront:" + controlAddress.rawTransaction);
+				controlAddress, "xxxxx@163.com");
 
 		Transaction.SubmitResponse txs = Transaction.submit(client, singer); 
-		assertNotNull(txs.tx_id); 
+		assertNotNull(txs.tx_id);
 
 	}
 }
