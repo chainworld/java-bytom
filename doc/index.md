@@ -344,7 +344,9 @@ optional:
 
 //Request
 ```java
-new Account.ReceiverBuilder().setAccountId("0DSPTV6T00A08").create(client);
+new Account.ReceiverBuilder()
+	   .setAccountId("0DSPTV6T00A08")
+	   .create(client);
 ```
 // Result
 ```json
@@ -378,8 +380,9 @@ list all the addresses:
 
 ```java
 // Request
-Account.AddressBuilder.Items items = new Account.AddressBuilder().setAccountId(
-				"0DSPTV6T00A08").list(client);
+Account.AddressBuilder.Items items = new Account.AddressBuilder()
+                                    .setAccountId("0DSPTV6T00A08")
+				    .list(client);
 
 // Result
 [
@@ -451,7 +454,8 @@ check whether the address is vaild or not.
 
 ```js
 // Request
-Address address = new Account.AddressBuilder().validate(client, "bm1qg3v9awlqh530fv7aqh230pkf62rpp35lap3unt");
+Address address = new Account.AddressBuilder()
+                             .validate(client, "bm1qg3v9awlqh530fv7aqh230pkf62rpp35lap3unt");
 
 // Result
 {
@@ -494,9 +498,13 @@ create asset.
 
 ```java
 // Request
-Asset testAsset = new Asset.Builder().setAlias(asset).addRootXpub(key.xpub)
-				.setQuorum(1).setDefinition(def).addDefinitionField("test", test)
-				.create(client);
+Asset testAsset = new Asset.Builder()
+                           .setAlias(asset)
+			   .addRootXpub(key.xpub)
+			   .setQuorum(1)
+			   .setDefinition(def)
+			   .addDefinitionField("test", test)
+			   .create(client);
 
 // Result
 {
@@ -548,7 +556,9 @@ get asset by assetID.
 
 ```java
 // Request
-Asset queryAsset = new Asset.QueryBuilder().setAssetId(testAsset.id).get(client);
+Asset queryAsset = new Asset.QueryBuilder()
+                            .setAssetId(testAsset.id)
+			    .get(client);
 
 // Result
 {
@@ -655,7 +665,10 @@ update asset alias.
 
 ```java
 // Request
-new Asset.UpdateBuilder().setAssetId(assetid).setAlias(newAlias).update(client);
+new Asset.UpdateBuilder()
+         .setAssetId(assetid)
+         .setAlias(newAlias)
+	 .update(client);
 
 // Result
 ```
@@ -741,9 +754,9 @@ list all the available unspent outputs:
 
 ```java
 // Request
-UnspentOutput.Items items = new UnspentOutput.QueryBuilder().setId(
-				"ffdc597f89349a1a19a74fd0811fd15c8fbbf384ce2bf3d17a718eddf9e79786").list(
-				client);
+UnspentOutput.Items items = new UnspentOutput.QueryBuilder()
+                                             .setId("ffdc597f89349a1a19a74fd0811fd15c8fbbf384ce2bf3d17a718eddf9e79786")
+					     .list(client);
 
 // Result
 [
@@ -1067,9 +1080,9 @@ Transaction.Template controlAddress = new Transaction.Builder()
 
 ```js
 // Request
-Transaction tran = new Transaction.QueryBuilder().setTxId(
-				"f4f1cd86b75c74159b32a70f3b6d486fa1ee6d7c3fd654a01b351f38236da32b").get(
-				client);
+Transaction tran = new Transaction.QueryBuilder()
+                                .setTxId("f4f1cd86b75c74159b32a70f3b6d486fa1ee6d7c3fd654a01b351f38236da32b")
+				.get(client);
 
 		Transaction.Input input = tran.inputs.get(0);
 		Transaction.Output output = tran.outputs.get(0);
@@ -1355,7 +1368,11 @@ Wallet.restoreWallet(client, w.accountImage, w.assetImage, w.keyImages);
 
 ```java
 // Request
-Message message = new Message.SignBuilder().setAddress("bm1q9jxex8dyh7y4efsrckpqgsmk0jcu9wup684a9y").setMessage("this is a test message").setPassword("xxxxx@pwd").sign(client);  
+Message message = new Message.SignBuilder()
+                             .setAddress("bm1q9jxex8dyh7y4efsrckpqgsmk0jcu9wup684a9y")
+			     .setMessage("this is a test message")
+			     .setPassword("xxxxx@pwd")
+			     .sign(client);  
 
 // Result
 {
@@ -1515,7 +1532,9 @@ true
 
 ```java
 // Request
-boolean flag = new TransactionFeed.Builder().setAlias("test1").setFilter("asset_id='84778a666fe453cf73b2e8c783dbc9e04bc4fd7cbb4f50caeaee99cf9967ebed' AND amount_lower_limit = 50 AND amount_upper_limit = 100").create(client);
+boolean flag = new TransactionFeed.Builder().setAlias("test1")
+                                            .setFilter("asset_id='84778a666fe453cf73b2e8c783dbc9e04bc4fd7cbb4f50caeaee99cf9967ebed' AND amount_lower_limit = 50 AND amount_upper_limit = 100")
+					    .create(client);
 
 // Result
 true
@@ -1649,7 +1668,7 @@ deleted when the txfeed exists, and create it with alias and filter:
 ```java
 // Request
 String filter = "asset_id='84778a666fe453cf73b2e8c783dbc9e04bc4fd7cbb4f50caeaee99cf9967ebed' AND amount_lower_limit = 50 AND amount_upper_limit = 80";
-			boolean flag = TransactionFeed.update(client, "test1", filter);
+boolean flag = TransactionFeed.update(client, "test1", filter);
 
 // Result
 true
@@ -1944,7 +1963,9 @@ get specified block information by block_hash or block_height, if both exists, t
 
 ```java
 // Request
-Block block = new Block.QueryBuilder().setBlockHeight(blockHeight).getBlock(client);
+Block block = new Block.QueryBuilder()
+                       .setBlockHeight(blockHeight)
+		       .getBlock(client);
 
 // Result
 {
@@ -2015,7 +2036,9 @@ optional:
 
 ```java
 // Request
-Block.BlockHeader blockHeader = new Block.QueryBuilder().setBlockHeight(blockHeight).getBlockHeader(client);
+Block.BlockHeader blockHeader = new Block.QueryBuilder()
+                                         .setBlockHeight(blockHeight)
+					 .getBlockHeader(client);
 			
 
 // Result
@@ -2053,8 +2076,9 @@ Get difficulty for current block or specified block hash / height.
 
 ```java
 // Request
-Block.BlockDifficulty blockDifficulty = new Block.QueryBuilder().setBlockHeight(blockHeight)
-					.getBlockDifficulty(client);
+Block.BlockDifficulty blockDifficulty = new Block.QueryBuilder()
+                                                 .setBlockHeight(blockHeight)
+					         .getBlockDifficulty(client);
 
 // Result
 {
