@@ -2,7 +2,6 @@ package io.bytom.api;
 
 import java.util.List;
 
-import io.bytom.api.model.BlockTx;
 import io.bytom.exception.BytomException;
 import io.bytom.http.Client;
 import com.google.gson.annotations.SerializedName;

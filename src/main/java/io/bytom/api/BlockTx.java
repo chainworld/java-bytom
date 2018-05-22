@@ -1,6 +1,4 @@
-package io.bytom.api.model;
-
-import io.bytom.api.Transaction;
+package io.bytom.api;
 
 import java.util.List;
 
