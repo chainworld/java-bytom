@@ -26,7 +26,7 @@ public class MessageTest {
 	public void testSignMessage() throws BytomException {
 		client = TestUtils.generateClient();
 		Message message = new Message.SignBuilder().setAddress("bm1q9jxex8dyh7y4efsrckpqgsmk0jcu9wup684a9y").setMessage("this is a test message")
-				.setPassword("bytom04241521@163.com").sign(client);  
+				.setPassword("xxxxx@163.com").sign(client);  
 		assertNotNull(message.derivedXpub);
 		assertNotNull(message.signature); 
 	}
