@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.bytom</groupId>
-	<artifactId>bytom.sdk.java</artifactId>
+	<artifactId>bytom-sdk-java</artifactId>
 	<version>1.0.1</version>
 	<packaging>jar</packaging>
 
@@ -11,10 +11,12 @@
 	<description>The Official Java SDK for Bytom Core Developer Edition</description>
 	<url>https://github.com/bytom/</url>
 
+
 	<licenses>
 		<license>
-			<name>The Apache License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
 		</license>
 	</licenses>
 
@@ -23,6 +25,19 @@
 		<connection>scm:git:git@github.com:chainworld/java-bytom.git</connection>
 		<developerConnection>scm:git:git@github.com:chainworld/java-bytom.git</developerConnection>
 	</scm>
+
+	<developers>
+		<developer>
+			<name>wangting</name>
+			<email>niyuelin1990@163.com</email>
+			<url>https://github.com/niyuelin1990</url>
+		</developer>
+		<developer>
+			<name>xiejin2008</name>
+			<email>xiejin2008.good@163.com</email>
+			<url>https://github.com/JackyKen</url>
+		</developer>
+	</developers>
 
 	<properties>
 		<encoding>UTF-8</encoding>
@@ -64,63 +79,73 @@
 
 	<distributionManagement>
 		<snapshotRepository>
-			<id>ossrh</id>
+			<id>sonatype-nexus-snapshots</id>
 			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		</snapshotRepository>
 		<repository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+			<id>sonatype-nexus-staging</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
 		</repository>
 	</distributionManagement>
 
-	<build>
-		<plugins>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.3</version>
-				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>3.0.1</version>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		<!-- 	<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.10.4</version>
-				<configuration>
-					<encoding>UTF-8</encoding>
-					<aggregate>true</aggregate>
-					<charset>UTF-8</charset>
-					<docencoding>UTF-8</docencoding>
-				</configuration>
-				<executions>
-					<execution>
-						<id>attach-javadocs</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin> -->
+	<profiles>
+		<profile>
+			<id>release</id>
+			<build>
+				<plugins>
 
-			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-gpg-plugin</artifactId> 
-				<version>1.6</version> <executions> <execution> <id>sign-artifacts</id> <phase>verify</phase> 
-				<goals> <goal>sign</goal> </goals> </execution> </executions> </plugin> -->
-		</plugins>
-	</build>
+					<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-compiler-plugin</artifactId> 
+						<version>3.3</version> <configuration> <source>1.7</source> <target>1.7</target> 
+						</configuration> </plugin> -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+						<version>2.2.1</version>
+						<executions>
+							<execution>
+								<id>attach-sources</id>
+								<goals>
+									<goal>jar-no-fork</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>2.10.4</version>
+						<configuration>
+							<encoding>UTF-8</encoding>
+							<aggregate>true</aggregate>
+							<charset>UTF-8</charset>
+							<docencoding>UTF-8</docencoding>
+						</configuration>
+						<executions>
+							<execution>
+								<id>attach-javadocs</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.6</version>
+						<executions>
+							<execution>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>

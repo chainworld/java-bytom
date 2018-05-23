@@ -101,12 +101,12 @@ public class Transaction {
 
 	public static class SignerBuilder {
 		/**
-		 * Sends a transaction template to a remote password for signing.
-		 * @param client
-		 * @param template a signed transaction template
-		 * @param password
-		 * @return
-		 * @throws BytomException
+		 *  Sends a transaction template to a remote password for signing.
+		 * @param client client
+		 * @param template  a signed transaction template
+		 * @param password password
+		 * @return Transaction.Template
+		 * @throws BytomException Exception
 		 */
 		public Transaction.Template sign(Client client, Transaction.Template template,
 				String password) throws BytomException {
@@ -262,7 +262,7 @@ public class Transaction {
 
 	/**
 	 * A built transaction that has not been submitted for block inclusion (returned from
-	 * {@link Transaction#buildBatch(Client, List)}).
+	 * {link Transaction#buildBatch(Client, List)}).
 	 */
 	public static class Template {
 		/**
@@ -376,7 +376,7 @@ public class Transaction {
 	}
 
 	/**
-	 * A single response from a call to {@link Transaction#submitBatch(Client, List)}
+	 * A single response from a call to {link Transaction#submitBatch(Client, List)}
 	 */
 	public static class SubmitResponse {
 		/**
@@ -826,10 +826,10 @@ public class Transaction {
 
 	/**
 	 * Transaction.Builder utilizes the builder pattern to create
-	 * {@link Transaction.Template} objects. At minimum, a {@link Action.Issue} or
-	 * {@link Action.SpendFromAccount}/{@link Action.SpendAccountUnspentOutput} must be
-	 * coupled with a {@link Action.ControlWithAccount}/{@link Action.ControlWithReceiver}
-	 * before calling {@link #build(Client)}.
+	 * {link Transaction.Template} objects. At minimum, a {link Action.Issue} or
+	 * {link Action.SpendFromAccount}/{link Action.SpendAccountUnspentOutput} must be
+	 * coupled with a {link Action.ControlWithAccount}/{link Action.ControlWithReceiver}
+	 * before calling {link #build(Client)}.
 	 */
 	public static class Builder {
 		/**
@@ -855,6 +855,7 @@ public class Transaction {
 		 * Builds a single transaction template.
 		 * @param client client object which makes requests to the server
 		 * @return a transaction template
+		 * @throws BytomException Exception
 		 */
 		public Template build(Client client) throws BytomException {
 			return client.request("build-transaction", this, Template.class);
@@ -871,6 +872,7 @@ public class Transaction {
 		 * Sets the baseTransaction field and initializes the actions lists.<br>
 		 * This constructor can be used when executing an atomic swap and the counter
 		 * party has sent an initialized tx template.
+		 * @param baseTransaction baseTransaction
 		 */
 		public Builder(String baseTransaction) {
 			this.setBaseTransaction(baseTransaction);
@@ -879,6 +881,8 @@ public class Transaction {
 
 		/**
 		 * Sets the base transaction that will be added to the current template.
+		 * @param baseTransaction Transaction
+		 * @return Builder
 		 */
 		public Builder setBaseTransaction(String baseTransaction) {
 			this.baseTransaction = baseTransaction;

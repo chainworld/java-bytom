@@ -42,8 +42,7 @@ public class TransactionFeed {
 
 		/**
 		 * 
-		 * @param alias
-		 *            the alias to set
+		 * @param alias the alias to set
 		 * @return Builder
 		 */
 		public Builder setAlias(String alias) {
@@ -53,8 +52,7 @@ public class TransactionFeed {
 
 		/**
 		 * 
-		 * @param type
-		 *            the type to set
+		 * @param filter  the type to set
 		 * @return Builder
 		 */
 		public Builder setFilter(String filter) {
@@ -64,11 +62,9 @@ public class TransactionFeed {
 
 		/**
 		 * 创建
-		 * 
-		 * @param client
-		 * @return true or false
-		 * @throws BytomException
-		 *             error
+		 * @param client client
+		 * @return  true or false
+		 * @throws BytomException error
 		 */
 		public boolean create(Client client) throws BytomException {
 			return client.request("create-transaction-feed", this);
@@ -78,10 +74,10 @@ public class TransactionFeed {
 	/**
 	 * 获取
 	 * 
-	 * @param client
-	 * @param alias
-	 * @return
-	 * @throws BytomException
+	 * @param client client
+	 * @param alias alias
+	 * @return txfeed
+	 * @throws BytomException Exception
 	 */
 	public static TransactionFeed get(Client client, String alias) throws BytomException {
 		Map<String, Object> req = new HashMap<String, Object>();
@@ -92,11 +88,11 @@ public class TransactionFeed {
 	/**
 	 * 修改
 	 * 
-	 * @param client
-	 * @param alias
-	 * @param filter
+	 * @param client client
+	 * @param alias alias
+	 * @param filter filter
 	 * @return success return true
-	 * @throws BytomException
+	 * @throws BytomException Exception
 	 */
 	public static boolean update(Client client, String alias, String filter) throws BytomException {
 		Map<String, Object> req = new HashMap<String, Object>();
@@ -108,9 +104,9 @@ public class TransactionFeed {
 	/**
 	 * 列表
 	 * 
-	 * @param client
-	 * @return
-	 * @throws BytomException
+	 * @param client client
+	 * @return Items
+	 * @throws BytomException Exception
 	 */
 	public static Items list(Client client) throws BytomException {
 		Items items = new Items();
@@ -121,10 +117,10 @@ public class TransactionFeed {
 	/**
 	 * delete
 	 * 
-	 * @param client
-	 * @param alias
+	 * @param client client
+	 * @param alias alias
 	 * @return success return true
-	 * @throws BytomException
+	 * @throws BytomException Exception
 	 */
 	public static boolean delete(Client client, String alias) throws BytomException {
 		Map<String, Object> req = new HashMap<String, Object>();

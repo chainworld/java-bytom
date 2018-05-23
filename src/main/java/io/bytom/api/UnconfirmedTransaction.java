@@ -14,12 +14,12 @@ import com.google.gson.annotations.SerializedName;
  */
 public class UnconfirmedTransaction extends BlockTx{
 
-    /**
-     * list unconfirmed-transactions ids
-     *
-     * @param client
-     * @return
-     */
+	/**
+	 * list unconfirmed-transactions ids
+	 * @param client client
+	 * @return Items
+	 * @throws BytomException Exception
+	 */
     public static Items list(Client client) throws BytomException {
         Items items = new Items();
         items.setClient(client);
@@ -28,11 +28,10 @@ public class UnconfirmedTransaction extends BlockTx{
 
     /**
      * get-unconfirmed-transaction by txId
-     *
-     * @param client
-     * @param txId
-     * @return
-     * @throws BytomException
+     * @param client client
+     * @param txId txId
+     * @return UnconfirmedTransaction
+     * @throws BytomException Exception
      */
     public static UnconfirmedTransaction get(Client client, String txId) throws BytomException {
         Map<String, Object> req = new HashMap<String, Object>();

@@ -25,9 +25,9 @@ There are various ways to install and use this sdk. We'll elaborate on a couple 
 ### Maven
 ```
 <dependency>
-    <groupId>io.bytom</groupId>
-	<artifactId>bytom.sdk.java</artifactId>
-	<version>1.0.1</version>
+  <groupId>io.bytom</groupId>
+  <artifactId>bytom-sdk-java</artifactId>
+  <version>1.0.1</version>
 </dependency>
 ```
 

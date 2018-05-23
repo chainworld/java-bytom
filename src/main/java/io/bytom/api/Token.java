@@ -71,9 +71,9 @@ public class Token {
 		/**
 		 * create token by id 该接口远程连接不可用
 		 * 
-		 * @param client
-		 * @return
-		 * @throws BytomException
+		 * @param client client
+		 * @return Token
+		 * @throws BytomException Exception
 		 */
 		public Token create(Client client) throws BytomException {
 			return client.request("create-access-token", this, Token.class);
@@ -82,12 +82,11 @@ public class Token {
 
 	/**
 	 * check token true or false
-	 * 
-	 * @param client
-	 * @param alias
-	 * @param filter
-	 * @return
-	 * @throws BytomException
+	 * @param client client
+	 * @param id id
+	 * @param secret secret
+	 * @return flag
+	 * @throws BytomException Exception
 	 */
 	public static boolean check(Client client, String id, String secret) throws BytomException {
 		Map<String, Object> req = new HashMap<String, Object>();
@@ -99,10 +98,10 @@ public class Token {
 	/**
 	 * 删除token
 	 * 
-	 * @param client
-	 * @param id
-	 * @return
-	 * @throws BytomException
+	 * @param client client
+	 * @param id id
+	 * @return flag
+	 * @throws BytomException Exception
 	 */
 	public static boolean delete(Client client, String id) throws BytomException {
 		Map<String, Object> req = new HashMap<String, Object>();
@@ -113,9 +112,9 @@ public class Token {
 	/**
 	 * 列表 该接口远程连接不可用
 	 * 
-	 * @param client
-	 * @return
-	 * @throws BytomException
+	 * @param client client
+	 * @return Items
+	 * @throws BytomException Exception
 	 */
 	public static Items list(Client client) throws BytomException {
 		Items items = new Items();

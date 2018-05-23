@@ -45,10 +45,10 @@ public class RawTransaction {
 
     /**
      * decode-raw-transaction  raw-transaction
-     * @param client
-     * @param txId
-     * @return
-     * @throws BytomException
+     * @param client client
+     * @param txId txId
+     * @return RawTransaction
+     * @throws BytomException Exception
      */
     public static RawTransaction decode(Client client, String txId) throws BytomException {
         Map<String, Object> req = new HashMap<String, Object>();

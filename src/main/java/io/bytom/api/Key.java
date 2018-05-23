@@ -28,11 +28,12 @@ public class Key {
 	public String file;
 
 	/**
+	 * create
+	 * @param client client
 	 * @param alias name of the key.
 	 * @param password password of the key.
-	 * @return
-	 * @throws BytomException
-	 * @throws JSONException
+	 * @return Key
+	 * @throws BytomException Exception
 	 */
 	public static Key create(Client client, String alias, String password)
 			throws BytomException {
@@ -50,9 +51,12 @@ public class Key {
 	}
 
 	public static class QueryBuilder {
+
 		/**
+		 * list
+		 * @param client client
 		 * @return keys owned by the client.
-		 * @throws BytomException
+		 * @throws BytomException Exception
 		 */
 		public Items list(Client client) throws BytomException {
 			Items items = new Items();
@@ -63,10 +67,11 @@ public class Key {
 
 	/**
 	 * return none if the key is deleted successfully
-	 * @param xpub
-	 * @param password
-	 * @throws BytomException
-	 * @throws JSONException
+	 * @param client client
+	 * @param xpub xpub
+	 * @param password password
+	 * @return flag
+	 * @throws BytomException Exception
 	 */
 	public static boolean delete(Client client, String xpub, String password) throws BytomException {
 		Map<String, Object> req = new HashMap<String, Object>();
@@ -76,12 +81,13 @@ public class Key {
 	}
 
 	/**
-	 * @param xpub pubkey of the key
+	 * 
+	 * @param client vclient
+	 * @param xpub xpub pubkey of the key
 	 * @param old_password old password of the key
 	 * @param new_password new password of the key
 	 * @return none if the key password is reset successfully
-	 * @throws BytomException
-	 * @throws JSONException
+	 * @throws BytomException BytomException
 	 */
 	public static boolean resetPassword(Client client, String xpub, String old_password,
 			String new_password) throws BytomException {

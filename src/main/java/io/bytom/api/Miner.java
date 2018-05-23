@@ -12,11 +12,10 @@ public class Miner {
 	/**
 	 *  设置是否挖矿
 	 * 
-	 * @param client
-	 * @param isMining
-	 *            是否挖矿
+	 * @param client client
+	 * @param isMining 是否挖矿
 	 * @return 返回设置是否成功
-	 * @throws BytomException
+	 * @throws BytomException Exception
 	 */
 	public static boolean setMining(Client client, boolean isMining) throws BytomException {
 		Map<String, Object> req = new HashMap<String, Object>();
@@ -27,9 +26,9 @@ public class Miner {
 	/**
 	 * 是否挖矿
 	 * 
-	 * @param client
+	 * @param client client
 	 * @return true挖矿 false没挖矿
-	 * @throws BytomException
+	 * @throws BytomException Exception
 	 */
 	public static boolean istMining(Client client) throws BytomException {
 		return client.requestGet("is-mining", null, "is_mining", Boolean.class);
@@ -37,9 +36,9 @@ public class Miner {
 
 	/**
 	 * get-work
-	 * @param client
-	 * @return
-	 * @throws BytomException
+	 * @param client client
+	 * @return MinerWork
+	 * @throws BytomException Exception
 	 */
 	public static MinerWork getWork(Client client) throws BytomException {
 		return client.request("get-work", null, MinerWork.class);
@@ -47,10 +46,10 @@ public class Miner {
 	
 	/**
 	 * submit-work
-	 * @param client
-	 * @param blockHeader
-	 * @return
-	 * @throws BytomException
+	 * @param client client
+	 * @param blockHeader blockHeader
+	 * @return true挖矿 false
+	 * @throws BytomException Exception
 	 */
 	public static boolean submiWork(Client client, String blockHeader) throws BytomException {
 		Map<String, Object> req = new HashMap<String, Object>();

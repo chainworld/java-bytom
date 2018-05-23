@@ -99,9 +99,10 @@ public class Client {
 	}
 
 	/**
-	 * @param maxConPerHost
-	 * @param conTimeOutMs
-	 * @param soTimeOutMs
+	 * 
+	 * @param maxConPerHost maxConPerHost
+	 * @param conTimeOutMs conTimeOutMs
+	 * @param soTimeOutMs soTimeOutMs
 	 */
 	public Client(int maxConPerHost, int conTimeOutMs, int soTimeOutMs) {
 		connectionManager = new MultiThreadedHttpConnectionManager();
@@ -116,10 +117,10 @@ public class Client {
 	/**
 	 * Perform a single HTTP POST request against the API for a specific action, return
 	 * true or false
-	 * 
 	 * @param action The requested API action
 	 * @param body Body payload sent to the API as JSON
-	 * @throws BytomException
+	 * @return true or false
+	 * @throws BytomException Exception
 	 */
 	public boolean request(String action, Object body) throws BytomException {
 		ResponseCreator<Boolean> rc = new ResponseCreator<Boolean>() {
@@ -139,12 +140,12 @@ public class Client {
 
 	/**
 	 * Perform a single HTTP POST request against the API for a specific action.
-	 *
 	 * @param action The requested API action
 	 * @param body Body payload sent to the API as JSON
 	 * @param tClass Type of object to be deserialized from the response JSON
+	 * @param <T> T
 	 * @return the result of the post request
-	 * @throws BytomException
+	 * @throws BytomException Exception
 	 */
 	public <T> T request(String action, Object body, final Type tClass)
 			throws BytomException {
@@ -166,13 +167,14 @@ public class Client {
 	}
 
 	/**
-	 * 
-	 * @param action
-	 * @param body
-	 * @param getKey
-	 * @param tClass
-	 * @return
-	 * @throws BytomException
+	 * requestGet
+	 * @param action action
+	 * @param body body
+	 * @param key getKey
+	 * @param tClass tClass
+	 * @param <T> T
+	 * @return  T
+	 * @throws BytomException Exception
 	 */
 	public <T> T requestGet(String action, Object body, final String key, final Type tClass)
 			throws BytomException {
@@ -312,10 +314,10 @@ public class Client {
 		/**
 		 * Deserializes an HTTP response into a Java object of type T.
 		 * @param response HTTP response object
-		 * @param deserializer json deserializer
+		 * @param deserializer  json deserializer
 		 * @return an object of type T
-		 * @throws BytomException
-		 * @throws IOException
+		 * @throws BytomException Exceptio
+		 * @throws IOException IOException
 		 */
 		T create(Response response, Gson deserializer) throws BytomException, IOException;
 	}

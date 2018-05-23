@@ -73,9 +73,9 @@ public class Block {
 
 	/**
 	 * get-block-count
-	 * 
-	 * @return
-	 * @throws BytomException
+	 * @param client client
+	 * @return block_count
+	 * @throws BytomException Exception
 	 */
 	public static int getBlockCount(Client client) throws BytomException {
 		return client.requestGet("get-block-count", null, "block_count", Integer.class);
@@ -83,9 +83,9 @@ public class Block {
 
 	/**
 	 * get-block-hash
-	 * 
-	 * @return
-	 * @throws BytomException
+	 * @param client client
+	 * @return block_hash
+	 * @throws BytomException Exception
 	 */
 	public static String getBlockHash(Client client) throws BytomException {
 		return client.requestGet("get-block-hash", null, "block_hash", String.class);

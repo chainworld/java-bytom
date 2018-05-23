@@ -129,8 +129,9 @@ public class Asset {
 
 		/**
 		 * Creates an asset object.
-		 * @param client client object that makes request to the core
-		 * @return an asset object
+		 * @param client client client object that makes request to the core
+		 * @return asset object
+		 * @throws BytomException Exception
 		 */
 		public Asset create(Client client) throws BytomException {
 			return client.request("create-asset", this, Asset.class);
@@ -223,10 +224,9 @@ public class Asset {
 
 		/**
 		 * 
-		 * @param client
-		 * @param assetId
-		 * @return The Asset Object
-		 * @throws BytomException
+		 * @param client client
+		 * @return Asset
+		 * @throws BytomException Exception
 		 */
 		public Asset get(Client client) throws BytomException {
 			return client.request("get-asset", this, Asset.class);

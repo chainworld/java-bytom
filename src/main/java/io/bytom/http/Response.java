@@ -59,8 +59,6 @@ public class Response {
 	 *
 	 * Disconnects the internal HttpURLConnection silently.
 	 * @return response body stream
-	 * @throws BytomException
-	 * @see #disconnect()
 	 */
 	public InputStream asStream() {
 		if (streamConsumed) {
@@ -73,7 +71,7 @@ public class Response {
 	 * Returns the response body as string.<br>
 	 * Disconnects the internal HttpURLConnection silently.
 	 * @return response body
-	 * @throws BytomException
+	 * @throws BytomException Exception
 	 */
 	public String asString() throws BytomException {
 		if (null == responseAsString) {

@@ -9,6 +9,7 @@ public class JSONException extends BytomException {
 
 	/**
 	 * Default constructor.
+	 * @param message message
 	 */
 	public JSONException(String message) {
 		super(message);
