@@ -134,7 +134,7 @@ Transaction.submit(client, singerTx);
 ### All usage examples
 
 You find more detailed documentation at [/doc](doc/index.md). 
-Also you can find Junit Test Cases at [/src/test/]
+Also you can find Junit Test Cases at [/test/java/io/bytom/integration]
 
 
 ## Support and Feedback
