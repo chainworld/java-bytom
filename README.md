@@ -123,7 +123,7 @@ Transaction.Template controlAddressTx = new Transaction.Builder()
 ### Sign the Transaction
 ```java
 Transaction.Template singerTx = new Transaction.SignerBuilder()
-                                   .sign(client,controlAcontrolAddressTxddress, "password");
+                                   .sign(client,controlAddressTx, "password");
 ```
 ### Submit the Transaction
 ```java
