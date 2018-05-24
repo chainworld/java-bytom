@@ -41,30 +41,92 @@ cd java-bytom
 mvn install
 ```
 
-## Usage
+## 5-Minute Guide
 
+This guide will walk you through the basic functions of Bytom:
 
-### Basic Usage
+### Initialize the SDK
+Create an instance of the SDK. By default, the SDK will try to access a core located at http://127.0.0.1:9888, which is the default if you’re running Bytom Wallet locally.
 
-```
-   public static Client generateClient() throws BytomException {
-		String coreURL = Configuration.getValue("bytom.api.url");
-		String accessToken = Configuration.getValue("client.access.token");
-		if (coreURL == null || coreURL.isEmpty()) {
-			coreURL = "http://127.0.0.1:9888/";
-		}
-		return new Client(coreURL, accessToken);
+```java
+
+public static Client generateClient() throws BytomException {
+	String coreURL = Configuration.getValue("bytom.api.url");
+	String accessToken = Configuration.getValue("client.access.token");
+	if (coreURL == null || coreURL.isEmpty()) {
+		coreURL = "http://127.0.0.1:9888/";
 	}
-
-   Account account = new Account.Builder().setAlias("hello_bytom9")
-					.addXpub(key.xpub).setQuorum(1).create(client);
-   ...
+	return new Client(coreURL, accessToken);
+}
 ```
 
+### Create Keys
+
+```java
+	Key key = Key.create(client, "alias", "password");
+```
+It will create a key whose alias is 'alias' while password is 'password'.
+
+
+### Create an Asset
+Create a new asset, providing an alias, key, and quorum. 
+
+```java
+	String asset = "GOLD";
+	Asset testAsset = new Asset.Builder()
+	                      .setAlias(asset)
+			      .addRootXpub(key.xpub)
+			      .setQuorum(1)
+			      .create(client);
+```
+
+### Create an Account
+Create an account, providing an alias, key, and quorum.
+
+```java
+	Account account = new Account.Builder()
+	                      .setAlias("alice")
+			      .addXpub(key.xpub)
+			      .setQuorum(1)
+			      .create(client);
+```
+
+### Create an Account Address
+ 
+```java
+	new Account.ReceiverBuilder()
+	   .setAccountId(account.id)
+	   .create(client);
+```
+
+### Build the Transaction
+ 
+```java
+	Transaction.Template controlAddressTx = new Transaction.Builder()
+				.addAction(new Transaction.Action.SpendFromAccount()
+						.setAccountId(account.id)
+						.setAssetId(asset.id)
+						.setAmount(300000000))
+				.addAction(new Transaction.Action.ControlWithAddress()
+						.setAddress(address.id)
+						.setAssetId(asset.id)
+						.setAmount(200000000))
+						.build(client);
+```
+### Sign the Transaction
+```java
+	Transaction.Template singerTx = new Transaction.SignerBuilder()
+	    .sign(client,controlAcontrolAddressTxddress, "password");
+```
+### Submit the Transaction
+```java
+	Transaction.submit(client, singerTx); 
+```
 
 ### All usage examples
 
-You find more detailed documentation at [/doc](doc/index.md).
+You find more detailed documentation at [/doc](doc/index.md). 
+Also you can find Junit Test Cases at [/src/test/]
 
 
 ## Support and Feedback
