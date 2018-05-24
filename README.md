@@ -11,8 +11,15 @@ documentation at https://github.com/Bytom/bytom/wiki
 - [Installation](#installation)
     - [Maven](#maven)
     - [Building from source code](#building-from-source-code)
-- [Usage](#usage)
-    - [Basic Usage](#basic-usage)
+- [5-Minute Guide](#5-Minute Guide)
+    - [Initialize the SDK](#Initialize the SDK)
+    - [Create Keys](#Create Keys)
+    - [Create an Asset](#Create an Asset)
+    - [Create an Account](#Create an Account)
+    - [Create an Account Address](#Create an Account Address)
+    - [Build the Transaction](#Build the Transaction)
+    - [Sign the Transaction](#Sign the Transaction)
+    - [Submit the Transaction](#Submit the Transaction)
     - [All usage examples](#all-usage-examples)
 - [Support and Feedback](#support-and-feedback)
 - [License](#license)
@@ -72,55 +79,55 @@ It will create a key whose alias is 'alias' while password is 'password'.
 Create a new asset, providing an alias, key, and quorum. 
 
 ```java
-	String asset = "GOLD";
-	Asset testAsset = new Asset.Builder()
-	                      .setAlias(asset)
-			      .addRootXpub(key.xpub)
-			      .setQuorum(1)
-			      .create(client);
+String asset = "GOLD";
+Asset testAsset = new Asset.Builder()
+		      .setAlias(asset)
+		      .addRootXpub(key.xpub)
+		      .setQuorum(1)
+		      .create(client);
 ```
 
 ### Create an Account
 Create an account, providing an alias, key, and quorum.
 
 ```java
-	Account account = new Account.Builder()
-	                      .setAlias("alice")
-			      .addXpub(key.xpub)
-			      .setQuorum(1)
-			      .create(client);
+Account account = new Account.Builder()
+		      .setAlias("alice")
+		      .addXpub(key.xpub)
+		      .setQuorum(1)
+		      .create(client);
 ```
 
 ### Create an Account Address
  
 ```java
-	new Account.ReceiverBuilder()
-	   .setAccountId(account.id)
-	   .create(client);
+new Account.ReceiverBuilder()
+   .setAccountId(account.id)
+   .create(client);
 ```
 
 ### Build the Transaction
  
 ```java
-	Transaction.Template controlAddressTx = new Transaction.Builder()
-				.addAction(new Transaction.Action.SpendFromAccount()
-						.setAccountId(account.id)
-						.setAssetId(asset.id)
-						.setAmount(300000000))
-				.addAction(new Transaction.Action.ControlWithAddress()
-						.setAddress(address.id)
-						.setAssetId(asset.id)
-						.setAmount(200000000))
-						.build(client);
+Transaction.Template controlAddressTx = new Transaction.Builder()
+			.addAction(new Transaction.Action.SpendFromAccount()
+					.setAccountId(account.id)
+					.setAssetId(asset.id)
+					.setAmount(300000000))
+			.addAction(new Transaction.Action.ControlWithAddress()
+					.setAddress(address.id)
+					.setAssetId(asset.id)
+					.setAmount(200000000))
+					.build(client);
 ```
 ### Sign the Transaction
 ```java
-	Transaction.Template singerTx = new Transaction.SignerBuilder()
-	    .sign(client,controlAcontrolAddressTxddress, "password");
+Transaction.Template singerTx = new Transaction.SignerBuilder()
+                                   .sign(client,controlAcontrolAddressTxddress, "password");
 ```
 ### Submit the Transaction
 ```java
-	Transaction.submit(client, singerTx); 
+Transaction.submit(client, singerTx); 
 ```
 
 ### All usage examples
