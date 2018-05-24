@@ -11,7 +11,7 @@ documentation at https://github.com/Bytom/bytom/wiki
 - [Installation](#installation)
     - [Maven](#maven)
     - [Building from source code](#building-from-source-code)
-- [5-Minute Guide](#5-minute guide)
+- [5-Minute Guide](#5-minute-guide)
     - [Maven](#maven)
     - [Initialize the SDK](#initialize-the-sdk) 
     - [Create Keys](#create-keys)
