@@ -12,6 +12,7 @@ documentation at https://github.com/Bytom/bytom/wiki
     - [Maven](#maven)
     - [Building from source code](#building-from-source-code)
 - [5-Minute Guide](#5-minute guide)
+    - [Maven](#maven)
     - [Initialize the SDK](#initialize the sdk)
     - [Create Keys](#create keys)
     - [Create an Asset](#Create an Asset)
@@ -70,7 +71,7 @@ public static Client generateClient() throws BytomException {
 ### Create Keys
 
 ```java
-	Key key = Key.create(client, "alias", "password");
+Key key = Key.create(client, "alias", "password");
 ```
 It will create a key whose alias is 'alias' while password is 'password'.
 
