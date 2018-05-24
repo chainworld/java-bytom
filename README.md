@@ -15,7 +15,7 @@ documentation at https://github.com/Bytom/bytom/wiki
     - [Maven](#maven)
     - [Initialize the SDK](#initialize-the-sdk)
     - [Create Keys](#create-keys)
-    - [Create an Asset](#Create-an-Asset)
+    - [Create an Asset](#create-an-asset)
     - [Create an Account](#Create-an-Account)
     - [Create an Account Address](#Create an Account Address)
     - [Build the Transaction](#Build the Transaction)
