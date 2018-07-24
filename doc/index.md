@@ -450,7 +450,7 @@ Account.AddressBuilder.Items items = new Account.AddressBuilder()
 
 `Object`:
 
-- `Boolean` - *vaild*, whether the account address is vaild.
+- `Boolean` - *valid*, whether the account address is valid.
 - `Boolean` - *is_local*, whether the account address is local.
 
 ##### Example
@@ -464,7 +464,7 @@ Address address = new Account.AddressBuilder()
 
 // Result
 {
-   "vaild": true,
+   "valid": true,
    "is_local": true,
 }
 ```
