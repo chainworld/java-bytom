@@ -17,7 +17,7 @@ public class Address {
 
 	public boolean change;
 
-	public boolean vaild;
+	public boolean valid;
 
 	@SerializedName("is_local")
 	public boolean isLocal;
